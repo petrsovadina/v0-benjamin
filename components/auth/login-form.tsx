@@ -1,17 +1,19 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
+import { signIn } from "@/lib/auth-actions"
 
 export function LoginForm() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -19,9 +21,10 @@ export function LoginForm() {
     setIsLoading(true)
 
     try {
-      // TODO: Implement actual authentication
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log("[v0] Login attempt:", { email, password })
+      const result = await signIn(email, password)
+      if (result?.error) {
+        setError(result.error)
+      }
     } catch (err) {
       setError("Přihlášení se nezdařilo. Zkuste to znovu.")
     } finally {

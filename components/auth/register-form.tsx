@@ -1,12 +1,12 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import { signUp } from "@/lib/auth-actions"
 
 export function RegisterForm() {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ export function RegisterForm() {
   })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState(false)
   const [passwordMatch, setPasswordMatch] = useState(true)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +40,7 @@ export function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
+    setSuccess(false)
 
     if (!passwordMatch) {
       setError("Hesla se neshodují")
@@ -53,9 +55,13 @@ export function RegisterForm() {
     setIsLoading(true)
 
     try {
-      // TODO: Implement actual registration
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log("[v0] Registration attempt:", formData)
+      const result = await signUp(formData.email, formData.password, formData.name)
+      if (result.error) {
+        setError(result.error)
+      } else {
+        setSuccess(true)
+        setFormData({ name: "", email: "", password: "", confirmPassword: "", acceptTerms: false })
+      }
     } catch (err) {
       setError("Registrace se nezdařila. Zkuste to znovu.")
     } finally {
@@ -65,6 +71,11 @@ export function RegisterForm() {
 
   return (
     <Card className="p-6 border border-border bg-card">
+      {success && (
+        <div className="p-3 rounded-md bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-sm mb-4">
+          Ověřovací email byl odeslán. Zkontrolujte si svůj inbox.
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Name field */}
         <div className="space-y-2">
