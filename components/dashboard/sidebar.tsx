@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { signOut } from "@/lib/auth-actions"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: "◆" },
@@ -14,6 +15,10 @@ const navItems = [
 
 export function DashboardSidebar() {
   const pathname = usePathname()
+
+  const handleSignOut = async () => {
+    await signOut()
+  }
 
   return (
     <aside className="w-64 border-r border-sidebar-border bg-sidebar min-h-screen flex flex-col">
@@ -61,6 +66,7 @@ export function DashboardSidebar() {
           </p>
         </div>
         <Button
+          onClick={handleSignOut}
           variant="outline"
           className="w-full border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent/30 bg-transparent"
         >
