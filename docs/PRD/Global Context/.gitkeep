@@ -1,0 +1,22 @@
+{
+  "orderIndex": "gA==",
+  "title": "Global Context",
+  "relativeTransform": {
+    "x": -1429.3585,
+    "y": -2825.0244
+  },
+  "sectionMetadata": {
+    "width": 3109.3584,
+    "height": 4085.0244,
+    "backgroundColor": "#E0E0F4"
+  },
+  "zeroFields": [
+    5008
+  ],
+  "nullFields": [],
+  "id": {
+    "sessionId": "1",
+    "id": "1"
+  },
+  "frameType": 4
+}

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Suspense } from "react"
 import { ResetPasswordForm } from "@/components/auth/reset-password-form"
 
 export const metadata = {
@@ -16,7 +17,9 @@ export default function ResetPasswordPage() {
       </div>
 
       {/* Form */}
-      <ResetPasswordForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordForm />
+      </Suspense>
 
       {/* Footer links */}
       <div className="flex justify-center gap-4 text-sm">
