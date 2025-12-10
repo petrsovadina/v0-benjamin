@@ -1,0 +1,94 @@
+
+**1. Cíl projektu**
+
+
+Vytvořit webovou službu, která dokáže pomocí umělé inteligence (AI) automaticky přepsat audio nahrávky lékařských rozhovorů (např. konzultace s pacienty, diktování zpráv) do textové podoby jako návrh lékařské zprávy. Cílem je ušetřit lékařům čas s administrativou a zpřesnit dokumentaci.
+
+
+**2. Klíčové funkce (MVP - Minimum Viable Product)**
+
+
+Následující funkce jsou nezbytné pro základní provoz služby:
+
+- **Uživatelské účty a autentizace:**
+	- Google OAuth přes Firebase
+	- Zabezpečení hesel a ochrana účtů
+- **Nahrávání audio souborů:**
+	- Rozhraní pro nahrání audio souboru (podporované formáty: minimálně MP3, WAV, M4A)
+	- Drag-and-drop funkcionalita
+	- **Jako druhá varianta (preferovaná):** tlačítko, které spustí mikrofon
+- **Proces přepisu:**
+	- Spuštění procesu přepisu po nahrání souboru pomocí Gemini 3 Pro
+	- Indikace stavu (Čeká, Přepisuje se, Hotovo, Chyba)
+- **Automatická extrakce a klasifikace dat:**
+	- Automatická klasifikace a extrakce relevantních dat z obsahu rozhovoru/přepisu
+	- **Defaultní konfigurace:**
+		- Extrakce PII entit (osobní identifikační údaje)
+		- Extrakce klinicky relevantních dat (jednoduchá základní konfigurace)
+	- **Uživatelská konfigurace:**
+		- Možnost pro uživatele nakonfigurovat vlastní parametry extrakce
+		- Volba specifických datových entit k extrakci z přepisu rozhovoru
+- **Zobrazení a správa přepisů:**
+	- Přehledný seznam všech nahrávek a jejich stavů
+	- Zobrazení finálního přepisu vedle audio přehrávače (pro snadnou kontrolu) s tlačítkem na zkopírování textu
+	- WYSIWYG Textový editor pro manuální opravy a úpravy vygenerovaného textu
+	- Zobrazení extrahovaných entit a strukturovaných dat
+- **Export textu:**
+	- Možnost exportovat/stáhnout finální přepis (formáty: .txt, .docx)
+
+**3. Pokročilé funkce (Budoucí rozvoj)**
+
+- **Rozpoznávání mluvčích (Speaker Diarization):**
+	- Automatické rozlišení, kdo mluví (např. "Lékař:", "Pacient:")
+- **Integrace AI modelu:**
+	- Napojení na specifický speech-to-text (STT) model. Použijeme existující API Google Speech-to-Text
+- **Strukturování dat:**
+	- Pokročilá schopnost AI rozpoznat a strukturovat komplexní lékařské entity v textu (např. diagnózy, léky, symptomy, dávkování)
+- **Správa pacientů:**
+	- Možnost přiřadit přepis ke konkrétnímu pacientovi v rámci systému. Například přes lékařský mail jako [medevio.cz](http://medevio.cz/)
+- **Rozšířený export / API:**
+	- Možnost exportu do PDF
+	- API pro napojení na externí systémy (např. lékařské informační systémy)
+
+**4. Technické požadavky a specifikace**
+
+- **AI Model:** Gemini 3 Pro
+- **Frontend:**
+	- Next.js
+	- UI komponenty: shadcn UI
+- **Backend:**
+	- Firebase
+	- Framework: LangChain
+- **Autentizace:** Google OAuth přes Firebase
+- **Databáze:** Firebase
+- **Infrastruktura:** Google Cloud
+- **Extrakce dat:** Automatická extrakce s využitím LangChain a konfigurovatelných schémat
+
+**5. Klíčové požadavky (Nepodkročitelné)**
+
+- **BEZPEČNOST A GDPR:** Protože jde o extrémně citlivá zdravotní data (Zvláštní kategorie osobních údajů), musí být zabezpečení absolutní prioritou.
+	- Šifrování dat (at rest i in transit)
+	- Přísná kontrola přístupu
+	- Zajištění plného souladu s nařízením GDPR
+	- Anonymizace nebo pseudonymizace dat tam, kde je to možné
+	- Zabezpečená extrakce a ukládání PII entit
+- **Přesnost přepisu:** Model musí být schopen korektně přepsat českou lékařskou terminologii
+- **Přesnost extrakce:** Správná identifikace a klasifikace klinicky relevantních dat
+
+**6. Uživatelský workflow**
+
+1. Uživatel se přihlásí přes Google OAuth
+2. Nahraje audio soubor (nebo nahraje přes mikrofon)
+3. Systém automaticky spustí přepis pomocí Gemini 3 Pro
+4. Po dokončení přepisu se automaticky spustí extrakce dat dle konfigurace
+5. Uživatel vidí:
+	- Text přepisu s možností úprav
+	- Extrahované entity a strukturovaná data
+	- Audio přehrávač synchronizovaný s textem
+6. Uživatel může nakonfigurovat vlastní extrakční parametry a to buď jednoduše mateřským jazykem tak že v promptu specifikuje slovy a nebo konfiguraci konkretních entit k extrakci a jejich metpopis
+7. Export finálního přepisu a extrahovaných dat
+
+**7. Otevřené otázky k diskuzi**
+
+- Jaké konkrétní klinické entity budou v defaultní konfiguraci extrakce?
+- Jak budeme vizualizovat extrahované entity v uživatelském rozhraní?

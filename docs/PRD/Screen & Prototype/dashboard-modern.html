@@ -1,0 +1,398 @@
+<!DOCTYPE html><html><head>
+    <style>@layer theme, base, paraflow, components, utilities;</style><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    
+    
+    <style id="moxt-styled">@layer paraflow{@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@100;200;300;400;500;600;700&family=PT+Serif:wght@400;700&family=Arimo:wght@400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700&;800;900&family=Rubik:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Ubuntu:wght@300;400;500;700&family=Merriweather:wght@300;400;500;600;700;800;900&family=Roboto+Slab:wght@100;200;300;400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Dancing+Script:wght@400;500;600;700&family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap')
+}</style>
+<!--FontAwesome version: 6.7.2--><link rel="stylesheet" href="https://static.paraflowcontent.com/public/css/font-awesome/font-awesome.672.css"><!--Tailwind version: 4.0.17--><script src="https://static.paraflowcontent.com/public/js/tailwind/tailwind.js"></script><!--iconify-icon version: 3.0.0--><script src="https://static.paraflowcontent.com/public/js/iconify/iconify-icon-3.0.0.js"></script></head>
+<body id="22:1" title="dashboard-modern.html" orderindex="80" relativetransform="1580, 125" class="font-[-apple-system,BlinkMacSystemFont,'Segoe UI'] w-[1440px] min-h-[900px]" style="line-height: 1.5;">
+
+<header id="22:2" orderindex="80" style="background-color: hsla( 155 , 18% , 96% , 1 );" class="w-full">
+<div id="22:3" orderindex="80" style="padding: 1rem 2rem;" class="flex justify-between items-center w-full">
+
+<div id="22:4" orderindex="80" class="flex items-center gap-y-10 gap-x-10">
+
+<div id="22:5" orderindex="80" class="flex items-center gap-y-3 gap-x-3">
+<div id="22:6" orderindex="80" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="22:7" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:stethoscope" class="text-2xl"></iconify-icon>
+</div>
+<span id="22:8" orderindex="81" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">MediAI</span>
+</div>
+
+<div id="22:9" orderindex="81" style="background-color: color-mix( in oklab , #fff 90% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); padding: 0.75rem 1rem; border-color: rgba(212, 232, 222, 1);" class="flex items-center gap-y-2 gap-x-2 min-w-80 border-[1px] border-solid rounded-full">
+<div id="22:10" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:11" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:search" class="text-base"></iconify-icon>
+</div>
+<input id="22:12" orderindex="81" style="flex-basis: 0%; color: rgba(44, 62, 58, 1);" type="text" placeholder="Vyhledat přepisy..." class="bg-transparent grow shrink outline-none">
+</div>
+</div>
+
+<div id="22:13" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+
+<button id="22:14" orderindex="80" class="hover:bg-[#6B8F7D] flex items-center gap-y-2 gap-x-2 rounded-full" style="background-color: rgba(127, 169, 144, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.12); color: color-mix( in oklab , #fff 90% , transparent ); padding: 0.75rem 1.5rem;">
+<div id="22:15" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:16" orderindex="80" icon="lucide:plus" class="text-base"></iconify-icon>
+</div>
+<span id="22:17" orderindex="81" class="whitespace-nowrap font-semibold">Nová Nahrávka</span>
+</button>
+
+<div id="22:18" orderindex="81" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex relative justify-center items-center w-10 h-10 rounded-full">
+<div id="22:19" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:20" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:bell" class="text-base"></iconify-icon>
+</div>
+<div id="22:21" orderindex="81" style="background-color: rgba(127, 169, 144, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 4px rgba(127, 169, 144, 0.12);" class="flex absolute -top-1 -right-1 justify-center items-center w-5 h-5 rounded-full">
+<span id="22:22" orderindex="80" style="color: color-mix( in oklab , #fff 90% , transparent );" class="text-xs font-semibold">3</span>
+</div>
+</div>
+
+<div id="22:23" orderindex="82" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex justify-center items-center w-10 h-10 rounded-full">
+<div id="22:24" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:25" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:settings" class="text-base"></iconify-icon>
+</div>
+</div>
+
+<div id="22:26" orderindex="83" class="flex items-center gap-y-2 gap-x-2">
+<img id="22:27" orderindex="80" style="box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.08); border-color: color-mix( in oklab , #fff 75% , transparent );" alt="Doctor profile avatar of a professional healthcare worker" src="https://static.paraflowcontent.com/public/resource/image/1c640c64-55b1-4174-b4ac-d3bb734cb7af.jpeg" class="w-10 h-10 border-[2px] border-solid rounded-full">
+<div id="22:28" orderindex="81" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:29" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:chevron-down" class="text-base"></iconify-icon>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<div id="22:30" orderindex="81" class="flex w-full min-h-[800px]">
+
+<main id="22:31" orderindex="80" style="flex-basis: 0%;" class="overflow-x-hidden flex flex-col grow shrink p-8">
+
+<div id="22:32" orderindex="80" class="mb-8">
+<h1 id="22:33" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-2xl mb-2 font-semibold">Moje Nahrávky</h1>
+</div>
+
+<div id="22:34" orderindex="81" class="mb-8">
+<div id="22:35" orderindex="80" class="flex items-center gap-y-8 gap-x-8 mb-6">
+
+<div id="22:36" orderindex="80">
+<span id="22:37" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base block mb-3">Filtr podle stavu:</span>
+<div id="22:38" orderindex="81" class="overflow-x-auto flex gap-y-3 gap-x-3">
+<label id="22:39" orderindex="80">
+<input id="22:40" orderindex="80" class="peer overflow-x-hidden overflow-y-hidden whitespace-nowrap absolute w-px h-px -m-px" style="clip-path: inset( 50% ); padding: 0; border-width: 0;" type="radio" checked="">
+<div id="22:41" orderindex="81" class="hover:opacity-70 whitespace-nowrap rounded-full" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); color: rgba(90, 107, 103, 1); padding: 0.5rem 1rem;">
+<span id="22:42" orderindex="80">Všechny</span>
+</div>
+</label>
+<label id="22:43" orderindex="81">
+<input id="22:44" orderindex="80" class="peer overflow-x-hidden overflow-y-hidden whitespace-nowrap absolute w-px h-px -m-px" style="clip-path: inset( 50% ); padding: 0; border-width: 0;" type="radio">
+<div id="22:45" orderindex="81" class="hover:opacity-70 whitespace-nowrap rounded-full" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); color: rgba(90, 107, 103, 1); padding: 0.5rem 1rem;">
+<span id="22:46" orderindex="80">Čeká</span>
+</div>
+</label>
+<label id="22:47" orderindex="82">
+<input id="22:48" orderindex="80" class="peer overflow-x-hidden overflow-y-hidden whitespace-nowrap absolute w-px h-px -m-px" style="clip-path: inset( 50% ); padding: 0; border-width: 0;" type="radio">
+<div id="22:49" orderindex="81" class="hover:opacity-70 whitespace-nowrap rounded-full" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); color: rgba(90, 107, 103, 1); padding: 0.5rem 1rem;">
+<span id="22:50" orderindex="80">Přepisuje se</span>
+</div>
+</label>
+<label id="22:51" orderindex="83">
+<input id="22:52" orderindex="80" class="peer overflow-x-hidden overflow-y-hidden whitespace-nowrap absolute w-px h-px -m-px" style="clip-path: inset( 50% ); padding: 0; border-width: 0;" type="radio">
+<div id="22:53" orderindex="81" class="hover:opacity-70 whitespace-nowrap rounded-full" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); color: rgba(90, 107, 103, 1); padding: 0.5rem 1rem;">
+<span id="22:54" orderindex="80">Hotovo</span>
+</div>
+</label>
+<label id="22:55" orderindex="84">
+<input id="22:56" orderindex="80" class="peer overflow-x-hidden overflow-y-hidden whitespace-nowrap absolute w-px h-px -m-px" style="clip-path: inset( 50% ); padding: 0; border-width: 0;" type="radio">
+<div id="22:57" orderindex="81" class="hover:opacity-70 whitespace-nowrap rounded-full" style="background-color: color-mix( in oklab , #fff 75% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); color: rgba(90, 107, 103, 1); padding: 0.5rem 1rem;">
+<span id="22:58" orderindex="80">Chyba</span>
+</div>
+</label>
+</div>
+</div>
+
+<div id="22:59" orderindex="81">
+<span id="22:60" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base block mb-3">Řazení:</span>
+<div id="22:61" orderindex="81" class="flex gap-y-2 gap-x-2">
+<div id="22:62" orderindex="80" style="background-color: color-mix( in oklab , #fff 90% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06); padding: 0.75rem 1rem; border-color: rgba(212, 232, 222, 1);" class="flex items-center gap-y-2 gap-x-2 border-[1px] border-solid rounded-full">
+<span id="22:63" orderindex="80" style="color: rgba(44, 62, 58, 1);">Nejnovější</span>
+<div id="22:64" orderindex="81" class="bg-transparent flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:65" orderindex="80" style="color: rgba(127, 169, 144, 1);" icon="lucide:chevron-down" class="text-base"></iconify-icon>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="22:66" orderindex="82" class="grid grid-cols-4 gap-y-6 gap-x-6 mb-8">
+<div id="22:67" orderindex="80" style="background-color: rgba(229, 245, 237, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex flex-col gap-y-3 gap-x-3 p-6 rounded-2xl">
+<span id="22:68" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">24</span>
+<span id="22:69" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-base font-normal">Celkem nahrávek</span>
+</div>
+<div id="22:70" orderindex="81" style="background-color: rgba(229, 245, 237, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex flex-col gap-y-3 gap-x-3 p-6 rounded-2xl">
+<span id="22:71" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">8</span>
+<span id="22:72" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-base font-normal">Tento týden</span>
+</div>
+<div id="22:73" orderindex="82" style="background-color: rgba(229, 245, 237, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex flex-col gap-y-3 gap-x-3 p-6 rounded-2xl">
+<span id="22:74" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">18.5 hod</span>
+<span id="22:75" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-base font-normal">Ušetřený čas</span>
+</div>
+<div id="22:76" orderindex="83" style="background-color: rgba(229, 245, 237, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.06);" class="flex flex-col gap-y-3 gap-x-3 p-6 rounded-2xl">
+<span id="22:77" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">95%</span>
+<span id="22:78" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-base font-normal">Úspěšnost</span>
+</div>
+</div>
+
+<div id="22:79" orderindex="83">
+
+<div id="22:80" orderindex="80" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 mb-6 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); margin-top: 0; box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:81" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:82" orderindex="80" class="flex justify-between items-start">
+<div id="22:83" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:84" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Vstupní vyšetření - 5.12.2024 09:30</h3>
+<div id="22:85" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:86" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">5. prosince 2024, 09:30</span>
+<span id="22:87" orderindex="81" style="background-color: rgba(200, 230, 215, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Hotovo</span>
+<div id="22:88" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:89" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:90" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:91" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">8:45</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="22:92" orderindex="81" class="flex flex-wrap gap-y-2 gap-x-2">
+<span id="22:93" orderindex="80" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Jan Novák, 45 let</span>
+<span id="22:94" orderindex="81" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Bolest hlavy</span>
+<span id="22:95" orderindex="82" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Paracetamol 500mg</span>
+</div>
+
+<div id="22:96" orderindex="82" class="flex gap-y-3 gap-x-3">
+<button id="22:97" orderindex="80" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:98" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:99" orderindex="80" icon="lucide:eye" class="text-base"></iconify-icon>
+</div>
+<span id="22:100" orderindex="81" class="whitespace-nowrap">Zobrazit</span>
+</button>
+<button id="22:101" orderindex="81" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:102" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:103" orderindex="80" icon="lucide:edit" class="text-base"></iconify-icon>
+</div>
+<span id="22:104" orderindex="81" class="whitespace-nowrap">Upravit</span>
+</button>
+<button id="22:105" orderindex="82" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:106" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:107" orderindex="80" icon="lucide:download" class="text-base"></iconify-icon>
+</div>
+<span id="22:108" orderindex="81" class="whitespace-nowrap">Exportovat</span>
+</button>
+<button id="22:109" orderindex="83" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:110" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:111" orderindex="80" icon="lucide:trash" class="text-base"></iconify-icon>
+</div>
+<span id="22:112" orderindex="81" class="whitespace-nowrap">Smazat</span>
+</button>
+</div>
+</div>
+</div>
+
+<div id="22:113" orderindex="81" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 mb-6 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); margin-top: 0; box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:114" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:115" orderindex="80" class="flex justify-between items-start">
+<div id="22:116" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:117" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Kontrolní vyšetření - 5.12.2024 14:15</h3>
+<div id="22:118" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:119" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">5. prosince 2024, 14:15</span>
+<span id="22:120" orderindex="81" style="background-color: rgba(155, 174, 184, 1); color: color-mix( in oklab , #fff 90% , transparent ); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Přepisuje se</span>
+<div id="22:121" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:122" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:123" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:124" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">12:30</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="22:125" orderindex="81" class="flex flex-col gap-y-2 gap-x-2">
+<div id="22:126" orderindex="80" style="background-color: rgba(229, 245, 237, 1);" class="h-2 rounded-full">
+<div id="22:127" orderindex="80" style="background-color: rgba(127, 169, 144, 1); width: 75%;" class="h-full rounded-full"></div>
+</div>
+<span id="22:128" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-sm">Odhadovaný čas dokončení: ~45 sekund</span>
+</div>
+</div>
+</div>
+
+<div id="22:129" orderindex="82" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 mb-6 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); margin-top: 0; box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:130" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:131" orderindex="80" class="flex justify-between items-start">
+<div id="22:132" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:133" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Následné vyšetření - 4.12.2024 16:00</h3>
+<div id="22:134" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:135" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">4. prosince 2024, 16:00</span>
+<span id="22:136" orderindex="81" style="background-color: rgba(200, 230, 215, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Hotovo</span>
+<div id="22:137" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:138" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:139" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:140" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">6:22</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="22:141" orderindex="81" class="flex flex-wrap gap-y-2 gap-x-2">
+<span id="22:142" orderindex="80" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Marie Svobodová, 62 let</span>
+<span id="22:143" orderindex="81" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Diabetes mellitus</span>
+<span id="22:144" orderindex="82" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Metformin</span>
+</div>
+
+<div id="22:145" orderindex="82" class="flex gap-y-3 gap-x-3">
+<button id="22:146" orderindex="80" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:147" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:148" orderindex="80" icon="lucide:eye" class="text-base"></iconify-icon>
+</div>
+<span id="22:149" orderindex="81" class="whitespace-nowrap">Zobrazit</span>
+</button>
+<button id="22:150" orderindex="81" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:151" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:152" orderindex="80" icon="lucide:edit" class="text-base"></iconify-icon>
+</div>
+<span id="22:153" orderindex="81" class="whitespace-nowrap">Upravit</span>
+</button>
+<button id="22:154" orderindex="82" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:155" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:156" orderindex="80" icon="lucide:download" class="text-base"></iconify-icon>
+</div>
+<span id="22:157" orderindex="81" class="whitespace-nowrap">Exportovat</span>
+</button>
+<button id="22:158" orderindex="83" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:159" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:160" orderindex="80" icon="lucide:trash" class="text-base"></iconify-icon>
+</div>
+<span id="22:161" orderindex="81" class="whitespace-nowrap">Smazat</span>
+</button>
+</div>
+</div>
+</div>
+
+<div id="22:162" orderindex="83" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 mb-6 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); margin-top: 0; box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:163" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:164" orderindex="80" class="flex justify-between items-start">
+<div id="22:165" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:166" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Ordinace - 4.12.2024 10:45</h3>
+<div id="22:167" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:168" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">4. prosince 2024, 10:45</span>
+<span id="22:169" orderindex="81" style="background-color: rgba(181, 194, 191, 1); color: color-mix( in oklab , #fff 90% , transparent ); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Čeká</span>
+<div id="22:170" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:171" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:172" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:173" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">15:12</span>
+</div>
+</div>
+</div>
+</div>
+<div id="22:174" orderindex="81" class="flex items-center gap-y-2 gap-x-2">
+<div id="22:175" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:176" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:users" class="text-base"></iconify-icon>
+</div>
+<span id="22:177" orderindex="81" style="color: rgba(90, 107, 103, 1);" class="text-base">Pozice ve frontě: 3</span>
+</div>
+</div>
+</div>
+
+<div id="22:178" orderindex="84" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 mb-6 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); margin-top: 0; box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:179" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:180" orderindex="80" class="flex justify-between items-start">
+<div id="22:181" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:182" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Konzultace - 3.12.2024 13:20</h3>
+<div id="22:183" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:184" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">3. prosince 2024, 13:20</span>
+<span id="22:185" orderindex="81" style="background-color: rgba(230, 200, 205, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Chyba</span>
+<div id="22:186" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:187" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:188" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:189" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">4:33</span>
+</div>
+</div>
+</div>
+</div>
+<div id="22:190" orderindex="81" style="background-color: rgba(245, 229, 232, 1);" class="p-4 rounded-xl">
+<div id="22:191" orderindex="80" class="flex items-center gap-y-2 gap-x-2 mb-2">
+<div id="22:192" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:193" orderindex="80" style="color: rgba(230, 200, 205, 1);" icon="lucide:alert-circle" class="text-base"></iconify-icon>
+</div>
+<span id="22:194" orderindex="81" style="color: rgba(44, 62, 58, 1);" class="text-base font-semibold">Přepis se nezdařil - Nízká kvalita audio</span>
+</div>
+<button id="22:195" orderindex="81" class="hover:bg-[#6B8F7D] flex items-center gap-y-2 gap-x-2 rounded-full" style="background-color: rgba(127, 169, 144, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 6px rgba(127, 169, 144, 0.08); color: color-mix( in oklab , #fff 90% , transparent ); padding: 0.5rem 1rem;">
+<div id="22:196" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:197" orderindex="80" icon="lucide:refresh-cw" class="text-sm"></iconify-icon>
+</div>
+<span id="22:198" orderindex="81" class="whitespace-nowrap font-semibold">Zkusit znovu</span>
+</button>
+</div>
+</div>
+</div>
+
+<div id="22:199" orderindex="85" class="hover:shadow-[0_4px_12px_rgba(127,169,144,0.12)] flex gap-y-5 gap-x-5 p-6 rounded-2xl" style="background-color: color-mix( in oklab , #fff 90% , transparent ); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 2px 8px rgba(127, 169, 144, 0.08);">
+<div id="22:200" orderindex="80" style="flex-basis: 0%;" class="flex flex-col grow shrink gap-y-4 gap-x-4">
+<div id="22:201" orderindex="80" class="flex justify-between items-start">
+<div id="22:202" orderindex="80" class="flex flex-col gap-y-2 gap-x-2">
+<h3 id="22:203" orderindex="80" style="color: rgba(44, 62, 58, 1);" class="text-xl font-semibold">Telefonická konzultace - 2.12.2024 11:10</h3>
+<div id="22:204" orderindex="81" class="flex items-center gap-y-4 gap-x-4">
+<span id="22:205" orderindex="80" style="color: rgba(90, 107, 103, 1);" class="text-base">2. prosince 2024, 11:10</span>
+<span id="22:206" orderindex="81" style="background-color: rgba(200, 230, 215, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm font-semibold rounded-full">Hotovo</span>
+<div id="22:207" orderindex="82" class="flex items-center gap-y-1 gap-x-1">
+<div id="22:208" orderindex="80" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="22:209" orderindex="80" style="color: rgba(138, 152, 149, 1);" icon="lucide:clock" class="text-sm"></iconify-icon>
+</div>
+<span id="22:210" orderindex="81" style="color: rgba(138, 152, 149, 1);" class="text-base">3:18</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="22:211" orderindex="81" class="flex flex-wrap gap-y-2 gap-x-2">
+<span id="22:212" orderindex="80" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Petr Dvořák, 38 let</span>
+<span id="22:213" orderindex="81" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Alergie</span>
+<span id="22:214" orderindex="82" style="background-color: rgba(212, 232, 222, 1); color: rgba(44, 62, 58, 1); padding: 0.25rem 0.75rem;" class="text-sm rounded-full">Cetirizin</span>
+</div>
+
+<div id="22:215" orderindex="82" class="flex gap-y-3 gap-x-3">
+<button id="22:216" orderindex="80" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:217" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:218" orderindex="80" icon="lucide:eye" class="text-base"></iconify-icon>
+</div>
+<span id="22:219" orderindex="81" class="whitespace-nowrap">Zobrazit</span>
+</button>
+<button id="22:220" orderindex="81" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:221" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:222" orderindex="80" icon="lucide:edit" class="text-base"></iconify-icon>
+</div>
+<span id="22:223" orderindex="81" class="whitespace-nowrap">Upravit</span>
+</button>
+<button id="22:224" orderindex="82" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:225" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:226" orderindex="80" icon="lucide:download" class="text-base"></iconify-icon>
+</div>
+<span id="22:227" orderindex="81" class="whitespace-nowrap">Exportovat</span>
+</button>
+<button id="22:228" orderindex="83" class="hover:opacity-70 flex items-center gap-y-2 gap-x-2" style="color: rgba(127, 169, 144, 1);">
+<div id="22:229" orderindex="80" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="22:230" orderindex="80" icon="lucide:trash" class="text-base"></iconify-icon>
+</div>
+<span id="22:231" orderindex="81" class="whitespace-nowrap">Smazat</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+
+</body></html>
