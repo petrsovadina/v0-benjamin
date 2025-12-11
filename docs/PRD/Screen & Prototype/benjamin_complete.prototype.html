@@ -1,0 +1,1309 @@
+<!DOCTYPE html><html><head>
+    <style>@layer theme, base, paraflow, components, utilities;</style><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    
+    
+    <style id="moxt-styled">@layer paraflow{@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Open+Sans:wght@300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Mono:wght@100;200;300;400;500;600;700&family=PT+Serif:wght@400;700&family=Arimo:wght@400;500;600;700&family=Raleway:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700&;800;900&family=Rubik:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Ubuntu:wght@300;400;500;700&family=Merriweather:wght@300;400;500;600;700;800;900&family=Roboto+Slab:wght@100;200;300;400;500;600;700&family=Libre+Baskerville:wght@400;700&family=Inconsolata:wght@200;300;400;500;600;700;800;900&family=Dancing+Script:wght@400;500;600;700&family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap');
+.pf-benjamin-bg-primary {
+    background-color: rgba(92, 184, 92, 1);
+}
+.pf-benjamin-text-primary {
+    color: rgba(92, 184, 92, 1);
+}
+.pf-benjamin-border-primary {
+    border-color: rgba(92, 184, 92, 1);
+}
+}</style>
+<style>@layer paraflow {::-webkit-scrollbar {
+    display: none;
+}
+html, body {
+    /* Internet Explorer 10+ */
+    /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+textarea {
+    resize: none;
+}
+input::-webkit-calendar-picker-indicator {
+    visibility: hidden;
+}
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+}</style><script>
+        window.addEventListener('wheel', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                window.parent.postMessage({ type: 'pinch', pinchEvent: {
+                    deltaX: e.deltaX,
+                    deltaY: e.deltaY,
+                    deltaZ: e.deltaZ,
+                    deltaMode: e.deltaMode,
+                    deltaTime: e.deltaTime,
+                    pageX: e.pageX,
+                    pageY: e.pageY,
+                    clientX: e.clientX,
+                    clientY: e.clientY,
+                } }, '*');
+            }
+        }, { passive: false });
+        window.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        }, { passive: false });
+        document.addEventListener('click', (e) => {
+            const target = e.target
+            if (target && target.tagName === 'A') {
+                e.preventDefault()
+            }
+        })
+    </script><!--FontAwesome version: 6.7.2--><link rel="stylesheet" href="https://static.paraflowcontent.com/public/css/font-awesome/font-awesome.672.css"><!--Tailwind version: 4.0.17--><script src="https://static.paraflowcontent.com/public/js/tailwind/tailwind.js"></script><!--iconify-icon version: 3.0.0--><script src="https://static.paraflowcontent.com/public/js/iconify/iconify-icon-3.0.0.js"></script></head>
+<body><div id="60:1" title="benjamin_chat_green.html" style="font-family: ui-sans-serif, system-ui, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;" class="w-[1200px] min-h-[800px]">
+<div id="60:2" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);" class="overflow-x-hidden overflow-y-hidden flex flex-col w-full h-[800px] rounded-lg">
+
+<div id="60:3" class="pf-benjamin-bg-primary flex justify-between items-center" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1rem;">
+
+<div id="60:4" class="flex items-center gap-y-3 gap-x-3">
+<div id="60:5" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="60:6" icon="mdi:brain" class="text-2xl"></iconify-icon>
+</div>
+<div id="60:7" class="flex flex-col">
+<h1 id="60:8" class="text-lg font-semibold">Benjamin</h1>
+<div id="60:9" class="text-sm opacity-90">AI Klinický Asistent</div>
+</div>
+</div>
+
+<div id="60:10" class="flex items-center gap-y-8 gap-x-8">
+<div id="60:11" style="border-bottom-style: solid; border-color: rgba(255, 255, 255, 1);" class="flex items-center gap-y-2 gap-x-2 pb-1 border-b-[2px]">
+<iconify-icon id="60:12" icon="lucide:message-circle" class="text-base"></iconify-icon>
+<span id="60:13" class="text-sm font-medium">Chat</span>
+</div>
+<div id="60:14" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="60:15" icon="lucide:clipboard-list" class="text-base"></iconify-icon>
+<span id="60:16" class="text-sm">Epikríza</span>
+</div>
+<div id="60:17" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="60:18" icon="lucide:globe" class="text-base"></iconify-icon>
+<span id="60:19" class="text-sm">Translator</span>
+</div>
+<div id="60:20" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="60:21" icon="lucide:settings" class="text-base"></iconify-icon>
+<span id="60:22" class="text-sm">Nastavení</span>
+</div>
+</div>
+
+<div id="60:23" class="flex items-center gap-y-3 gap-x-3">
+<div id="60:24" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:25" icon="lucide:search" class="text-xl"></iconify-icon>
+</div>
+<div id="60:26" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:27" icon="lucide:user" class="text-xl"></iconify-icon>
+</div>
+<div id="60:28" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:29" icon="lucide:x" class="text-xl"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="60:30" style="background-color: rgba(255, 255, 255, 1); flex-basis: 0%;" class="flex flex-col grow shrink justify-center items-center p-8">
+
+<div id="60:31" class="text-center mb-12">
+<div id="60:32" class="pf-benjamin-bg-primary flex justify-center items-center w-24 h-24 mb-6 rounded-full" style="margin-right: auto; margin-left: auto;">
+<iconify-icon id="60:33" style="color: rgba(255, 255, 255, 1);" icon="mdi:brain" class="text-4xl"></iconify-icon>
+</div>
+<h2 id="60:34" style="color: oklch( 21% 0.034 264.665 );" class="text-2xl mb-2 font-semibold">Dobrý den, doktore 👋</h2>
+<p id="60:35" style="color: oklch( 44.6% 0.03 256.802 );" class="text-base max-w-168">Zeptejte se mě na cokoliv - jsem připojený k PubMed, SÚKL, Semantic Scholar a dalším medicínským zdrojům.</p>
+</div>
+
+<div id="60:36" class="grid grid-cols-3 gap-y-4 gap-x-4 w-full max-w-4xl mb-12">
+
+<div id="60:37" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:38" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:39" style="background-color: oklch( 93.2% 0.032 255.585 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:40" style="color: oklch( 54.6% 0.245 262.881 );" icon="lucide:search" class="text-xl"></iconify-icon>
+</div>
+<span id="60:41" style="background-color: oklch( 93.2% 0.032 255.585 ); color: oklch( 48.8% 0.243 264.376 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Diagnostika</span>
+</div>
+<p id="60:42" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">Diferenciální diagnostika akutní bolesti břicha</p>
+</div>
+
+<div id="60:43" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:44" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:45" style="background-color: oklch( 94.6% 0.033 307.174 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:46" style="color: oklch( 55.8% 0.288 302.321 );" icon="lucide:pill" class="text-xl"></iconify-icon>
+</div>
+<span id="60:47" style="background-color: oklch( 94.6% 0.033 307.174 ); color: oklch( 49.6% 0.265 301.924 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Léky</span>
+</div>
+<p id="60:48" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">Interakce warfarinu se SSRI antidepresivy</p>
+</div>
+
+<div id="60:49" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:50" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:51" style="background-color: oklch( 96.2% 0.044 156.743 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:52" style="color: oklch( 62.7% 0.194 149.214 );" icon="lucide:clipboard-list" class="text-xl"></iconify-icon>
+</div>
+<span id="60:53" style="background-color: oklch( 96.2% 0.044 156.743 ); color: oklch( 52.7% 0.154 150.069 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Doporučení</span>
+</div>
+<p id="60:54" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">Aktuální guidelines pro léčbu diabetu 2. typu</p>
+</div>
+
+<div id="60:55" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:56" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:57" style="background-color: oklch( 95.4% 0.038 75.164 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:58" style="color: oklch( 64.6% 0.222 41.116 );" icon="lucide:flask-conical" class="text-xl"></iconify-icon>
+</div>
+<span id="60:59" style="background-color: oklch( 95.4% 0.038 75.164 ); color: oklch( 55.3% 0.195 38.402 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Lab</span>
+</div>
+<p id="60:60" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">Interpretace zvýšeného D-dimeru u starších pacientů</p>
+</div>
+
+<div id="60:61" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:62" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:63" style="background-color: oklch( 93.6% 0.032 17.717 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:64" style="color: oklch( 57.7% 0.245 27.325 );" icon="lucide:hospital" class="text-xl"></iconify-icon>
+</div>
+<span id="60:65" style="background-color: oklch( 93.6% 0.032 17.717 ); color: oklch( 50.5% 0.213 27.518 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Kazuistika</span>
+</div>
+<p id="60:66" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">45letá žena s palpitacemi a únavou - co vyšetřit?</p>
+</div>
+
+<div id="60:67" class="hover:shadow-md p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="60:68" class="flex items-center gap-y-3 gap-x-3 mb-3">
+<div id="60:69" style="background-color: oklch( 95.6% 0.045 203.388 );" class="flex justify-center items-center w-10 h-10 rounded-lg">
+<iconify-icon id="60:70" style="color: oklch( 60.9% 0.126 221.723 );" icon="lucide:sparkles" class="text-xl"></iconify-icon>
+</div>
+<span id="60:71" style="background-color: oklch( 95.6% 0.045 203.388 ); color: oklch( 52% 0.105 223.128 ); padding: 0.25rem 0.5rem;" class="text-xs font-medium rounded-sm">Novinky</span>
+</div>
+<p id="60:72" style="line-height: 1.625; color: oklch( 37.3% 0.034 259.733 ); font-size: 0.875rem;">Co nového v léčbě fibrilace síní (2024-2025)?</p>
+</div>
+</div>
+
+<div id="60:73" style="background-color: oklch( 97% 0.014 254.604 ); border-color: oklch( 88.2% 0.059 254.128 );" class="w-full max-w-4xl p-4 border-[1px] border-solid rounded-lg">
+<div id="60:74" class="flex items-start gap-y-3 gap-x-3">
+<div id="60:75" style="margin-top: 0.125rem;" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="60:76" style="color: oklch( 54.6% 0.245 262.881 );" icon="lucide:lightbulb" class="text-base"></iconify-icon>
+</div>
+<div id="60:77">
+<p id="60:78" style="color: oklch( 42.4% 0.199 265.638 );" class="text-sm mb-2">
+<span id="60:79" class="font-medium">Tip:</span> <span id="60:80">Pište přirozeně v češtině. Mohu odpovídat na základě PubMed, SÚKL databáze, českých guidelines a dalších zdrojů.</span>
+</p>
+<a id="60:81" class="hover:text-blue-800 text-sm" style="color: oklch( 54.6% 0.245 262.881 );" href="#">Jak efektivně komunikovat s Benjaminem</a>
+</div>
+</div>
+</div>
+</div>
+
+<div id="60:82" style="background-color: rgba(255, 255, 255, 1); border-top-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-t-[1px] p-4">
+
+<div id="60:83" class="flex justify-between items-center mb-3">
+<div id="60:84" class="flex items-center gap-y-2 gap-x-2">
+<div id="60:85" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:86" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:paperclip" class="text-base"></iconify-icon>
+</div>
+<div id="60:87" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:88" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:mic" class="text-base"></iconify-icon>
+</div>
+<div id="60:89" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:90" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:lightbulb" class="text-base"></iconify-icon>
+</div>
+</div>
+<div id="60:91" class="flex items-center gap-y-2 gap-x-2">
+<div id="60:92" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:93" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:trash-2" class="text-base"></iconify-icon>
+</div>
+<div id="60:94" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="60:95" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:settings" class="text-base"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="60:96" class="flex items-end gap-y-3 gap-x-3">
+<div id="60:97" style="flex-basis: 0%;" class="grow shrink">
+<textarea id="60:98" class="pf-benjamin-focus text-sm w-full p-3 border-[1px] border-solid rounded-lg" style="color: oklch( 21% 0.034 264.665 ); border-color: oklch( 92.8% 0.006 264.531 );" placeholder="Zeptejte se Benjamina..." rows="3"></textarea>
+<div id="60:99" style="color: oklch( 70.7% 0.022 261.325 );" class="text-xs text-right mt-1">0 / 2000</div>
+</div>
+<button id="60:100" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover pf-benjamin-bg-primary-active text-sm flex items-center gap-y-2 gap-x-2 font-medium rounded-lg" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1.5rem;">
+<iconify-icon id="60:101" icon="lucide:send" class="text-base"></iconify-icon>
+<span id="60:102">Odeslat</span>
+</button>
+</div>
+
+<div id="60:103" style="color: oklch( 44.6% 0.03 256.802 );" class="text-sm flex items-center gap-y-2 gap-x-2 mt-3">
+<div id="60:104" style="background-color: oklch( 72.3% 0.219 149.579 );" class="w-2 h-2 rounded-full"></div>
+<span id="60:105">Připojeno: PubMed • SÚKL • Semantic Scholar</span>
+</div>
+</div>
+</div>
+
+
+
+</div><div id="70:1" title="benjamin_active_chat.html" class="w-[1200px] min-h-[800px]">
+<div id="70:2" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);" class="overflow-x-hidden overflow-y-hidden flex flex-col w-full h-[800px] rounded-lg">
+
+<div id="70:3" class="pf-benjamin-bg-primary flex justify-between items-center" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1rem;">
+
+<div id="70:4" class="flex items-center gap-y-3 gap-x-3">
+<div id="70:5" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="70:6" icon="mdi:brain" class="text-2xl"></iconify-icon>
+</div>
+<div id="70:7" class="flex flex-col">
+<h1 id="70:8" class="text-lg font-semibold">Benjamin</h1>
+<div id="70:9" class="text-sm opacity-90">AI Klinický Asistent</div>
+</div>
+</div>
+
+<div id="70:10" class="flex items-center gap-y-8 gap-x-8">
+<div id="70:11" style="border-bottom-style: solid; border-color: rgba(255, 255, 255, 1);" class="flex items-center gap-y-2 gap-x-2 pb-1 border-b-[2px]">
+<iconify-icon id="70:12" icon="lucide:message-circle" class="text-base"></iconify-icon>
+<span id="70:13" class="text-sm font-medium">Chat</span>
+</div>
+<div id="70:14" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="70:15" icon="lucide:clipboard-list" class="text-base"></iconify-icon>
+<span id="70:16" class="text-sm">Epikríza</span>
+</div>
+<div id="70:17" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="70:18" icon="lucide:globe" class="text-base"></iconify-icon>
+<span id="70:19" class="text-sm">Translator</span>
+</div>
+<div id="70:20" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="70:21" icon="lucide:settings" class="text-base"></iconify-icon>
+<span id="70:22" class="text-sm">Nastavení</span>
+</div>
+</div>
+
+<div id="70:23" class="flex items-center gap-y-3 gap-x-3">
+<div id="70:24" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:25" icon="lucide:search" class="text-xl"></iconify-icon>
+</div>
+<div id="70:26" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:27" icon="lucide:user" class="text-xl"></iconify-icon>
+</div>
+<div id="70:28" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:29" icon="lucide:x" class="text-xl"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="70:30" style="background-color: rgba(248, 249, 250, 1); flex-basis: 0%;" class="overflow-y-auto grow shrink p-6">
+<div id="70:31" style="margin-right: auto; margin-left: auto;" class="max-w-4xl">
+
+<div id="70:32" style="margin-top: 0;" class="flex justify-end mb-6">
+<div id="70:33" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-color: oklch( 92.8% 0.006 264.531 );" class="max-w-168 p-4 border-[1px] border-solid rounded-lg">
+<p id="70:34" style="color: oklch( 21% 0.034 264.665 );" class="text-sm">Jaké jsou guidelines pro léčbu diabetu 2. typu u pacienta s KV rizikem?</p>
+<div id="70:35" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs text-right mt-2">před 5 minutami</div>
+</div>
+</div>
+
+<div id="70:36" style="margin-top: 0;" class="flex items-start gap-y-4 gap-x-4 mb-6">
+
+<div id="70:37" class="pf-benjamin-bg-primary flex shrink-0 justify-center items-center w-8 h-8 rounded-full">
+<iconify-icon id="70:38" style="color: rgba(255, 255, 255, 1);" icon="mdi:brain" class="text-lg"></iconify-icon>
+</div>
+
+<div id="70:39" style="flex-basis: 0%;" class="grow shrink">
+
+<div id="70:40" class="flex items-center gap-y-2 gap-x-2 mb-3">
+<span id="70:41" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-semibold">Benjamin</span>
+<span id="70:42" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs">před 2 minutami</span>
+</div>
+
+<div id="70:43" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-color: oklch( 92.8% 0.006 264.531 );" class="mb-4 p-4 border-[1px] border-solid rounded-lg">
+<p id="70:44" style="line-height: 1.625; color: oklch( 21% 0.034 264.665 ); font-size: 0.875rem;" class="mb-4">
+<span id="70:45">Pro pacienty s **diabetem mellitus 2. typu a vysokým kardiovaskulárním rizikem** jsou aktuální guidelines jasné - prioritou je cardioprotektivní léčba pomocí **SGLT2 inhibitorů** nebo **GLP-1 RA**</span> <span id="70:46" style="color: oklch( 62.7% 0.194 149.214 );" class="font-medium">[1]</span><span id="70:47">.</span>
+</p>
+<p id="70:48" style="line-height: 1.625; color: oklch( 21% 0.034 264.665 ); font-size: 0.875rem;" class="mb-4">
+                                **Hlavní doporučení podle ČDS a ESC 2023:**
+                            </p>
+<ul id="70:49" style="color: oklch( 21% 0.034 264.665 );" class="text-sm mb-4 ml-4">
+<li id="70:50" style="margin-top: 0;" class="mb-1"><span id="70:51">• **1. linie**: Metformin + SGLT2 inhibitor (`empagliflozin`, `dapagliflozin`)</span> <span id="70:52" style="color: oklch( 62.7% 0.194 149.214 );" class="font-medium">[2]</span></li>
+<li id="70:53" style="margin-top: 0;" class="mb-1">• **Alternativa**: Metformin + GLP-1 RA (`semaglutid`, `liraglutid`) při kontraindikaci SGLT2i</li>
+<li id="70:54"><span id="70:55">• **Cílové hodnoty**: HbA1c &lt; 53 mmol/mol (7%), LDL &lt; 1,4 mmol/l</span> <span id="70:56" style="color: oklch( 62.7% 0.194 149.214 );" class="font-medium">[3]</span></li>
+</ul>
+<p id="70:57" style="line-height: 1.625; color: oklch( 21% 0.034 264.665 ); font-size: 0.875rem;">
+                                **České specifika**: SÚKL aktuálně hradí empagliflozin při HbA1c ≥ 53 mmol/mol s diagnózou E11, alternativně je možná žádost o individuální úhradu při prokázaném kardiovaskulárním riziku.
+                            </p>
+</div>
+
+<div id="70:58" class="mb-4">
+<button id="70:59" class="hover:text-gray-800 text-sm flex items-center gap-y-2 gap-x-2" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="70:60" icon="lucide:book-open" class="text-base"></iconify-icon>
+<span id="70:61">📚 Zobrazit 3 zdroje</span>
+</button>
+</div>
+
+<div id="70:62">
+<p id="70:63" style="margin-top: 0; color: oklch( 44.6% 0.03 256.802 );" class="text-sm mb-3 font-medium">🤔 Možná vás zajímá:</p>
+<div id="70:64" class="flex flex-wrap gap-y-2 gap-x-2">
+<button id="70:65" class="hover:bg-blue-100 text-sm border-[1px] border-solid rounded-sm" style="background-color: oklch( 97% 0.014 254.604 ); color: oklch( 48.8% 0.243 264.376 ); padding: 0.5rem 0.75rem; border-color: oklch( 88.2% 0.059 254.128 );">
+                                    Jaké jsou kontraindikace?
+                                </button>
+<button id="70:66" class="hover:bg-green-100 text-sm border-[1px] border-solid rounded-sm" style="background-color: oklch( 98.2% 0.018 155.826 ); color: oklch( 52.7% 0.154 150.069 ); padding: 0.5rem 0.75rem; border-color: oklch( 92.5% 0.084 155.995 );">
+                                    Dávkování u starších?
+                                </button>
+<button id="70:67" class="hover:bg-purple-100 text-sm border-[1px] border-solid rounded-sm" style="background-color: oklch( 97.7% 0.014 308.299 ); color: oklch( 49.6% 0.265 301.924 ); padding: 0.5rem 0.75rem; border-color: oklch( 90.2% 0.063 306.703 );">
+                                    Alternativy?
+                                </button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="70:68" style="margin-top: 0;" class="flex justify-end mb-6">
+<div id="70:69" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-color: oklch( 92.8% 0.006 264.531 );" class="max-w-168 p-4 border-[1px] border-solid rounded-lg">
+<p id="70:70" style="color: oklch( 21% 0.034 264.665 );" class="text-sm">Děkuji. Můžeš mi ještě říct něco o monitorování pacientů na SGLT2 inhibitorech?</p>
+<div id="70:71" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs text-right mt-2">právě teď</div>
+</div>
+</div>
+
+<div id="70:72" class="flex items-start gap-y-4 gap-x-4">
+<div id="70:73" class="pf-benjamin-bg-primary flex shrink-0 justify-center items-center w-8 h-8 rounded-full">
+<iconify-icon id="70:74" style="color: rgba(255, 255, 255, 1);" icon="mdi:brain" class="text-lg"></iconify-icon>
+</div>
+<div id="70:75" style="flex-basis: 0%;" class="grow shrink">
+<div id="70:76" class="flex items-center gap-y-2 gap-x-2 mb-3">
+<span id="70:77" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-semibold">Benjamin</span>
+<span id="70:78" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs flex items-center gap-y-1 gap-x-1">
+<div id="70:79" style="background-color: oklch( 72.3% 0.219 149.579 );" class="w-1 h-1 rounded-full"></div>
+<span id="70:80">Hledám v PubMed...</span>
+</span>
+</div>
+<div id="70:81" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-color: oklch( 92.8% 0.006 264.531 );" class="p-4 border-[1px] border-solid rounded-lg">
+<p id="70:82" style="line-height: 1.625; color: oklch( 21% 0.034 264.665 ); font-size: 0.875rem;">
+                                **Monitorování pacientů na SGLT2 inhibitorech:**
+                                
+                                **Před zahájením léčby:**
+                                • Vyšetření ledvinných funkcí (kreatinin, eGFR)
+                                • Kontrola genitálního stavu (riziko mykotických infekcí)
+                            </p>
+<div id="70:83" style="color: oklch( 70.7% 0.022 261.325 );" class="text-xs flex items-center gap-y-1 gap-x-1 mt-2">
+<div id="70:84" style="background-color: oklch( 70.7% 0.022 261.325 );" class="w-1 h-1 rounded-full"></div>
+<div id="70:85" style="background-color: oklch( 70.7% 0.022 261.325 );" class="w-1 h-1 rounded-full"></div>
+<div id="70:86" style="background-color: oklch( 70.7% 0.022 261.325 );" class="w-1 h-1 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="70:87" style="background-color: rgba(255, 255, 255, 1); border-top-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-t-[1px] p-4">
+
+<div id="70:88" class="flex justify-between items-center mb-3">
+<div id="70:89" class="flex items-center gap-y-2 gap-x-2">
+<div id="70:90" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:91" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:paperclip" class="text-base"></iconify-icon>
+</div>
+<div id="70:92" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:93" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:mic" class="text-base"></iconify-icon>
+</div>
+<div id="70:94" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:95" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:lightbulb" class="text-base"></iconify-icon>
+</div>
+</div>
+<div id="70:96" class="flex items-center gap-y-2 gap-x-2">
+<div id="70:97" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:98" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:trash-2" class="text-base"></iconify-icon>
+</div>
+<div id="70:99" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="70:100" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:settings" class="text-base"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="70:101" class="flex items-end gap-y-3 gap-x-3">
+<div id="70:102" style="flex-basis: 0%;" class="grow shrink">
+<textarea id="70:103" class="pf-benjamin-focus text-sm w-full p-3 border-[1px] border-solid rounded-lg" style="color: oklch( 21% 0.034 264.665 ); border-color: oklch( 92.8% 0.006 264.531 );" placeholder="Zeptejte se Benjamina..." rows="3"></textarea>
+<div id="70:104" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs text-right mt-1">0 / 2000</div>
+</div>
+<button id="70:105" class="pf-benjamin-bg-primary hover:bg-green-600 active:bg-green-700 text-sm flex items-center gap-y-2 gap-x-2 font-medium rounded-lg" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1.5rem;">
+<iconify-icon id="70:106" icon="lucide:send" class="text-base"></iconify-icon>
+<span id="70:107">Odeslat</span>
+</button>
+</div>
+
+<div id="70:108" style="color: oklch( 44.6% 0.03 256.802 );" class="text-sm flex items-center gap-y-2 gap-x-2 mt-3">
+<div id="70:109" style="background-color: oklch( 72.3% 0.219 149.579 );" class="w-2 h-2 rounded-full"></div>
+<span id="70:110">Připojeno: PubMed • SÚKL • Semantic Scholar</span>
+</div>
+</div>
+</div>
+
+
+</div><div id="61:1" title="benjamin_epicrisis_green.html" style="font-family: ui-sans-serif, system-ui, sans-serif;" class="w-[1200px] min-h-[800px]">
+<div id="61:2" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);" class="overflow-x-hidden overflow-y-hidden flex flex-col w-full h-[800px] rounded-lg">
+
+<div id="61:3" class="pf-benjamin-bg-primary flex justify-between items-center" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1rem;">
+
+<div id="61:4" class="flex items-center gap-y-3 gap-x-3">
+<div id="61:5" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="61:6" icon="mdi:brain" class="text-2xl"></iconify-icon>
+</div>
+<div id="61:7" class="flex flex-col">
+<h1 id="61:8" class="text-lg font-semibold">Benjamin</h1>
+<div id="61:9" class="text-sm opacity-90">AI Klinický Asistent</div>
+</div>
+</div>
+
+<div id="61:10" class="flex items-center gap-y-8 gap-x-8">
+<div id="61:11" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="61:12" icon="lucide:message-circle" class="text-base"></iconify-icon>
+<span id="61:13" class="text-sm">Chat</span>
+</div>
+<div id="61:14" style="border-bottom-style: solid; border-color: rgba(255, 255, 255, 1);" class="flex items-center gap-y-2 gap-x-2 pb-1 border-b-[2px]">
+<iconify-icon id="61:15" icon="lucide:clipboard-list" class="text-base"></iconify-icon>
+<span id="61:16" class="text-sm font-medium">Epikríza</span>
+</div>
+<div id="61:17" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="61:18" icon="lucide:globe" class="text-base"></iconify-icon>
+<span id="61:19" class="text-sm">Translator</span>
+</div>
+<div id="61:20" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="61:21" icon="lucide:settings" class="text-base"></iconify-icon>
+<span id="61:22" class="text-sm">Nastavení</span>
+</div>
+</div>
+
+<div id="61:23" class="flex items-center">
+<div id="61:24" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="61:25" icon="lucide:x" class="text-xl"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="61:26" style="background-color: oklch( 98.5% 0.002 247.839 ); flex-basis: 0%;" class="flex flex-col grow shrink">
+
+<div id="61:27" style="background-color: rgba(255, 255, 255, 1); border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px] p-6">
+<div id="61:28" class="mb-4">
+<h2 id="61:29" style="color: oklch( 21% 0.034 264.665 );" class="text-xl flex items-center gap-y-2 gap-x-2 font-semibold">
+<iconify-icon id="61:30" icon="lucide:clipboard-list" class="text-xl"></iconify-icon>
+<span id="61:31">Generování Epikrízy</span>
+</h2>
+<p id="61:32" style="color: oklch( 44.6% 0.03 256.802 );" class="text-sm mt-1">Automatická generování podle vyhlášky č. 98/2012 Sb. § 21</p>
+</div>
+
+<div id="61:33" style="background-color: oklch( 97% 0.014 254.604 ); border-color: oklch( 88.2% 0.059 254.128 );" class="p-4 border-[1px] border-solid rounded-lg">
+<div id="61:34" class="flex justify-between items-center">
+<div id="61:35" class="flex items-center gap-y-4 gap-x-4">
+<div id="61:36" style="background-color: oklch( 93.2% 0.032 255.585 );" class="flex justify-center items-center w-12 h-12 rounded-full">
+<iconify-icon id="61:37" style="color: oklch( 54.6% 0.245 262.881 );" icon="lucide:user" class="text-xl"></iconify-icon>
+</div>
+<div id="61:38" class="flex flex-col">
+<span id="61:39" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Jan Novák</span>
+<span id="61:40" style="color: oklch( 44.6% 0.03 256.802 );" class="text-xs">Datum narození: 15.3.1965</span>
+<span id="61:41" style="color: oklch( 44.6% 0.03 256.802 );" class="text-xs">Oddělení: Interna</span>
+</div>
+</div>
+<div id="61:42" class="text-center">
+<div id="61:43" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Hospitalizace</div>
+<div id="61:44" style="color: oklch( 44.6% 0.03 256.802 );" class="text-xs">1.1.2025 - 5.1.2025</div>
+</div>
+<div id="61:45" class="flex items-center gap-y-2 gap-x-2">
+<div id="61:46" style="background-color: oklch( 72.3% 0.219 149.579 );" class="w-2 h-2 rounded-full"></div>
+<span id="61:47" style="color: oklch( 52.7% 0.154 150.069 );" class="text-xs font-medium">Data dostupná</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="61:48" style="flex-basis: 0%;" class="overflow-y-auto grow shrink p-6">
+
+<div id="61:49" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );" class="mb-6 p-6 border-[1px] border-solid rounded-lg">
+<h3 id="61:50" style="color: oklch( 21% 0.034 264.665 );" class="text-lg flex items-center gap-y-2 gap-x-2 mb-4 font-semibold">
+<iconify-icon id="61:51" icon="lucide:database" class="text-lg"></iconify-icon>
+<span id="61:52">Vyberte datové zdroje</span>
+</h3>
+<div id="61:53" class="grid grid-cols-2 gap-y-4 gap-x-4">
+<label id="61:54" class="flex items-center gap-y-3 gap-x-3">
+<input id="61:55" class="pf-benjamin-text-primary w-4 h-4" type="checkbox" checked="">
+<div id="61:56" class="flex items-center gap-y-2 gap-x-2">
+<span id="61:57" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Dekurzy</span>
+<span id="61:58" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;" class="text-xs rounded-sm">12 záznamů</span>
+</div>
+</label>
+<label id="61:59" class="flex items-center gap-y-3 gap-x-3">
+<input id="61:60" class="pf-benjamin-text-primary w-4 h-4" type="checkbox" checked="">
+<div id="61:61" class="flex items-center gap-y-2 gap-x-2">
+<span id="61:62" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Laboratorní výsledky</span>
+<span id="61:63" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;" class="text-xs rounded-sm">23 výsledků</span>
+</div>
+</label>
+<label id="61:64" class="flex items-center gap-y-3 gap-x-3">
+<input id="61:65" class="pf-benjamin-text-primary w-4 h-4" type="checkbox" checked="">
+<div id="61:66" class="flex items-center gap-y-2 gap-x-2">
+<span id="61:67" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Medikace</span>
+<span id="61:68" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;" class="text-xs rounded-sm">15 léků</span>
+</div>
+</label>
+<label id="61:69" class="flex items-center gap-y-3 gap-x-3">
+<input id="61:70" class="pf-benjamin-text-primary w-4 h-4" type="checkbox" checked="">
+<div id="61:71" class="flex items-center gap-y-2 gap-x-2">
+<span id="61:72" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Vyšetření</span>
+<span id="61:73" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;" class="text-xs rounded-sm">8 vyšetření</span>
+</div>
+</label>
+</div>
+</div>
+
+<div id="61:74" class="text-center mb-6">
+<div id="61:75" style="background-color: oklch( 97% 0.014 254.604 ); border-color: oklch( 88.2% 0.059 254.128 );" class="mb-6 p-4 border-[1px] border-solid rounded-lg">
+<div id="61:76" class="flex items-start gap-y-3 gap-x-3">
+<div id="61:77" style="margin-top: 0.125rem;" class="flex justify-center items-center w-5 h-5">
+<iconify-icon id="61:78" style="color: oklch( 54.6% 0.245 262.881 );" icon="lucide:lightbulb" class="text-base"></iconify-icon>
+</div>
+<p id="61:79" style="color: oklch( 42.4% 0.199 265.638 );" class="text-sm">Benjamin vygeneruje strukturovanou epikrízu podle legislativních požadavků (§21).</p>
+</div>
+</div>
+<button id="61:80" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover pf-benjamin-bg-primary-active flex items-center gap-y-2 gap-x-2 font-medium rounded-lg" style="margin-right: auto; margin-left: auto; color: rgba(255, 255, 255, 1); padding: 0.75rem 2rem;">
+<iconify-icon id="61:81" icon="mdi:brain" class="text-lg"></iconify-icon>
+<span id="61:82">Generovat Epikrízu</span>
+</button>
+</div>
+
+<div id="61:83" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );" class="mb-6 p-6 border-[1px] border-solid rounded-lg">
+<div id="61:84" class="mb-4">
+<div id="61:85" class="text-sm flex justify-between mb-2">
+<span id="61:86" style="color: oklch( 44.6% 0.03 256.802 );">Načítám data...</span>
+<span id="61:87" style="color: oklch( 44.6% 0.03 256.802 );">0%</span>
+</div>
+<div id="61:88" style="background-color: oklch( 92.8% 0.006 264.531 );" class="w-full h-2 rounded-full">
+<div id="61:89" class="pf-benjamin-bg-primary h-2 rounded-full" style="width: 0%;"></div>
+</div>
+</div>
+<div id="61:90" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs">
+<div id="61:91" style="margin-top: 0;" class="flex items-center gap-y-2 gap-x-2 mb-1">
+<div id="61:92" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="61:93" icon="lucide:clock" class="text-xs"></iconify-icon>
+</div>
+<span id="61:94">Načítám data pacienta...</span>
+</div>
+<div id="61:95" style="margin-top: 0;" class="flex items-center gap-y-2 gap-x-2 mb-1">
+<div id="61:96" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="61:97" icon="lucide:search" class="text-xs"></iconify-icon>
+</div>
+<span id="61:98">Analyzuji průběh hospitalizace...</span>
+</div>
+<div id="61:99" class="flex items-center gap-y-2 gap-x-2">
+<div id="61:100" class="flex justify-center items-center w-4 h-4">
+<iconify-icon id="61:101" icon="lucide:file-text" class="text-xs"></iconify-icon>
+</div>
+<span id="61:102">Strukturuji obsah epikrízy...</span>
+</div>
+</div>
+</div>
+
+<div id="61:103" style="background-color: rgba(255, 255, 255, 1); border-color: oklch( 92.8% 0.006 264.531 );" class="overflow-x-hidden overflow-y-hidden border-[1px] border-solid rounded-lg">
+
+<div id="61:104" style="border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="flex items-center gap-y-1 gap-x-1 border-b-[1px] p-2">
+<button id="61:105" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:106" icon="lucide:bold" class="text-base"></iconify-icon>
+</button>
+<button id="61:107" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:108" icon="lucide:italic" class="text-base"></iconify-icon>
+</button>
+<button id="61:109" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:110" icon="lucide:list" class="text-base"></iconify-icon>
+</button>
+<button id="61:111" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:112" icon="lucide:list-ordered" class="text-base"></iconify-icon>
+</button>
+<div id="61:113" style="background-color: oklch( 92.8% 0.006 264.531 );" class="w-px h-6 mr-1 ml-1"></div>
+<button id="61:114" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:115" icon="lucide:undo" class="text-base"></iconify-icon>
+</button>
+<button id="61:116" class="hover:bg-gray-100 flex justify-center items-center w-8 h-8 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:117" icon="lucide:redo" class="text-base"></iconify-icon>
+</button>
+</div>
+
+<div id="61:118" class="min-h-[200px] p-4">
+<div id="61:119" style="color: oklch( 70.7% 0.022 261.325 );" class="text-sm">Zde se zobrazí vygenerovaná epikríza...</div>
+</div>
+</div>
+</div>
+
+<div id="61:120" style="background-color: rgba(255, 255, 255, 1); border-top-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-t-[1px] p-6">
+<div id="61:121" class="flex justify-between items-center">
+<button id="61:122" class="hover:text-gray-900 text-sm flex items-center gap-y-2 gap-x-2" style="color: oklch( 44.6% 0.03 256.802 );">
+<iconify-icon id="61:123" icon="lucide:refresh-cw" class="text-base"></iconify-icon>
+<span id="61:124">Generovat jinak</span>
+</button>
+<button id="61:125" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover pf-benjamin-bg-primary-active flex items-center gap-y-2 gap-x-2 font-medium rounded-lg" style="color: rgba(255, 255, 255, 1); padding: 0.5rem 1.5rem;">
+<iconify-icon id="61:126" icon="lucide:upload" class="text-base"></iconify-icon>
+<span id="61:127">Exportovat do FONS</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+</div><div id="62:1" title="benjamin_translator_green.html" style="font-family: ui-sans-serif, system-ui, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;" class="w-[1200px] min-h-[800px]">
+<div id="62:2" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);" class="overflow-x-hidden overflow-y-hidden flex flex-col w-full h-[800px] rounded-lg">
+
+<div id="62:3" class="pf-benjamin-bg-primary flex justify-between items-center" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1rem;">
+
+<div id="62:4" class="flex items-center gap-y-3 gap-x-3">
+<div id="62:5" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="62:6" icon="mdi:brain" class="text-2xl"></iconify-icon>
+</div>
+<div id="62:7" class="flex flex-col">
+<h1 id="62:8" class="text-lg font-semibold">Benjamin</h1>
+<div id="62:9" class="text-sm opacity-90">AI Klinický Asistent</div>
+</div>
+</div>
+
+<div id="62:10" class="flex items-center gap-y-8 gap-x-8">
+<div id="62:11" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="62:12" icon="lucide:message-circle" class="text-base"></iconify-icon>
+<span id="62:13" class="text-sm">Chat</span>
+</div>
+<div id="62:14" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="62:15" icon="lucide:clipboard-list" class="text-base"></iconify-icon>
+<span id="62:16" class="text-sm">Epikríza</span>
+</div>
+<div id="62:17" style="border-bottom-style: solid; border-color: rgba(255, 255, 255, 1);" class="flex items-center gap-y-2 gap-x-2 pb-1 border-b-[2px]">
+<iconify-icon id="62:18" icon="lucide:globe" class="text-base"></iconify-icon>
+<span id="62:19" class="text-sm font-medium">Translator</span>
+</div>
+<div id="62:20" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="62:21" icon="lucide:settings" class="text-base"></iconify-icon>
+<span id="62:22" class="text-sm">Nastavení</span>
+</div>
+</div>
+
+<div id="62:23" class="flex items-center gap-y-3 gap-x-3">
+<div id="62:24" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="62:25" icon="lucide:search" class="text-xl"></iconify-icon>
+</div>
+<div id="62:26" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="62:27" icon="lucide:user" class="text-xl"></iconify-icon>
+</div>
+<div id="62:28" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="62:29" icon="lucide:x" class="text-xl"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="62:30" style="background-color: rgba(255, 255, 255, 1); border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px] p-6">
+
+<div id="62:31" class="text-center mb-6">
+<h2 id="62:32" style="color: oklch( 21% 0.034 264.665 );" class="text-2xl mb-2 font-semibold">🌍 Překlad Medicínského Obsahu</h2>
+<p id="62:33" style="color: oklch( 44.6% 0.03 256.802 );" class="text-sm">Překlad mezi češtinou a angličtinou s podporou odborné terminologie</p>
+</div>
+
+<div id="62:34" class="flex justify-center items-center gap-y-6 gap-x-6">
+
+<div id="62:35" class="flex items-center gap-y-2 gap-x-2">
+<label id="62:36" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Z:</label>
+<div id="62:37" class="relative">
+<select id="62:38" class="focus:outline-none pf-benjamin-focus text-sm appearance-none border-[1px] border-solid rounded-sm" style="background-color: rgba(255, 255, 255, 1); padding: 0.5rem 0.75rem; border-color: oklch( 92.8% 0.006 264.531 );">
+<option id="62:39">🔍 Auto-detect</option>
+<option id="62:40">🇨🇿 Čeština</option>
+<option id="62:41">🇬🇧 Angličtina</option>
+</select>
+<iconify-icon id="62:42" style="top: 50%; transform: NaN; translate: 0 -50%; color: oklch( 70.7% 0.022 261.325 );" icon="lucide:chevron-down" class="absolute right-2"></iconify-icon>
+</div>
+</div>
+
+<button id="62:43" class="hover:bg-gray-100 flex justify-center items-center w-10 h-10 border-[1px] border-solid rounded-sm" style="border-color: oklch( 92.8% 0.006 264.531 );">
+<iconify-icon id="62:44" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:arrow-left-right" class="text-lg"></iconify-icon>
+</button>
+
+<div id="62:45" class="flex items-center gap-y-2 gap-x-2">
+<label id="62:46" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Do:</label>
+<div id="62:47" class="relative">
+<select id="62:48" class="focus:outline-none pf-benjamin-focus text-sm appearance-none border-[1px] border-solid rounded-sm" style="background-color: rgba(255, 255, 255, 1); padding: 0.5rem 0.75rem; border-color: oklch( 92.8% 0.006 264.531 );">
+<option id="62:49">🇬🇧 Angličtina</option>
+<option id="62:50">🇨🇿 Čeština</option>
+</select>
+<iconify-icon id="62:51" style="top: 50%; transform: NaN; translate: 0 -50%; color: oklch( 70.7% 0.022 261.325 );" icon="lucide:chevron-down" class="absolute right-2"></iconify-icon>
+</div>
+</div>
+
+<div id="62:52" class="flex items-center gap-y-2 gap-x-2 ml-4">
+<label id="62:53" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Režim:</label>
+<div id="62:54" style="background-color: oklch( 96.7% 0.003 264.542 );" class="flex p-1 rounded-sm">
+<button id="62:55" class="pf-benjamin-bg-primary text-sm flex items-center gap-y-1 gap-x-1 font-medium rounded-sm" style="color: rgba(255, 255, 255, 1); padding: 0.25rem 0.75rem;">
+<iconify-icon id="62:56" icon="lucide:stethoscope" class="text-sm"></iconify-icon>
+<span id="62:57">Odborný</span>
+</button>
+<button id="62:58" class="hover:bg-gray-200 text-sm flex items-center gap-y-1 gap-x-1 font-medium rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="62:59" icon="lucide:user" class="text-sm"></iconify-icon>
+<span id="62:60">Zjednodušený</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="62:61" style="flex-basis: 0%;" class="overflow-x-hidden overflow-y-hidden flex grow shrink">
+
+<div id="62:62" style="width: 50%; border-right-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="flex flex-col border-r-[1px]">
+
+<div id="62:63" style="background-color: oklch( 98.5% 0.002 247.839 ); border-bottom-style: solid; padding: 0.75rem 1rem; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px]">
+<div id="62:64" class="flex justify-between items-center">
+<div id="62:65" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="62:66" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:edit" class="text-base"></iconify-icon>
+<span id="62:67" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Text k překladu</span>
+</div>
+<div id="62:68" class="flex items-center gap-y-4 gap-x-4">
+<span id="62:69" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs">0 / 5000 znaků</span>
+<div id="62:70" style="background-color: oklch( 96.2% 0.044 156.743 ); color: oklch( 52.7% 0.154 150.069 ); padding: 0.25rem 0.5rem;" class="text-xs flex items-center gap-y-1 gap-x-1 rounded-sm">
+<span id="62:71">Detekováno: 🇨🇿 Čeština</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="62:72" style="background-color: rgba(255, 255, 255, 1); border-bottom-style: solid; padding: 0.5rem 1rem; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px]">
+<div id="62:73" class="flex items-center gap-y-2 gap-x-2">
+<button id="62:74" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:75" icon="lucide:clipboard" class="text-sm"></iconify-icon>
+<span id="62:76">Vložit ze schránky</span>
+</button>
+<button id="62:77" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:78" icon="lucide:trash-2" class="text-sm"></iconify-icon>
+<span id="62:79">Vymazat vše</span>
+</button>
+<button id="62:80" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:81" icon="lucide:upload" class="text-sm"></iconify-icon>
+<span id="62:82">Nahrát soubor</span>
+</button>
+</div>
+</div>
+
+<div id="62:83" style="flex-basis: 0%;" class="grow shrink p-4">
+<textarea id="62:84" class="focus:outline-none text-sm w-full h-full border-solid" style="color: oklch( 21% 0.034 264.665 ); border-width: 0;" placeholder="Vložte text k překladu...
+
+Příklad:
+'Pacient přijat pro akutní infarkt myokardu...'"></textarea>
+</div>
+
+<div id="62:85" style="background-color: oklch( 97% 0.014 254.604 ); border-top-style: solid; padding: 0.5rem 1rem; border-color: oklch( 88.2% 0.059 254.128 );" class="border-t-[1px]">
+<div id="62:86" style="color: oklch( 48.8% 0.243 264.376 );" class="text-xs flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="62:87" icon="lucide:hospital" class="text-sm"></iconify-icon>
+<span id="62:88">Typ: Lékařská zpráva</span>
+</div>
+</div>
+</div>
+
+<div id="62:89" style="background-color: oklch( 98.5% 0.002 247.839 );" class="flex justify-center items-center w-16">
+<button id="62:90" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover hover:shadow-lg flex justify-center items-center w-12 h-12 rounded-full" style="box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); color: rgba(255, 255, 255, 1);">
+<iconify-icon id="62:91" icon="lucide:globe" class="text-xl"></iconify-icon>
+</button>
+</div>
+
+<div id="62:92" style="width: 50%;" class="flex flex-col">
+
+<div id="62:93" style="background-color: oklch( 98.5% 0.002 247.839 ); border-bottom-style: solid; padding: 0.75rem 1rem; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px]">
+<div id="62:94" class="flex justify-between items-center">
+<div id="62:95" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="62:96" style="color: oklch( 62.7% 0.194 149.214 );" icon="lucide:check-circle" class="text-base"></iconify-icon>
+<span id="62:97" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Překlad</span>
+</div>
+<div id="62:98" class="flex items-center gap-y-4 gap-x-4">
+<span id="62:99" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs">~250 slov</span>
+<div id="62:100" style="background-color: oklch( 96.2% 0.044 156.743 ); color: oklch( 52.7% 0.154 150.069 ); padding: 0.25rem 0.5rem;" class="text-xs flex items-center gap-y-1 gap-x-1 rounded-sm">
+<iconify-icon id="62:101" icon="lucide:check" class="text-xs"></iconify-icon>
+<span id="62:102">Vysoká kvalita</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="62:103" style="background-color: oklch( 98.5% 0.002 247.839 ); flex-basis: 0%;" class="grow shrink p-4">
+<div id="62:104" style="background-color: rgba(255, 255, 255, 1); color: oklch( 55.1% 0.027 264.364 ); border-color: oklch( 92.8% 0.006 264.531 );" class="text-sm flex justify-center items-center w-full h-full p-4 border-[1px] border-solid rounded-sm">
+<div id="62:105" class="text-center">
+<iconify-icon id="62:106" style="color: oklch( 87.2% 0.01 258.338 );" icon="lucide:globe" class="text-4xl mb-2"></iconify-icon>
+<p id="62:107">Překlad se zobrazí zde</p>
+</div>
+</div>
+</div>
+
+<div id="62:108" style="background-color: rgba(255, 255, 255, 1); border-top-style: solid; padding: 0.5rem 1rem; border-color: oklch( 92.8% 0.006 264.531 );" class="border-t-[1px]">
+<div id="62:109" class="flex items-center gap-y-2 gap-x-2">
+<button id="62:110" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:111" icon="lucide:copy" class="text-sm"></iconify-icon>
+<span id="62:112">Kopírovat překlad</span>
+</button>
+<button id="62:113" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:114" icon="lucide:download" class="text-sm"></iconify-icon>
+<span id="62:115">Stáhnout</span>
+</button>
+<button id="62:116" class="hover:bg-gray-100 text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:117" icon="lucide:edit" class="text-sm"></iconify-icon>
+<span id="62:118">Upravit</span>
+</button>
+<button id="62:119" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover text-xs flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: rgba(255, 255, 255, 1); padding: 0.25rem 0.5rem;">
+<iconify-icon id="62:120" icon="lucide:send" class="text-sm"></iconify-icon>
+<span id="62:121">Použít v dokumentaci</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="62:122" style="border-top-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-t-[1px]">
+
+<div id="62:123" style="border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px]">
+<button id="62:124" class="hover:bg-gray-50 text-left flex justify-between items-center w-full" style="background-color: rgba(255, 255, 255, 1); padding: 0.75rem 1.5rem;">
+<div id="62:125" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="62:126" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:book-open" class="text-base"></iconify-icon>
+<span id="62:127" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Klíčové termíny v překladu</span>
+<div id="62:128" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.5rem;" class="text-xs rounded-sm">5 termínů</div>
+</div>
+<iconify-icon id="62:129" style="color: oklch( 70.7% 0.022 261.325 );" icon="lucide:chevron-down" class="text-base"></iconify-icon>
+</button>
+</div>
+
+<div id="62:130" style="border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px]">
+<button id="62:131" class="hover:bg-gray-50 text-left flex justify-between items-center w-full" style="background-color: rgba(255, 255, 255, 1); padding: 0.75rem 1.5rem;">
+<div id="62:132" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="62:133" style="color: oklch( 44.6% 0.03 256.802 );" icon="lucide:git-compare" class="text-base"></iconify-icon>
+<span id="62:134" style="color: oklch( 37.3% 0.034 259.733 );" class="text-sm font-medium">Porovnat: Odborný vs. Zjednodušený</span>
+</div>
+<iconify-icon id="62:135" style="color: oklch( 70.7% 0.022 261.325 );" icon="lucide:chevron-down" class="text-base"></iconify-icon>
+</button>
+</div>
+</div>
+
+<div id="62:136" class="absolute right-4 bottom-4">
+<button id="62:137" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover text-sm flex items-center gap-y-2 gap-x-2 rounded-sm" style="box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); color: rgba(255, 255, 255, 1); padding: 0.5rem 0.75rem;">
+<iconify-icon id="62:138" icon="lucide:history" class="text-base"></iconify-icon>
+<span id="62:139">Historie</span>
+</button>
+</div>
+</div>
+
+
+
+</div><div id="63:1" title="benjamin_settings_green.html" style="background-color: rgba(255, 255, 255, 1); font-family: ui-sans-serif, system-ui, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;" class="w-[1200px] min-h-[800px]">
+<div id="63:2" style="background-color: rgba(255, 255, 255, 1); box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);" class="overflow-x-hidden overflow-y-hidden flex flex-col w-full h-[800px] rounded-lg">
+
+<div id="63:3" class="pf-benjamin-bg-primary flex justify-between items-center" style="color: rgba(255, 255, 255, 1); padding: 0.75rem 1rem;">
+
+<div id="63:4" class="flex items-center gap-y-3 gap-x-3">
+<div id="63:5" class="flex justify-center items-center w-8 h-8">
+<iconify-icon id="63:6" icon="mdi:brain" class="text-2xl"></iconify-icon>
+</div>
+<div id="63:7" class="flex flex-col">
+<h1 id="63:8" class="text-lg font-semibold">Benjamin</h1>
+<div id="63:9" class="text-sm opacity-90">AI Klinický Asistent</div>
+</div>
+</div>
+
+<div id="63:10" class="flex items-center gap-y-8 gap-x-8">
+<div id="63:11" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="63:12" icon="lucide:message-circle" class="text-base"></iconify-icon>
+<span id="63:13" class="text-sm">Chat</span>
+</div>
+<div id="63:14" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="63:15" icon="lucide:clipboard-list" class="text-base"></iconify-icon>
+<span id="63:16" class="text-sm">Epikríza</span>
+</div>
+<div id="63:17" class="hover:opacity-100 opacity-70 flex items-center gap-y-2 gap-x-2 pb-1">
+<iconify-icon id="63:18" icon="lucide:globe" class="text-base"></iconify-icon>
+<span id="63:19" class="text-sm">Translator</span>
+</div>
+<div id="63:20" style="border-bottom-style: solid; border-color: rgba(255, 255, 255, 1);" class="flex items-center gap-y-2 gap-x-2 pb-1 border-b-[2px]">
+<iconify-icon id="63:21" icon="lucide:settings" class="text-base"></iconify-icon>
+<span id="63:22" class="text-sm font-medium">Nastavení</span>
+</div>
+</div>
+
+<div id="63:23" class="flex items-center gap-y-3 gap-x-3">
+<div id="63:24" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="63:25" icon="lucide:user" class="text-xl"></iconify-icon>
+</div>
+<div id="63:26" class="hover:bg-white hover:bg-opacity-10 flex justify-center items-center w-8 h-8 rounded-sm">
+<iconify-icon id="63:27" icon="lucide:x" class="text-xl"></iconify-icon>
+</div>
+</div>
+</div>
+
+<div id="63:28" style="flex-basis: 0%;" class="overflow-x-hidden overflow-y-hidden flex grow shrink">
+
+<div id="63:29" style="background-color: rgba(255, 255, 255, 1); border-right-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="flex flex-col w-[280px] border-r-[1px]">
+
+<div id="63:30" style="border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px] p-3">
+<div id="63:31" class="relative">
+<div id="63:32" style="top: 0; bottom: 0;" class="flex absolute left-3 items-center">
+<iconify-icon id="63:33" style="color: oklch( 55.1% 0.027 264.364 );" icon="lucide:search" class="text-base"></iconify-icon>
+</div>
+<input id="63:34" class="pf-benjamin-focus text-sm w-full pt-2 pr-4 pb-2 pl-10 border-[1px] border-solid rounded-sm" style="background-color: oklch( 98.5% 0.002 247.839 ); border-color: oklch( 92.8% 0.006 264.531 );" type="text" placeholder="Hledat v nastavení...">
+</div>
+</div>
+<div id="63:35" style="flex-basis: 0%;" class="overflow-y-auto grow shrink">
+
+<div id="63:36" class="pt-2 pb-2">
+<div id="63:37" style="text-transform: uppercase; color: oklch( 55.1% 0.027 264.364 ); padding: 0.5rem 1rem;" class="text-xs tracking-wide font-medium">Historie &amp; Audit</div>
+
+<div id="63:38" class="pf-benjamin-text-primary pf-benjamin-border-primary flex items-center border-l-[3px]" style="background-color: oklch( 98.2% 0.018 155.826 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:39" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:40" icon="lucide:message-square" class="text-lg"></iconify-icon>
+</div>
+<span id="63:41" class="text-sm font-medium">Historie konverzací</span>
+</div>
+<div id="63:42" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:43" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:44" icon="lucide:download" class="text-lg"></iconify-icon>
+</div>
+<span id="63:45" class="text-sm">Audit Trail Export</span>
+</div>
+</div>
+
+<div id="63:46" class="pt-2 pb-2">
+<div id="63:47" style="text-transform: uppercase; color: oklch( 55.1% 0.027 264.364 ); padding: 0.5rem 1rem;" class="text-xs tracking-wide font-medium">Připojené Zdroje</div>
+<div id="63:48" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:49" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:50" icon="lucide:link" class="text-lg"></iconify-icon>
+</div>
+<span id="63:51" class="text-sm">MCP Nástroje Status</span>
+</div>
+<div id="63:52" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:53" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:54" icon="lucide:settings" class="text-lg"></iconify-icon>
+</div>
+<span id="63:55" class="text-sm">Konfigurace Zdrojů</span>
+</div>
+</div>
+
+<div id="63:56" class="pt-2 pb-2">
+<div id="63:57" style="text-transform: uppercase; color: oklch( 55.1% 0.027 264.364 ); padding: 0.5rem 1rem;" class="text-xs tracking-wide font-medium">Profil &amp; Preferences</div>
+<div id="63:58" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:59" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:60" icon="lucide:user" class="text-lg"></iconify-icon>
+</div>
+<span id="63:61" class="text-sm">Můj Profil</span>
+</div>
+<div id="63:62" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:63" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:64" icon="lucide:globe" class="text-lg"></iconify-icon>
+</div>
+<span id="63:65" class="text-sm">Jazykové Nastavení</span>
+</div>
+<div id="63:66" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:67" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:68" icon="lucide:bell" class="text-lg"></iconify-icon>
+</div>
+<span id="63:69" class="text-sm">Notifikace</span>
+</div>
+</div>
+
+<div id="63:70" class="pt-2 pb-2">
+<div id="63:71" style="text-transform: uppercase; color: oklch( 55.1% 0.027 264.364 ); padding: 0.5rem 1rem;" class="text-xs tracking-wide font-medium">O Aplikaci</div>
+<div id="63:72" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:73" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:74" icon="lucide:info" class="text-lg"></iconify-icon>
+</div>
+<span id="63:75" class="text-sm">O Benjaminovi</span>
+</div>
+<div id="63:76" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:77" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:78" icon="lucide:sparkles" class="text-lg"></iconify-icon>
+</div>
+<span id="63:79" class="text-sm">Co je nového</span>
+</div>
+<div id="63:80" class="hover:bg-gray-50 flex items-center border-l-[3px] border-transparent" style="color: oklch( 37.3% 0.034 259.733 ); border-left-style: solid; padding: 0.75rem 1rem;">
+<div id="63:81" class="flex justify-center items-center w-6 h-6 mr-3">
+<iconify-icon id="63:82" icon="lucide:help-circle" class="text-lg"></iconify-icon>
+</div>
+<span id="63:83" class="text-sm">Nápověda &amp; Dokumentace</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="63:84" style="background-color: rgba(255, 255, 255, 1); flex-basis: 0%;" class="overflow-x-hidden overflow-y-hidden flex flex-col grow shrink">
+
+<div id="63:85" style="border-bottom-style: solid; border-color: oklch( 92.8% 0.006 264.531 );" class="border-b-[1px] p-6">
+<div id="63:86" class="flex justify-between items-start mb-4">
+<div id="63:87">
+<h2 id="63:88" style="color: oklch( 21% 0.034 264.665 );" class="text-xl flex items-center gap-y-2 gap-x-2 font-semibold">
+<iconify-icon id="63:89" icon="lucide:message-square" class="text-xl"></iconify-icon>
+<span id="63:90">Historie Konverzací</span>
+</h2>
+<p id="63:91" style="color: oklch( 44.6% 0.03 256.802 );" class="text-sm mt-1">Kompletní záznam všech vašich interakcí s Benjaminem pro právní ochranu a zpětné dohledání.</p>
+</div>
+<button id="63:92" class="pf-benjamin-bg-primary pf-benjamin-bg-primary-hover text-sm flex items-center gap-y-2 gap-x-2 font-medium rounded-sm" style="color: rgba(255, 255, 255, 1); padding: 0.5rem 1rem;">
+<iconify-icon id="63:93" icon="lucide:download" class="text-base"></iconify-icon>
+<span id="63:94">Exportovat vše</span>
+</button>
+</div>
+
+<div id="63:95" class="flex items-center gap-y-4 gap-x-4 mb-4">
+<div id="63:96" style="flex-basis: 0%;" class="relative grow shrink">
+<div id="63:97" style="top: 0; bottom: 0;" class="flex absolute left-3 items-center">
+<iconify-icon id="63:98" style="color: oklch( 70.7% 0.022 261.325 );" icon="lucide:search" class="text-base"></iconify-icon>
+</div>
+<input id="63:99" class="pf-benjamin-focus text-sm w-full pt-2 pr-4 pb-2 pl-10 border-[1px] border-solid rounded-sm" style="border-color: oklch( 92.8% 0.006 264.531 );" type="text" placeholder="Hledat v historii...">
+</div>
+<div id="63:100" class="flex items-center gap-y-2 gap-x-2">
+<select id="63:101" class="pf-benjamin-focus text-sm border-[1px] border-solid rounded-sm" style="background-color: rgba(255, 255, 255, 1); padding: 0.5rem 0.75rem; border-color: oklch( 92.8% 0.006 264.531 );">
+<option id="63:102">Tento měsíc</option>
+<option id="63:103">Poslední týden</option>
+<option id="63:104">Poslední 3 měsíce</option>
+<option id="63:105">Celá historie</option>
+</select>
+</div>
+</div>
+
+<div id="63:106" class="flex items-center gap-y-2 gap-x-2">
+<span id="63:107" class="pf-benjamin-text-primary text-xs font-medium rounded-full" style="background-color: oklch( 96.2% 0.044 156.743 ); padding: 0.25rem 0.75rem;">Vše</span>
+<span id="63:108" class="hover:bg-gray-200 text-xs flex items-center gap-y-1 gap-x-1 rounded-full" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:109" icon="lucide:message-circle" class="text-xs"></iconify-icon>
+<span id="63:110">Chat</span>
+</span>
+<span id="63:111" class="hover:bg-gray-200 text-xs flex items-center gap-y-1 gap-x-1 rounded-full" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:112" icon="lucide:clipboard-list" class="text-xs"></iconify-icon>
+<span id="63:113">Epikríza</span>
+</span>
+<span id="63:114" class="hover:bg-gray-200 text-xs flex items-center gap-y-1 gap-x-1 rounded-full" style="background-color: oklch( 96.7% 0.003 264.542 ); color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:115" icon="lucide:globe" class="text-xs"></iconify-icon>
+<span id="63:116">Translator</span>
+</span>
+</div>
+</div>
+
+<div id="63:117" style="flex-basis: 0%;" class="overflow-y-auto grow shrink p-6">
+<div id="63:118">
+
+<div id="63:119" class="hover:shadow-md mb-4 p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); margin-top: 0; border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="63:120" class="flex justify-between items-start mb-3">
+<div id="63:121" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="63:122" class="pf-benjamin-text-primary text-lg" icon="lucide:message-circle"></iconify-icon>
+<span id="63:123" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Chat Konverzace</span>
+</div>
+<span id="63:124" style="color: oklch( 55.1% 0.027 264.364 );" class="text-sm">15.1.2026 14:32</span>
+</div>
+<p id="63:125" style="display: -webkit-box; color: oklch( 37.3% 0.034 259.733 ); -webkit-box-orient: vertical; -webkit-line-clamp: 2;" class="text-sm overflow-x-hidden overflow-y-hidden mb-3">
+                            "Jaké jsou guidelines pro léčbu diabetu 2. typu u pacienta s kardiovaskulárním rizikem?"
+                        </p>
+<div id="63:126" class="flex justify-between items-center">
+<div id="63:127" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs flex items-center gap-y-4 gap-x-4">
+<span id="63:128" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:129" icon="lucide:book-open" class="text-xs"></iconify-icon>
+<span id="63:130">Zdroje: PubMed • SÚKL • ČLS JEP</span>
+</span>
+<span id="63:131" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:132" icon="lucide:clock" class="text-xs"></iconify-icon>
+<span id="63:133">Délka: 2 minuty • 4 zprávy</span>
+</span>
+</div>
+</div>
+<div id="63:134" style="border-top-style: solid; border-color: oklch( 96.7% 0.003 264.542 );" class="flex items-center gap-y-2 gap-x-2 mt-3 pt-3 border-t-[1px]">
+<button id="63:135" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:136" icon="lucide:eye" class="text-xs"></iconify-icon>
+<span id="63:137">Zobrazit</span>
+</button>
+<button id="63:138" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:139" icon="lucide:copy" class="text-xs"></iconify-icon>
+<span id="63:140">Kopírovat</span>
+</button>
+<button id="63:141" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:142" icon="lucide:download" class="text-xs"></iconify-icon>
+<span id="63:143">Exportovat</span>
+</button>
+</div>
+</div>
+
+<div id="63:144" class="hover:shadow-md mb-4 p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); margin-top: 0; border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="63:145" class="flex justify-between items-start mb-3">
+<div id="63:146" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="63:147" style="color: oklch( 54.6% 0.245 262.881 );" icon="lucide:clipboard-list" class="text-lg"></iconify-icon>
+<span id="63:148" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Epikríza Generování</span>
+</div>
+<span id="63:149" style="color: oklch( 55.1% 0.027 264.364 );" class="text-sm">14.1.2026 09:15</span>
+</div>
+<p id="63:150" style="display: -webkit-box; color: oklch( 37.3% 0.034 259.733 ); -webkit-box-orient: vertical; -webkit-line-clamp: 2;" class="text-sm overflow-x-hidden overflow-y-hidden mb-3">
+                            "Pacient: Jan Novák, *1965, přijat s akutním koronárním syndromem STEMI spodní stěny..."
+                        </p>
+<div id="63:151" class="flex justify-between items-center">
+<div id="63:152" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs flex items-center gap-y-4 gap-x-4">
+<span id="63:153" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:154" icon="lucide:book-open" class="text-xs"></iconify-icon>
+<span id="63:155">Zdroje: FONS data</span>
+</span>
+<span id="63:156" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:157" icon="lucide:clock" class="text-xs"></iconify-icon>
+<span id="63:158">Délka: 5 minut • Dokument vygenerován</span>
+</span>
+</div>
+</div>
+<div id="63:159" style="border-top-style: solid; border-color: oklch( 96.7% 0.003 264.542 );" class="flex items-center gap-y-2 gap-x-2 mt-3 pt-3 border-t-[1px]">
+<button id="63:160" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:161" icon="lucide:eye" class="text-xs"></iconify-icon>
+<span id="63:162">Zobrazit</span>
+</button>
+<button id="63:163" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:164" icon="lucide:copy" class="text-xs"></iconify-icon>
+<span id="63:165">Kopírovat</span>
+</button>
+<button id="63:166" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:167" icon="lucide:download" class="text-xs"></iconify-icon>
+<span id="63:168">Exportovat</span>
+</button>
+</div>
+</div>
+
+<div id="63:169" class="hover:shadow-md mb-4 p-4 border-[1px] border-solid rounded-lg" style="background-color: rgba(255, 255, 255, 1); margin-top: 0; border-color: oklch( 92.8% 0.006 264.531 );">
+<div id="63:170" class="flex justify-between items-start mb-3">
+<div id="63:171" class="flex items-center gap-y-2 gap-x-2">
+<iconify-icon id="63:172" style="color: oklch( 55.8% 0.288 302.321 );" icon="lucide:globe" class="text-lg"></iconify-icon>
+<span id="63:173" style="color: oklch( 21% 0.034 264.665 );" class="text-sm font-medium">Překladač</span>
+</div>
+<span id="63:174" style="color: oklch( 55.1% 0.027 264.364 );" class="text-sm">13.1.2026 16:45</span>
+</div>
+<p id="63:175" style="display: -webkit-box; color: oklch( 37.3% 0.034 259.733 ); -webkit-box-orient: vertical; -webkit-line-clamp: 2;" class="text-sm overflow-x-hidden overflow-y-hidden mb-3">
+                            "Překlad: 'Adverse reactions: Headache, nausea, dizziness' → 'Nežádoucí účinky: Bolest hlavy, nevolnost, závratě'"
+                        </p>
+<div id="63:176" class="flex justify-between items-center">
+<div id="63:177" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs flex items-center gap-y-4 gap-x-4">
+<span id="63:178" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:179" icon="lucide:languages" class="text-xs"></iconify-icon>
+<span id="63:180">Směr: EN → CS</span>
+</span>
+<span id="63:181" class="flex items-center gap-y-1 gap-x-1">
+<iconify-icon id="63:182" icon="lucide:clock" class="text-xs"></iconify-icon>
+<span id="63:183">Délka: 30 sekund • 1 překlad</span>
+</span>
+</div>
+</div>
+<div id="63:184" style="border-top-style: solid; border-color: oklch( 96.7% 0.003 264.542 );" class="flex items-center gap-y-2 gap-x-2 mt-3 pt-3 border-t-[1px]">
+<button id="63:185" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:186" icon="lucide:eye" class="text-xs"></iconify-icon>
+<span id="63:187">Zobrazit</span>
+</button>
+<button id="63:188" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:189" icon="lucide:copy" class="text-xs"></iconify-icon>
+<span id="63:190">Kopírovat</span>
+</button>
+<button id="63:191" class="hover:pf-benjamin-text-primary hover:bg-gray-50 text-sm flex items-center gap-y-1 gap-x-1 rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.25rem 0.75rem;">
+<iconify-icon id="63:192" icon="lucide:download" class="text-xs"></iconify-icon>
+<span id="63:193">Exportovat</span>
+</button>
+</div>
+</div>
+
+<div id="63:194" class="text-center pt-4 pb-4">
+<button id="63:195" class="hover:pf-benjamin-text-primary hover:border-gray-300 text-sm border-[1px] border-solid rounded-sm" style="color: oklch( 44.6% 0.03 256.802 ); padding: 0.5rem 1rem; border-color: oklch( 92.8% 0.006 264.531 );">
+                            Načíst dalších 20 konverzací
+                        </button>
+<p id="63:196" style="color: oklch( 55.1% 0.027 264.364 );" class="text-xs mt-2">Zobrazeno 20 z 156 konverzací</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+</div>
+<!-- BEGIN: fast-prototype:script --><script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  function addClassesSafely(el, newClasses) {
+    if (!el || !newClasses || !Array.isArray(newClasses)) return;
+    const existing = (el.getAttribute('class') || '').split(/\s+/).filter(Boolean);
+    const hasPrefix = (cls) => existing.some(c => c.startsWith('transition-') && cls.startsWith('transition-'));
+    const toAdd = [];
+    for (const nc of newClasses) {
+      if (existing.includes(nc)) continue;
+      if (nc.startsWith('transition-') && existing.some(c => c.startsWith('transition-'))) continue;
+      toAdd.push(nc);
+    }
+    if (toAdd.length) el.setAttribute('class', (existing.concat(toAdd)).join(' '));
+  }
+
+  // Dynamically get all page IDs using CSS selector
+  const getAllPageElements = () => Array.from(document.querySelectorAll('body > div[title]'));
+  const detailPageIds = ["61:1", "62:1", "63:1", "70:1"];
+  const initialPageDisplayMap = getAllPageElements().reduce((acc, el) => ({
+    ...acc,
+    [el.id]: window.getComputedStyle(el).display,
+  }), {});
+
+  function hideAllPages() {
+    getAllPageElements().forEach((el) => {
+      el.style.display = 'none';
+    });
+  }
+
+  function showPage(pageId) {
+    hideAllPages();
+    const target = document.querySelector(`body > div[title][id="${pageId}"]`);
+    if (target) {
+      target.style.display = initialPageDisplayMap[pageId] || 'block';
+      if (detailPageIds.includes(pageId)) {
+        window.scrollTo(0, 0);
+      }
+    }
+  }
+
+  const homepage = "60:1";
+  hideAllPages();
+  if (homepage) {
+    showPage(homepage);
+  } else {
+    // Fallback to first page if no homepage specified
+    const firstPage = getAllPageElements()[0];
+    if (firstPage) showPage(firstPage.getAttribute('id'));
+  }
+
+  const clickMap = {"[id=\"60:11\"]": "60:1", "[id=\"60:14\"]": "61:1", "[id=\"60:17\"]": "62:1", "[id=\"60:20\"]": "63:1", "[id=\"60:37\"]": "70:1", "[id=\"60:43\"]": "70:1", "[id=\"60:49\"]": "70:1", "[id=\"60:55\"]": "70:1", "[id=\"60:61\"]": "70:1", "[id=\"60:67\"]": "70:1", "[id=\"70:11\"]": "70:1", "[id=\"70:14\"]": "61:1", "[id=\"70:17\"]": "62:1", "[id=\"70:20\"]": "63:1", "[id=\"61:11\"]": "60:1", "[id=\"61:14\"]": "61:1", "[id=\"61:17\"]": "62:1", "[id=\"61:20\"]": "63:1", "[id=\"62:11\"]": "60:1", "[id=\"62:14\"]": "61:1", "[id=\"62:17\"]": "62:1", "[id=\"62:20\"]": "63:1", "[id=\"63:11\"]": "60:1", "[id=\"63:14\"]": "61:1", "[id=\"63:17\"]": "62:1", "[id=\"63:20\"]": "63:1"};
+  document.addEventListener('click', function (evt) {
+    const target = evt.target;
+    if (!target) return;
+    for (const sel in clickMap) {
+      try {
+        if (target.matches(sel) || (target.closest && target.closest(sel))) {
+          const pid = clickMap[sel];
+          if (pid) showPage(pid);
+          break;
+        }
+      } catch (e) {}
+    }
+  }, true);
+
+  const enhanceMap = {"[id=\"60:100\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"61:80\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"61:125\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"62:90\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"62:119\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"62:137\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"63:92\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"70:105\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90", "hover:shadow-xl", "shadow-lg"], "[id=\"61:122\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:43\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:74\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:77\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:80\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:110\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:113\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:116\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:124\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"62:131\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"63:195\"]": ["active:brightness-95", "cursor-pointer", "hover:brightness-95"], "[id=\"60:37\"]": ["hover:cursor-pointer"], "[id=\"60:43\"]": ["hover:cursor-pointer"], "[id=\"60:49\"]": ["hover:cursor-pointer"], "[id=\"60:55\"]": ["hover:cursor-pointer"], "[id=\"60:61\"]": ["hover:cursor-pointer"], "[id=\"60:67\"]": ["hover:cursor-pointer"], "[id=\"63:119\"]": ["hover:cursor-pointer"], "[id=\"63:144\"]": ["hover:cursor-pointer"], "[id=\"63:169\"]": ["hover:cursor-pointer"], "[id=\"60:11\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:14\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:17\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:20\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:24\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:26\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:28\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"61:11\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"61:14\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"61:17\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"61:20\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"62:11\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"62:14\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"62:17\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"62:20\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:11\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:14\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:17\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:20\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:38\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:42\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:48\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:52\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:58\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:62\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:66\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:72\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:76\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"63:80\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"70:11\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"70:14\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"70:17\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"70:20\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-95", "hover:opacity-90"], "[id=\"60:98\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"61:55\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"61:60\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"61:65\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"61:70\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"62:38\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"62:48\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"62:84\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"63:34\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"63:99\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"63:101\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"70:103\"]": ["cursor-text", "focus:outline-none", "focus:ring-2", "focus:ring-opacity-50", "hover:brightness-95"], "[id=\"60:85\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"60:87\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"60:89\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"60:92\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"60:94\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:105\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:107\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:109\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:111\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:114\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"61:116\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"62:55\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"62:58\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:135\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:138\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:141\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:160\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:163\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:166\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:185\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:188\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"63:191\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:59\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:65\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:66\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:67\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:90\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:92\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:94\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:97\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"], "[id=\"70:99\"]": ["active:brightness-90", "cursor-pointer", "hover:brightness-90"]};
+  Object.keys(enhanceMap).forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (el) addClassesSafely(el, enhanceMap[sel]);
+  });
+
+  const removeMap = {};
+  Object.keys(removeMap).forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const existing = (el.getAttribute('class') || '').split(/\s+/).filter(Boolean);
+    const filtered = existing.filter(c => !removeMap[sel].includes(c));
+    el.setAttribute('class', filtered.join(' '));
+  });
+
+  const toggleMap = {};
+  Object.keys(toggleMap).forEach((sel) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    const hasAnyTransition = (el.getAttribute('class') || '').split(/\s+/).some(c => c.startsWith('transition-'));
+    if (toggleMap[sel]) {
+      if (!hasAnyTransition) addClassesSafely(el, ['transition-all', 'duration-200']);
+    } else {
+      const existing = (el.getAttribute('class') || '').split(/\s+/).filter(Boolean);
+      const filtered = existing.filter(c => !(c === 'transition-all' || c === 'duration-200'));
+      el.setAttribute('class', filtered.join(' '));
+    }
+  });
+});
+</script><!-- END: fast-prototype:script --></body></html>
