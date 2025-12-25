@@ -1,0 +1,63 @@
+# 📊 Data Pipeline Documentation
+
+Tento dokument popisuje datovou architekturu projektu Benjamin a procesy získávání a zpracování lékařských dat.
+
+## 🏗️ Architektura
+
+Data pipeline je postavena nad Python backendem a využívá asynchronní zpracování pro stahování a parsování dat.
+
+### Zdroje Dat
+1. **SÚKL Open Data**: Oficiální data o léčivech v ČR.
+   - Datová sada DLP (Databáze léčivých přípravků).
+   - SPC a PIL dokumenty (PDF).
+   - Ceníky a úhrady (CSV/Excel).
+   - *Aktualizace:* Spouští se manuálně/cronem (skript `import_sukl_data.py`).
+2. **PubMed**: Biomedicínská literatura.
+   - Přístup přes NCBI E-utilities API.
+   - Real-time vyhledávání (neskladujeme vše, jen cachujeme výsledky).
+
+---
+
+## 🛠️ Komponenty Pipeline
+
+### 1. Parsery (`backend/data_processing/parsers`)
+- `SuklDlpParser`: Paršuje CSV/JSON exporty ze SÚKL. Normalizuje názvy léků a extrahuje kódy.
+- `SpcPilParser`: 
+  - Generuje odkazy na oficiální PDF dokumenty.
+  - V budoucnu: Stahuje PDF, extrahuje text pomocí `pdfplumber` a chunkuje pro embeddingy.
+- `SukPricingParser`: Zpracovává ceníky a páruje ceny (OER, MFC) k lékům podle SÚKL kódů.
+
+### 2. Retrievery (`backend/pipeline/retrievers`)
+Tyto třídy používá AI Agent pro získávání kontextu.
+- `SuklRetriever`: 
+  - Vyhledává léky v Supabase databázi (tabulka `drugs`).
+  - Podporuje `ILike` vyhledávání a vrací strukturovaná metadata + odkazy.
+  - Používá `SimpleCache` (TTL 30 min).
+- `PubMedRetriever`:
+  - Volá externí API pro vědecké články.
+  - Formátuje abstrakty pro LLM.
+  - Používá `SimpleCache` (TTL 1 hod).
+
+---
+
+## 🗄️ Databáze (Supabase)
+
+Data jsou ukládána do PostgreSQL v Supabase.
+
+### Schéma (Zjednodušené)
+- `drugs`: Hlavní tabulka léků (SÚKL kód, název, síla, forma).
+- `documents` (Planned): Textové chunky z SPC/PIL + vektory (`pgvector`).
+- `app_errors`: Logování chyb pipeline a aplikace.
+
+---
+
+## 🚀 Jak spustit import dat
+
+Pro manuální spuštění importu (po deploymentu nebo lokálně):
+
+```bash
+cd backend
+python scripts/import_sukl_data.py
+```
+
+*Poznámka: Ujistěte se, že máte nastavené `SUPABASE_URL` a `SUPABASE_SERVICE_KEY`.*

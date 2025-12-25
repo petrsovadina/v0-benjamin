@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/data_processing/parsers/active_substance_parser.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import pandas as pd\nfrom typing import List, Dict\nimport logging\n\nlogger = logging.getLogger(__name__)\n\nclass ActiveSubstanceParser:\n    def __init__(self, file_path: str):\n        self.file_path = file_path\n\n    def parse(self, limit: int = None) -> List[Dict]:\n        \"\"\"\n        Parses the S\u00daKL Active Substances CSV file.\n        Expected columns: KOD_LATKY, NAZEV_INN, NAZEV_EN, NAZEV, ZAV\n        \"\"\"\n        logger.info(f\"Parsing Active Substances file: {self.file_path}\")\n        try:\n            # Encoding is usually cp1250 for Czech data, csv usually comma separated for this file?\n            # From previous 'head' command: 1,ABSINTHII HERBA,... (comma separated)\n            df = pd.read_csv(self.file_path, encoding=\"utf-8\", delimiter=\",\")\n            \n            # Sanitize NaNs\n            df = df.where(pd.notnull(df), None)\n            \n            items = []\n            count = 0\n            \n            for _, row in df.iterrows():\n                if limit and count >= limit:\n                    break\n                    \n                item = {\n                    \"kod_latky\": str(row.get(\"KOD_LATKY\", \"\")).strip(),\n                    \"nazev_inn\": row.get(\"NAZEV_INN\", \"\"),\n                    \"nazev_en\": row.get(\"NAZEV_EN\", \"\"),\n                    \"nazev_cs\": row.get(\"NAZEV\", \"\"), # Czech Name\n                }\n                items.append(item)\n                count += 1\n            \n            # Deduplicate by kod_latky just in case\n            unique_items = {i['kod_latky']: i for i in items}.values()\n            items = list(unique_items)\n            \n            logger.info(f\"Parsed {len(items)} unique active substances.\")\n            return items\n        except Exception as e:\n            logger.error(f\"Error parsing Active Substances file: {e}\")\n            raise\n",
+        "last_modified": "2025-12-25T21:22:14.920757"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.404391",
+  "last_updated": "2025-12-25T01:36:13.419349"
+}

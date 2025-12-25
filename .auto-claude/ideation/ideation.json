@@ -1,0 +1,748 @@
+{
+  "id": "ideation-20251225-141524",
+  "project_id": "/Users/petrsovadina/Desktop/Develope/benjamin/v0-benjamin",
+  "config": {
+    "enabled_types": [
+      "code_improvements",
+      "ui_ux_improvements",
+      "security_hardening",
+      "documentation_gaps",
+      "performance_optimizations",
+      "code_quality"
+    ],
+    "include_roadmap_context": true,
+    "include_kanban_context": true,
+    "max_ideas_per_type": 5
+  },
+  "ideas": [
+    {
+      "id": "ci-001",
+      "type": "code_improvements",
+      "title": "Persist User Settings to Backend",
+      "description": "The settings interface has a complete UI for user profile and preferences but currently only updates local state - changes are lost on refresh. Add backend persistence using the existing Supabase patterns.",
+      "rationale": "The SettingsInterface component already has the complete form UI with state management. The Supabase client pattern is established in auth-context.tsx and history-interface.tsx. The backend API structure exists in FastAPI. This is simply connecting existing frontend form to backend storage.",
+      "builds_upon": [
+        "SettingsInterface UI",
+        "Supabase client pattern",
+        "User authentication context"
+      ],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/settings-interface.tsx",
+        "lib/supabase/client.ts",
+        "backend/app/api/v1/endpoints/users.py"
+      ],
+      "existing_patterns": [
+        "Supabase table operations in history-interface.tsx",
+        "Auth token handling in chat-interface.tsx",
+        "Form state management in settings-interface.tsx"
+      ],
+      "implementation_approach": "1. Add user_settings table to Supabase schema 2. Create backend endpoint following ai.py pattern 3. Add useEffect to fetch settings on mount using createClient pattern 4. Update handleSave to POST to backend like other interfaces",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-002",
+      "type": "code_improvements",
+      "title": "Add Copy-to-Clipboard to Chat Messages",
+      "description": "The translator and epicrisis interfaces have copy buttons for output text. Extend this pattern to individual chat messages so users can easily copy AI responses.",
+      "rationale": "The copy-to-clipboard pattern using navigator.clipboard.writeText() is already implemented in translator-interface.tsx and epicrisis-generator.tsx. ChatMessage component renders individual messages but lacks this feature. Direct pattern replication.",
+      "builds_upon": [
+        "Translator copy button",
+        "Epicrisis copy button",
+        "ChatMessage component"
+      ],
+      "estimated_effort": "trivial",
+      "affected_files": [
+        "components/dashboard/chat-message.tsx"
+      ],
+      "existing_patterns": [
+        "Copy button in translator-interface.tsx: <Button onClick={() => navigator.clipboard.writeText(output)}>Kopirovat</Button>",
+        "Conditional rendering: {output && <Button>}"
+      ],
+      "implementation_approach": "Add a copy icon button to the ChatMessage component for assistant messages. Use the same navigator.clipboard.writeText(message.content) pattern. Show only on hover using group/hover Tailwind classes.",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-003",
+      "type": "code_improvements",
+      "title": "Add Loading Skeleton States",
+      "description": "Replace text-only loading states with skeleton UI for better perceived performance. History shows 'Nacitam historii...' and VZP shows loading in button text - both could use skeleton components.",
+      "rationale": "The ThinkingIndicator component shows a loading pattern exists. Radix UI is installed (used throughout for primitives). Loading states currently use text or spinner but skeleton cards would follow modern UI patterns already established with Card component usage.",
+      "builds_upon": [
+        "ThinkingIndicator pattern",
+        "Card component structure",
+        "VzpResultCard layout"
+      ],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/ui/skeleton.tsx"
+      ],
+      "existing_patterns": [
+        "ThinkingIndicator with pulse animation",
+        "Card component structure for result items",
+        "Tailwind animate utilities (already using Loader2 spin)"
+      ],
+      "implementation_approach": "1. Create Skeleton component in ui/ folder following Button/Card pattern 2. Create HistoryItemSkeleton matching Card layout in history-interface 3. Create VzpResultSkeleton matching VzpResultCard layout 4. Replace loading text with skeleton array.map",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-004",
+      "type": "code_improvements",
+      "title": "Export Query History to JSON/CSV",
+      "description": "Add export functionality to the history interface allowing users to download their query history. The data is already fetched and displayed - just needs export button and file generation.",
+      "rationale": "History interface already fetches complete query data from backend. The data structure is well-defined (HistoryItem interface). The copy-to-clipboard pattern in translator shows user expectation for data export. This extends that pattern to bulk export.",
+      "builds_upon": [
+        "History data fetching",
+        "Copy button pattern",
+        "HistoryItem interface"
+      ],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/history-interface.tsx"
+      ],
+      "existing_patterns": [
+        "Data fetching in history-interface.tsx useEffect",
+        "Button component with icon (Copy button in translator)",
+        "JSON.stringify for data serialization"
+      ],
+      "implementation_approach": "1. Add export button next to search input 2. Create exportToJSON function that converts historyItems to JSON blob and triggers download 3. Optionally add exportToCSV using simple string concatenation for CSV format 4. Use URL.createObjectURL pattern for file download",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-005",
+      "type": "code_improvements",
+      "title": "Add Keyboard Shortcuts for Common Actions",
+      "description": "Add keyboard shortcuts for common actions like Cmd+Enter to send message, Cmd+K for search, Escape to clear. The handleKeyDown pattern already exists for Enter key handling.",
+      "rationale": "The handleKeyDown pattern is established in chat-interface.tsx (Enter to send), vzp-search-interface.tsx (Enter to search). This pattern can be extended globally with more shortcuts using the same event handler approach.",
+      "builds_upon": [
+        "handleKeyDown in chat-interface",
+        "handleKeyDown in vzp-search-interface",
+        "Input component key handling"
+      ],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "lib/hooks/useKeyboardShortcuts.ts"
+      ],
+      "existing_patterns": [
+        "handleKeyDown in chat-interface.tsx checking e.key === 'Enter'",
+        "e.preventDefault() for preventing default behavior",
+        "Checking for modifier keys: e.shiftKey, e.metaKey"
+      ],
+      "implementation_approach": "1. Create useKeyboardShortcuts hook following useAuth pattern 2. Register global shortcuts at layout level 3. Add Cmd+Enter as alternative to clicking Send button 4. Add Escape to clear input fields 5. Optional: Show shortcuts in tooltip on hover",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "uiux-001",
+      "type": "ui_ux_improvements",
+      "title": "Add distinctive navigation icons to sidebar",
+      "description": "Replace generic diamond icon with meaningful icons for each navigation item using Lucide React icons (already installed)",
+      "rationale": "All sidebar navigation items currently use the same '◆' character, making it difficult for users to quickly identify and navigate to different sections. Meaningful icons improve visual hierarchy and reduce cognitive load.",
+      "category": "usability",
+      "affected_components": [
+        "components/dashboard/sidebar.tsx"
+      ],
+      "screenshots": [],
+      "current_state": "All 8 navigation items use the same diamond symbol '◆' as their icon (lines 9-17 in sidebar.tsx)",
+      "proposed_change": "Import Lucide icons and map them to nav items: Dashboard=LayoutDashboard, AI Chat=MessageSquare, Epikriza=FileText, Translator=Languages, History=History, VZP Navigator=Search, Guidelines=BookOpen, Settings=Settings",
+      "user_benefit": "Users can quickly locate desired functionality through visual recognition of familiar icons, reducing time to complete tasks",
+      "status": "draft",
+      "created_at": "2025-12-25T14:30:00.000Z"
+    },
+    {
+      "id": "uiux-002",
+      "type": "ui_ux_improvements",
+      "title": "Add skeleton loading states for better perceived performance",
+      "description": "Replace plain text loading indicators with animated skeleton loaders that mimic the content layout",
+      "rationale": "Current loading states are plain text (e.g., 'Nacitam historii...'), which feels unpolished and provides no visual preview of incoming content. Skeleton loaders reduce perceived wait time.",
+      "category": "performance",
+      "affected_components": [
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx"
+      ],
+      "screenshots": [],
+      "current_state": "History interface shows 'Nacitam historii...' text (line 92). VZP search shows 'Hledam...' text in button. No skeleton loaders exist in UI.",
+      "proposed_change": "Create a Skeleton component in components/ui/skeleton.tsx using Tailwind animate-pulse. Apply 3-4 skeleton cards in HistoryInterface during loading state. Add skeleton to VZP results area.",
+      "user_benefit": "Users experience faster perceived loading times and see a preview of content structure, reducing anxiety about wait times",
+      "status": "draft",
+      "created_at": "2025-12-25T14:30:00.000Z"
+    },
+    {
+      "id": "uiux-003",
+      "type": "ui_ux_improvements",
+      "title": "Make history cards keyboard accessible and interactive",
+      "description": "Add proper keyboard navigation and ARIA attributes to clickable history cards",
+      "rationale": "History cards have onClick handlers but lack keyboard support (no role='button', no tabIndex, no Enter key handling). This excludes keyboard users and fails WCAG 2.1 Level A.",
+      "category": "accessibility",
+      "affected_components": [
+        "components/dashboard/history-interface.tsx"
+      ],
+      "screenshots": [],
+      "current_state": "History cards use Card component with onClick but: 1) Only logs to console (line 103: 'console.log(\"Load query\", item.id)'), 2) Missing role='button', 3) Missing tabIndex=0, 4) No onKeyDown handler for Enter/Space keys",
+      "proposed_change": "Add role='button', tabIndex={0}, and onKeyDown handler to Card. Implement actual navigation to chat with query context. Update cursor-pointer to have focus-visible ring styles.",
+      "user_benefit": "Keyboard users and assistive technology users can navigate and interact with history, improving accessibility compliance and user reach",
+      "status": "draft",
+      "created_at": "2025-12-25T14:30:00.000Z"
+    },
+    {
+      "id": "uiux-004",
+      "type": "ui_ux_improvements",
+      "title": "Enhance empty states with visual illustrations and CTAs",
+      "description": "Replace plain text empty states with visually appealing illustrations and actionable buttons",
+      "rationale": "Current empty states are bare text ('Zadna historie nenalezena', 'Zadne vysledky pro...') that provide no guidance or visual appeal. Well-designed empty states guide users and maintain engagement.",
+      "category": "visual",
+      "affected_components": [
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx"
+      ],
+      "screenshots": [],
+      "current_state": "HistoryInterface line 94 shows plain 'Zadna historie nenalezena.' VZP search line 127-131 shows Card with plain text 'Zadne vysledky pro...'",
+      "proposed_change": "Create EmptyState component with: 1) Lucide icon (e.g., Search, Clock, FileSearch), 2) Primary heading, 3) Descriptive subtext, 4) Optional CTA button. Apply to history (Start a new chat CTA) and VZP search (Try example queries CTA).",
+      "user_benefit": "Users understand why content is missing and have clear next steps, reducing confusion and improving engagement",
+      "status": "draft",
+      "created_at": "2025-12-25T14:30:00.000Z"
+    },
+    {
+      "id": "uiux-005",
+      "type": "ui_ux_improvements",
+      "title": "Add aria-describedby for form validation errors",
+      "description": "Connect form error messages to input fields using aria-describedby for screen reader accessibility",
+      "rationale": "Login and registration forms display error messages but don't associate them with inputs via aria-describedby. Screen reader users won't know which field has an error or what the error is.",
+      "category": "accessibility",
+      "affected_components": [
+        "components/auth/login-form.tsx",
+        "components/auth/register-form.tsx",
+        "components/auth/forgot-password-form.tsx"
+      ],
+      "screenshots": [],
+      "current_state": "LoginForm shows error in div with bg-destructive styling (lines 71-75) but Input components don't have aria-describedby pointing to error. Error state exists but is disconnected from inputs.",
+      "proposed_change": "Add id='form-error' to error message div. Add aria-describedby='form-error' to relevant input fields when error exists. Also add aria-invalid={!!error} to inputs. Consider per-field validation with individual error associations.",
+      "user_benefit": "Screen reader users hear error messages when navigating to input fields, enabling independent form completion and WCAG 2.1 Level A compliance",
+      "status": "draft",
+      "created_at": "2025-12-25T14:30:00.000Z"
+    },
+    {
+      "id": "sec-001",
+      "type": "security_hardening",
+      "title": "Restrict CORS configuration for production",
+      "description": "The backend FastAPI application in backend/app/main.py has wide-open CORS configuration with allow_origins=['*'], allow_credentials=True, allow_methods=['*'], and allow_headers=['*']. This allows any website to make cross-origin requests to the API, potentially exposing sensitive medical data to malicious third-party sites.",
+      "rationale": "With credentials allowed and origins unrestricted, an attacker could create a malicious website that makes authenticated requests to your API on behalf of logged-in users, stealing their medical query data or performing actions in their name. This is especially critical for a medical application handling sensitive patient information.",
+      "category": "configuration",
+      "severity": "critical",
+      "affectedFiles": [
+        "backend/app/main.py"
+      ],
+      "vulnerability": "CWE-942: Overly Permissive Cross-domain Whitelist",
+      "currentRisk": "Any website can make authenticated API requests, enabling CSRF-like attacks and data exfiltration",
+      "remediation": "1. Create an environment variable ALLOWED_ORIGINS containing comma-separated trusted domains\n2. Parse and use this list in CORSMiddleware: allow_origins=settings.ALLOWED_ORIGINS.split(',')\n3. For development, allow localhost origins; for production, only allow your frontend domain (e.g., https://benjamin.cz)\n4. Consider removing allow_credentials=True if not strictly needed, or ensure origins are strictly validated",
+      "references": [
+        "https://owasp.org/www-community/attacks/cors-origin-change",
+        "https://cwe.mitre.org/data/definitions/942.html"
+      ],
+      "compliance": [
+        "GDPR",
+        "SOC2",
+        "HIPAA"
+      ]
+    },
+    {
+      "id": "sec-002",
+      "type": "security_hardening",
+      "title": "Add authentication to admin upload and AI endpoints",
+      "description": "The admin endpoint POST /api/v1/admin/upload/guideline allows unauthenticated file uploads. Additionally, the POST /api/v1/query/stream endpoint bypasses authentication entirely despite handling sensitive medical queries. While other query endpoints use Depends(get_current_user), the streaming endpoint does not.",
+      "rationale": "Unauthenticated admin endpoints allow anyone to upload potentially malicious PDFs that will be processed and indexed. The unprotected streaming endpoint exposes the AI chat functionality to abuse, allowing unauthorized users to make expensive AI API calls and access medical information without authentication.",
+      "category": "authorization",
+      "severity": "critical",
+      "affectedFiles": [
+        "backend/app/api/v1/endpoints/admin.py",
+        "backend/app/api/v1/endpoints/query.py"
+      ],
+      "vulnerability": "CWE-306: Missing Authentication for Critical Function",
+      "currentRisk": "Anyone can upload files to the server and access the AI chat without authentication",
+      "remediation": "1. Add authentication dependency to admin routes: current_user: Dict = Depends(get_current_user)\n2. Implement role-based access control - only admin users should access /admin/* endpoints\n3. Add the same authentication check to the /stream endpoint\n4. Consider adding an admin role check: if current_user.get('role') != 'admin': raise HTTPException(403, 'Admin access required')",
+      "references": [
+        "https://owasp.org/Top10/A01_2021-Broken_Access_Control/",
+        "https://cwe.mitre.org/data/definitions/306.html"
+      ],
+      "compliance": [
+        "SOC2",
+        "HIPAA",
+        "GDPR"
+      ]
+    },
+    {
+      "id": "sec-003",
+      "type": "security_hardening",
+      "title": "Sanitize filenames to prevent path traversal attacks",
+      "description": "Both the admin upload endpoint (backend/app/api/v1/endpoints/admin.py) and transcription endpoint (backend/app/api/v1/endpoints/ai.py) use user-provided filenames directly: file_path = os.path.join(UPLOAD_DIR, file.filename) and temp_path = temp_dir / file.filename. An attacker could supply a filename like '../../../etc/passwd' or '..\\..\\windows\\system32\\config' to write files outside the intended directory.",
+      "rationale": "Path traversal vulnerabilities can allow attackers to overwrite critical system files, configuration files, or place executable files in unexpected locations. In a medical application, this could lead to complete system compromise and data breach.",
+      "category": "input_validation",
+      "severity": "high",
+      "affectedFiles": [
+        "backend/app/api/v1/endpoints/admin.py",
+        "backend/app/api/v1/endpoints/ai.py"
+      ],
+      "vulnerability": "CWE-22: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')",
+      "currentRisk": "Attackers can write files to arbitrary locations on the server filesystem",
+      "remediation": "1. Use secure_filename from werkzeug.utils or implement custom sanitization:\n   from werkzeug.utils import secure_filename\n   safe_filename = secure_filename(file.filename)\n2. Additionally, generate unique filenames using UUIDs: import uuid; safe_name = f'{uuid.uuid4()}.pdf'\n3. Validate file extension server-side using magic bytes, not just filename extension\n4. Use Path.resolve() and verify the resolved path is still within the upload directory:\n   resolved = (UPLOAD_DIR / safe_filename).resolve()\n   if not str(resolved).startswith(str(UPLOAD_DIR.resolve())): raise HTTPException(400, 'Invalid path')",
+      "references": [
+        "https://owasp.org/www-community/attacks/Path_Traversal",
+        "https://cwe.mitre.org/data/definitions/22.html"
+      ],
+      "compliance": [
+        "SOC2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "id": "sec-004",
+      "type": "security_hardening",
+      "title": "Add security headers to Next.js and FastAPI responses",
+      "description": "The application lacks security headers in both the Next.js frontend (next.config.mjs) and FastAPI backend (main.py). Missing headers include Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Strict-Transport-Security, and Referrer-Policy. The Next.js config also has typescript.ignoreBuildErrors=true which may hide security-related type errors.",
+      "rationale": "Security headers provide defense-in-depth against common web attacks. Without CSP, the app is vulnerable to XSS. Without X-Frame-Options, it can be embedded in malicious iframes for clickjacking. Without HSTS, users may be vulnerable to downgrade attacks on HTTPS connections.",
+      "category": "configuration",
+      "severity": "medium",
+      "affectedFiles": [
+        "next.config.mjs",
+        "backend/app/main.py"
+      ],
+      "vulnerability": "CWE-1021: Improper Restriction of Rendered UI Layers or Frames",
+      "currentRisk": "Application vulnerable to XSS, clickjacking, MIME sniffing, and protocol downgrade attacks",
+      "remediation": "1. Add security headers to next.config.mjs:\n   async headers() { return [{ source: '/:path*', headers: [\n     { key: 'X-Frame-Options', value: 'DENY' },\n     { key: 'X-Content-Type-Options', value: 'nosniff' },\n     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },\n     { key: 'Content-Security-Policy', value: \"default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'\" }\n   ]}]}\n2. Add middleware to FastAPI:\n   from starlette.middleware.base import BaseHTTPMiddleware\n   class SecurityHeadersMiddleware(BaseHTTPMiddleware):\n       async def dispatch(self, request, call_next):\n           response = await call_next(request)\n           response.headers['X-Frame-Options'] = 'DENY'\n           response.headers['X-Content-Type-Options'] = 'nosniff'\n           return response\n3. Remove ignoreBuildErrors: true to catch type-related security issues",
+      "references": [
+        "https://owasp.org/www-project-secure-headers/",
+        "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+      ],
+      "compliance": [
+        "SOC2",
+        "PCI-DSS"
+      ]
+    },
+    {
+      "id": "sec-005",
+      "type": "security_hardening",
+      "title": "Prevent sensitive data exposure in error messages and improve .env handling",
+      "description": "Multiple endpoints expose raw exception details to clients via HTTPException(status_code=500, detail=str(e)), which can leak sensitive information about the system. Additionally, the .gitignore file only excludes '.env*.local' patterns but not the base '.env' file, risking accidental commit of secrets. The backend/.env and .env files contain API keys that could be exposed.",
+      "rationale": "Detailed error messages can reveal database schemas, file paths, third-party service names, and internal architecture to attackers. Exposing API keys in version control is a critical security incident that can lead to unauthorized API usage, data breaches, and significant financial costs.",
+      "category": "data_protection",
+      "severity": "medium",
+      "affectedFiles": [
+        "backend/app/api/v1/endpoints/query.py",
+        "backend/app/api/v1/endpoints/admin.py",
+        "backend/app/api/v1/endpoints/ai.py",
+        ".gitignore"
+      ],
+      "vulnerability": "CWE-209: Generation of Error Message Containing Sensitive Information",
+      "currentRisk": "Internal system details exposed to attackers; API keys may be accidentally committed",
+      "remediation": "1. Create generic error responses:\n   import logging\n   logger = logging.getLogger(__name__)\n   \n   except Exception as e:\n       logger.error(f'Query failed: {e}', exc_info=True)  # Log full details\n       raise HTTPException(500, detail='An internal error occurred. Please try again later.')  # Generic to user\n\n2. Update .gitignore to exclude all .env files:\n   .env\n   .env.*\n   !.env.example\n   backend/.env\n   backend/.env.*\n   !backend/.env.example\n\n3. Audit git history for any previously committed secrets using: git log -p -- '*.env'\n4. If secrets were committed, rotate all API keys immediately\n5. Consider using a secrets manager (AWS Secrets Manager, HashiCorp Vault) for production",
+      "references": [
+        "https://owasp.org/www-community/Improper_Error_Handling",
+        "https://cwe.mitre.org/data/definitions/209.html"
+      ],
+      "compliance": [
+        "GDPR",
+        "SOC2",
+        "HIPAA"
+      ]
+    },
+    {
+      "id": "doc-001",
+      "type": "documentation_gaps",
+      "title": "Fix README.md Git Merge Conflict",
+      "description": "The main README.md file contains unresolved git merge conflicts (<<<<<<< HEAD markers at lines 3 and 168). This makes the project entry point confusing for new developers and prevents proper documentation rendering on GitHub.",
+      "rationale": "The README is the primary onboarding point for all developers. Having merge conflicts visible breaks trust, looks unprofessional, and makes it unclear which version of setup instructions to follow. This is a critical blocker for developer experience.",
+      "category": "readme",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "README.md"
+      ],
+      "currentDocumentation": "Two conflicting versions of README content with unresolved merge markers",
+      "proposedContent": "Resolve the merge conflict by combining the best elements from both versions: the detailed v2.0 architecture overview, backend API documentation references, and the user-friendly installation steps. Ensure consistent formatting and accurate version numbers.",
+      "priority": "critical",
+      "estimatedEffort": "low",
+      "status": "archived",
+      "linked_task_id": "005-fix-readme-md-git-merge-conflict"
+    },
+    {
+      "id": "doc-002",
+      "type": "documentation_gaps",
+      "title": "Add JSDoc Documentation for lib/ TypeScript Functions",
+      "description": "The lib/ directory contains 6 critical TypeScript files (auth-actions.ts, utils.ts, supabase/*.ts) with public functions that have zero JSDoc documentation. Functions like signUp(), signIn(), signOut(), createClient() lack parameter descriptions, return types, error handling documentation, and usage examples.",
+      "rationale": "These authentication and Supabase utility functions are used across the entire frontend application. Without documentation, developers must read source code to understand behavior, error states, and proper usage. This slows onboarding and increases bug risk.",
+      "category": "api_docs",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "lib/auth-actions.ts",
+        "lib/utils.ts",
+        "lib/supabase/client.ts",
+        "lib/supabase/server.ts",
+        "lib/supabase/middleware.ts",
+        "lib/supabase/database.types.ts"
+      ],
+      "currentDocumentation": "None - functions have no JSDoc comments",
+      "proposedContent": "Add comprehensive JSDoc blocks for all exported functions including: @description, @param with types and descriptions, @returns with type and description, @throws for error cases, @example for common usage patterns. For database.types.ts, add interface-level documentation explaining each table's purpose.",
+      "priority": "high",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "doc-003",
+      "type": "documentation_gaps",
+      "title": "Create Component Documentation for Dashboard Components",
+      "description": "The components/dashboard/ directory contains 18 React components (chat-interface.tsx, vzp-search-interface.tsx, etc.) with no component-level documentation. While some have TypeScript interfaces, there are no JSDoc comments explaining component purpose, props, events, or usage patterns.",
+      "rationale": "Dashboard components are the core UI of the application. New developers joining the project cannot quickly understand what each component does, what props it accepts, or how components relate to each other. This is especially important for the medical domain where UI accuracy matters.",
+      "category": "api_docs",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/epicrisis-generator.tsx",
+        "components/dashboard/translator-interface.tsx",
+        "components/dashboard/chat-message.tsx",
+        "components/dashboard/chat-citations.tsx"
+      ],
+      "currentDocumentation": "TypeScript interfaces exist for props but no descriptive documentation",
+      "proposedContent": "Add JSDoc blocks to each component with: @description explaining the component's purpose and behavior, @param for each prop with clear descriptions, @example showing typical usage, and inline comments for complex logic (e.g., citation mapping, streaming response handling).",
+      "priority": "medium",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "doc-004",
+      "type": "documentation_gaps",
+      "title": "Create Environment Variables Reference Guide",
+      "description": "Environment variables are scattered across multiple locations: .env, .env.local, backend/.env, with different variables required for different components (frontend, backend, pipeline). There's no consolidated reference documenting all required and optional environment variables with their purposes.",
+      "rationale": "The project requires 10+ environment variables (OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, SUPABASE_URL, SUPABASE_KEY, NEXT_PUBLIC_API_URL, etc.). New developers spend significant time hunting through READMEs to understand what's needed, leading to failed setups and confusion.",
+      "category": "troubleshooting",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "docs/ENVIRONMENT.md (new file)",
+        "README.md",
+        "backend/README.md"
+      ],
+      "currentDocumentation": "Partial mentions in README and backend/README, no consolidated reference",
+      "proposedContent": "Create docs/ENVIRONMENT.md with: complete table of all environment variables (name, required/optional, default value, description, example), sections for frontend vs backend vs pipeline variables, setup instructions for local development vs production, and troubleshooting tips for common configuration errors.",
+      "priority": "high",
+      "estimatedEffort": "low"
+    },
+    {
+      "id": "doc-005",
+      "type": "documentation_gaps",
+      "title": "Add Architecture Diagram and Data Flow Documentation",
+      "description": "The project has a complex architecture with Next.js frontend, FastAPI backend, LangGraph orchestration, Supabase database, and external APIs (PubMed, SÚKL, OpenAI, Anthropic). There's no visual system architecture diagram or data flow documentation explaining how components interact.",
+      "rationale": "Czech MedAI is a medical AI assistant with multiple data sources (PubMed, SÚKL, VZP, Guidelines) flowing through various services. Understanding this architecture is critical for debugging, extending features, and ensuring data accuracy. The product-description/ folder has specs but no technical architecture diagrams.",
+      "category": "architecture",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "docs/ARCHITECTURE.md (new file)",
+        "product-description/"
+      ],
+      "currentDocumentation": "Scattered text descriptions in README and product-description/, no visual diagrams",
+      "proposedContent": "Create docs/ARCHITECTURE.md with: Mermaid diagrams showing system architecture (frontend → API → LangGraph → data sources), data flow for chat queries (user input → backend → LLM → citations → response), SÚKL pipeline flow diagram, database schema relationships diagram, and descriptions of each component's responsibility.",
+      "priority": "medium",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "perf-001",
+      "type": "performance_optimizations",
+      "title": "Add React.memo and useCallback to prevent unnecessary re-renders in chat",
+      "description": "The ChatInterface component has no memoization. Every time a new message is added, ALL existing ChatMessage components re-render. Additionally, inline arrow functions like `onClick={() => handleSendMessage()}` create new function references on every render.",
+      "rationale": "The grep search shows ZERO usage of React.memo, useMemo, or useCallback across all components. ChatMessage component re-renders for every message in the list when a new message arrives. With long conversations (10+ messages), this causes noticeable lag. The inline onClick handlers in chat-interface.tsx, vzp-search-interface.tsx, and others create new function instances on every render, breaking React's shallow comparison.",
+      "category": "rendering",
+      "impact": "high",
+      "affectedAreas": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/chat-message.tsx",
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx"
+      ],
+      "currentMetric": "All chat messages re-render on every state update (O(n) renders per message)",
+      "expectedImprovement": "~70% reduction in component renders during chat, smoother scrolling and input responsiveness",
+      "implementation": "1. Wrap ChatMessage with React.memo()\n2. Extract inline onClick handlers to useCallback hooks\n3. Memoize message array transformations with useMemo\n4. Apply React.memo to VzpResultCard and HistoryItem cards\n5. Use useCallback for handleSendMessage, handleKeyDown, handleSearch",
+      "tradeoffs": "Slight increase in code complexity; requires understanding of dependency arrays",
+      "estimatedEffort": "small"
+    },
+    {
+      "id": "perf-002",
+      "type": "performance_optimizations",
+      "title": "Enable Next.js Image Optimization and configure proper image handling",
+      "description": "The next.config.mjs has `images: { unoptimized: true }` which completely disables Next.js image optimization. This means images are served at full size without WebP conversion, lazy loading optimization, or responsive sizing.",
+      "rationale": "Next.js Image component provides automatic WebP conversion (30-50% smaller files), lazy loading, responsive sizing, and blur placeholders. With optimization disabled, users download full-size images regardless of viewport, significantly impacting LCP and TTI on slower connections. Czech MedAI targets medical professionals who may access it on various devices and network conditions.",
+      "category": "bundle_size",
+      "impact": "high",
+      "affectedAreas": [
+        "next.config.mjs",
+        "components/landing/hero-section.tsx",
+        "components/landing/testimonials-section.tsx",
+        "app/layout.tsx"
+      ],
+      "currentMetric": "All images served unoptimized (full size, original format)",
+      "expectedImprovement": "30-50% reduction in image payload, ~1-2s improvement in LCP on 3G connections",
+      "implementation": "1. Remove or set `images: { unoptimized: false }` in next.config.mjs\n2. Configure image domains if using external sources\n3. Replace <img> tags with Next.js <Image> component\n4. Add proper width/height or fill props\n5. Consider adding blur placeholders for above-the-fold images",
+      "tradeoffs": "Requires specifying image dimensions; external images need domain configuration",
+      "estimatedEffort": "small"
+    },
+    {
+      "id": "perf-003",
+      "type": "performance_optimizations",
+      "title": "Implement Supabase client singleton and request caching",
+      "description": "The `createClient()` function is called multiple times per component lifecycle - once in AuthContext and again in each API call (chat-interface.tsx, history-interface.tsx). Each call creates a new browser client instance. Additionally, there's no caching for API responses like query history.",
+      "rationale": "Found 10+ calls to `createClient()` across components, with some components calling it multiple times (AuthContext creates one, then ChatInterface creates another for getSession). This wastes memory and network resources. The history API endpoint is called on every mount without caching, even if data hasn't changed. API responses like drug searches could benefit from short-term caching.",
+      "category": "network",
+      "impact": "medium",
+      "affectedAreas": [
+        "lib/supabase/client.ts",
+        "lib/auth-context.tsx",
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/history-interface.tsx"
+      ],
+      "currentMetric": "New Supabase client created per API call; no response caching",
+      "expectedImprovement": "~50% reduction in client initialization overhead; ~30% fewer API calls with caching",
+      "implementation": "1. Modify createClient to use singleton pattern with memoization\n2. Export useSupabaseClient hook that reuses the singleton\n3. Add React Query or SWR for API response caching\n4. Implement stale-while-revalidate for history endpoint\n5. Add 60-second cache for VZP drug search results",
+      "tradeoffs": "Added dependency on caching library; need to handle cache invalidation on auth changes",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "perf-004",
+      "type": "performance_optimizations",
+      "title": "Add AbortController for fetch requests to prevent memory leaks",
+      "description": "API calls in ChatInterface, HistoryInterface, and VzpSearchInterface don't use AbortController. If the user navigates away or component unmounts while a request is in-flight, the request continues and tries to update unmounted component state.",
+      "rationale": "The chat API call can take several seconds (AI response generation). If a user navigates away during loading, the fetch continues, and upon completion attempts `setMessages()` on an unmounted component. This causes React warnings and memory leaks. This is especially problematic for the streaming endpoint when implemented.",
+      "category": "memory",
+      "impact": "medium",
+      "affectedAreas": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/dashboard/epicrisis-generator.tsx",
+        "components/dashboard/translator-interface.tsx"
+      ],
+      "currentMetric": "Fetch requests continue after component unmount, causing memory leaks",
+      "expectedImprovement": "Eliminates memory leaks from orphaned requests; cleaner component lifecycle",
+      "implementation": "1. Create useAbortController custom hook\n2. Add AbortController.signal to all fetch calls\n3. Call controller.abort() in useEffect cleanup\n4. Handle AbortError gracefully in catch blocks\n5. Consider using react-query which handles this automatically",
+      "tradeoffs": "Slightly more verbose fetch code; need to handle AbortError separately from real errors",
+      "estimatedEffort": "small"
+    },
+    {
+      "id": "perf-005",
+      "type": "performance_optimizations",
+      "title": "Implement debounced search for VZP and history filtering",
+      "description": "The history search filter in HistoryInterface runs `filteredHistory` computation on every keystroke. The VZP search doesn't debounce - users might trigger multiple API calls while typing quickly. Both cause unnecessary processing and potential API spam.",
+      "rationale": "HistoryInterface's `filteredHistory` recalculates on every character typed in the search box (line 72-76). With 100+ history items, this becomes noticeable. VZP search triggers on Enter key, but quick tip buttons have no debounce. Adding debouncing would reduce unnecessary API calls and improve perceived responsiveness.",
+      "category": "runtime",
+      "impact": "low",
+      "affectedAreas": [
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx"
+      ],
+      "currentMetric": "Filter runs on every keystroke; no debounce on search triggers",
+      "expectedImprovement": "Smoother typing experience; ~40% fewer filter computations",
+      "implementation": "1. Add useDeferredValue for search query in React 19\n2. Or implement useDebounce hook with 300ms delay\n3. Wrap filteredHistory computation in useMemo with debounced query dependency\n4. Add debounce to VZP search for automatic search-as-you-type feature",
+      "tradeoffs": "Slight delay before filter results appear (300ms); requires React 19 or custom debounce hook",
+      "estimatedEffort": "trivial"
+    },
+    {
+      "id": "cq-001",
+      "type": "code_quality",
+      "title": "Extract duplicated API proxy route logic into reusable utility",
+      "description": "The API route files (epicrisis/route.ts, translate/route.ts, transcribe/route.ts) contain nearly identical patterns: fetch to backend, handle response, catch errors with `error: any`. This violates DRY principle and makes maintenance harder.",
+      "rationale": "Code duplication across 4 API routes leads to inconsistent error handling when changes are made and increases maintenance burden. Centralizing this logic would reduce code from ~100 lines to ~40 lines and ensure consistent behavior.",
+      "category": "duplication",
+      "severity": "minor",
+      "affectedFiles": [
+        "app/api/chat/route.ts",
+        "app/api/epicrisis/route.ts",
+        "app/api/translate/route.ts",
+        "app/api/transcribe/route.ts"
+      ],
+      "currentState": "4 API routes with identical try-catch patterns, error handling, and backend proxy logic. Each route has 25-50 lines of similar code.",
+      "proposedChange": "Create lib/api/proxy-helper.ts with a createBackendProxy() utility function that handles the common pattern. Routes would become 5-10 lines each calling the shared utility.",
+      "codeExample": "// Current (repeated in 4 files):\ntry {\n  const response = await fetch(backendUrl, {...});\n  if (!response.ok) {\n    return NextResponse.json({ error: `Backend Error` }, { status: response.status });\n  }\n  return NextResponse.json(data);\n} catch (error: any) {\n  return NextResponse.json({ error: error.message }, { status: 500 });\n}\n\n// Proposed:\nimport { proxyToBackend } from '@/lib/api/proxy-helper';\nexport const POST = proxyToBackend('/api/v1/ai/epicrisis');",
+      "bestPractice": "DRY Principle - centralize repeated patterns into reusable utilities",
+      "metrics": {
+        "lineCount": null,
+        "complexity": null,
+        "duplicateLines": 80,
+        "testCoverage": null
+      },
+      "estimatedEffort": "small",
+      "breakingChange": false,
+      "prerequisites": null
+    },
+    {
+      "id": "cq-002",
+      "type": "code_quality",
+      "title": "Eliminate 'any' type usage in TypeScript files",
+      "description": "Multiple files use 'any' type assertions, particularly in error handling (`catch (error: any)`) and data mapping (`data.map((item: any)`). This undermines TypeScript's type safety benefits.",
+      "rationale": "Using 'any' bypasses type checking, leading to potential runtime errors that TypeScript should catch. Proper error types and data interfaces improve code reliability and developer experience.",
+      "category": "types",
+      "severity": "minor",
+      "affectedFiles": [
+        "app/api/chat/route.ts",
+        "app/api/epicrisis/route.ts",
+        "app/api/translate/route.ts",
+        "app/api/transcribe/route.ts",
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "mdx-components.tsx"
+      ],
+      "currentState": "7 files contain explicit 'any' type usage. Error catch blocks use `error: any`, Citation interface has `metadata?: any`, and history mapping uses `item: any`.",
+      "proposedChange": "1. Replace `error: any` with `error: unknown` and proper type guards.\n2. Define proper interfaces for API responses in lib/types/api.ts.\n3. Create typed Citation metadata interface.\n4. Add proper typing for history API response.",
+      "codeExample": "// Current:\ncatch (error: any) {\n  return NextResponse.json({ error: error.message }, { status: 500 });\n}\n\n// Proposed:\ncatch (error: unknown) {\n  const message = error instanceof Error ? error.message : 'Unknown error';\n  return NextResponse.json({ error: message }, { status: 500 });\n}\n\n// Current:\nmetadata?: any;\n\n// Proposed:\ninterface CitationMetadata {\n  year?: string;\n  authors?: string | string[];\n  journal?: string;\n}",
+      "bestPractice": "TypeScript strict mode compliance - avoid 'any' to maintain type safety",
+      "metrics": {
+        "lineCount": null,
+        "complexity": null,
+        "duplicateLines": null,
+        "testCoverage": null
+      },
+      "estimatedEffort": "small",
+      "breakingChange": false,
+      "prerequisites": [
+        "Create lib/types/api.ts for shared API types"
+      ]
+    },
+    {
+      "id": "cq-003",
+      "type": "code_quality",
+      "title": "Create reusable TwoColumnEditor component for generator interfaces",
+      "description": "EpicrisisGenerator and TranslatorInterface share nearly identical two-column layout patterns with input on left, output on right, similar card styling, copy button functionality, and loading states. This structural duplication could be abstracted.",
+      "rationale": "Both components use the same grid layout (grid-cols-1 lg:grid-cols-2), card styling, output display with copy functionality, and loading indicators. Abstracting this reduces code and ensures consistent UX across generator features.",
+      "category": "duplication",
+      "severity": "suggestion",
+      "affectedFiles": [
+        "components/dashboard/epicrisis-generator.tsx",
+        "components/dashboard/translator-interface.tsx"
+      ],
+      "currentState": "Two components with ~240 combined lines sharing similar layout structure, copy button, loading states, and output display patterns.",
+      "proposedChange": "Create components/dashboard/shared/two-column-editor.tsx with configurable input/output columns, built-in copy functionality, and loading states. Reduce each generator to ~50 lines focused on business logic.",
+      "codeExample": "// Proposed shared component:\nexport function TwoColumnEditor({\n  inputTitle,\n  inputPlaceholder,\n  outputTitle,\n  inputContent,\n  outputContent,\n  isLoading,\n  onSubmit,\n  submitLabel,\n  inputIcon,\n  inputActions\n}: TwoColumnEditorProps) {\n  // Shared layout, copy button, loading states\n}\n\n// Usage in EpicrisisGenerator:\n<TwoColumnEditor\n  inputTitle=\"Vstupní data\"\n  outputTitle=\"Výstupní zpráva\"\n  onSubmit={handleGenerate}\n  submitLabel=\"Generovat Epikrízu\"\n/>",
+      "bestPractice": "Component composition - extract shared UI patterns into reusable components",
+      "metrics": {
+        "lineCount": 242,
+        "complexity": null,
+        "duplicateLines": 60,
+        "testCoverage": null
+      },
+      "estimatedEffort": "medium",
+      "breakingChange": false,
+      "prerequisites": null
+    },
+    {
+      "id": "cq-004",
+      "type": "code_quality",
+      "title": "Add unit tests for critical business logic",
+      "description": "The project has no application-level test files. Critical functionality like auth actions, API routes, and form validation have no test coverage, making refactoring risky and bug detection harder.",
+      "rationale": "Without tests, every code change carries risk of regression. Auth flows, API proxy logic, and form validation are critical paths that should have test coverage to ensure reliability for medical professionals.",
+      "category": "testing",
+      "severity": "major",
+      "affectedFiles": [
+        "lib/auth-actions.ts",
+        "lib/auth-context.tsx",
+        "app/api/chat/route.ts",
+        "app/api/epicrisis/route.ts",
+        "components/auth/login-form.tsx",
+        "components/auth/register-form.tsx"
+      ],
+      "currentState": "No test files found in app/, components/, or lib/ directories. Only node_modules contain tests from dependencies.",
+      "proposedChange": "1. Set up Vitest or Jest testing framework with React Testing Library.\n2. Add unit tests for lib/auth-actions.ts (signIn, signUp, signOut).\n3. Add integration tests for API routes with mocked fetch.\n4. Add component tests for auth forms with user interaction scenarios.\n5. Create __tests__ folders alongside source files.",
+      "codeExample": "// lib/__tests__/auth-actions.test.ts\nimport { signIn, signUp } from '../auth-actions';\nimport { createClient } from '@/lib/supabase/server';\n\njest.mock('@/lib/supabase/server');\n\ndescribe('auth-actions', () => {\n  describe('signIn', () => {\n    it('redirects to dashboard on success', async () => {\n      // Test implementation\n    });\n    it('returns error message on failure', async () => {\n      // Test implementation\n    });\n  });\n});",
+      "bestPractice": "Test-Driven Development - critical paths should have automated test coverage",
+      "metrics": {
+        "lineCount": null,
+        "complexity": null,
+        "duplicateLines": null,
+        "testCoverage": 0
+      },
+      "estimatedEffort": "large",
+      "breakingChange": false,
+      "prerequisites": [
+        "Configure testing framework (Vitest or Jest)",
+        "Set up test utilities and mocks"
+      ]
+    },
+    {
+      "id": "cq-005",
+      "type": "code_quality",
+      "title": "Extract shared form state management into custom hook",
+      "description": "Auth forms (login, register, forgot-password, reset-password) share common patterns for loading state, error handling, and form submission. This could be consolidated into a reusable useFormSubmit hook.",
+      "rationale": "All 4 auth forms implement the same pattern: isLoading state, error state, try-catch with setError, finally setIsLoading(false). Extracting this reduces boilerplate and ensures consistent error handling.",
+      "category": "duplication",
+      "severity": "minor",
+      "affectedFiles": [
+        "components/auth/login-form.tsx",
+        "components/auth/register-form.tsx",
+        "components/auth/forgot-password-form.tsx",
+        "components/auth/reset-password-form.tsx"
+      ],
+      "currentState": "4 form components each implementing ~15 lines of identical state management: useState for isLoading/error, try-catch pattern, finally block to reset loading.",
+      "proposedChange": "Create hooks/useFormSubmit.ts that encapsulates loading state, error handling, and submission wrapper. Forms would use the hook and focus only on their specific validation and action logic.",
+      "codeExample": "// hooks/useFormSubmit.ts\nexport function useFormSubmit<T>() {\n  const [isLoading, setIsLoading] = useState(false);\n  const [error, setError] = useState('');\n\n  const handleSubmit = async (\n    action: () => Promise<{ error?: string } | void>\n  ) => {\n    setError('');\n    setIsLoading(true);\n    try {\n      const result = await action();\n      if (result?.error) setError(result.error);\n    } catch (err) {\n      setError('Něco se pokazilo. Zkuste to znovu.');\n    } finally {\n      setIsLoading(false);\n    }\n  };\n\n  return { isLoading, error, handleSubmit, setError };\n}\n\n// Usage in LoginForm:\nconst { isLoading, error, handleSubmit } = useFormSubmit();\nconst onSubmit = (e) => {\n  e.preventDefault();\n  handleSubmit(() => signIn(email, password));\n};",
+      "bestPractice": "Custom hooks - encapsulate reusable stateful logic for cleaner components",
+      "metrics": {
+        "lineCount": null,
+        "complexity": null,
+        "duplicateLines": 60,
+        "testCoverage": null
+      },
+      "estimatedEffort": "small",
+      "breakingChange": false,
+      "prerequisites": [
+        "Create hooks/ directory if not exists"
+      ]
+    }
+  ],
+  "project_context": {
+    "existing_features": [],
+    "tech_stack": [
+      "TypeScript",
+      "Next.js"
+    ],
+    "target_audience": "Czech medical professionals (doctors, physicians) who need quick, evidence-based clinical answers in Czech language",
+    "planned_features": [
+      "Voice Query Interface",
+      "Drug Interaction Checker",
+      "Prescription Safety Alerts",
+      "Team and Clinic Management",
+      "Guidelines Semantic Search Endpoint",
+      "Clinical Query Templates",
+      "Production CORS Configuration",
+      "History Interface Click Handler",
+      "Patient Context Management",
+      "AI-Generated Drug Summaries",
+      "Drug Comparison Tool",
+      "End-to-End Testing Suite",
+      "Complete Guidelines RAG PDF Import",
+      "Public API for Integrations",
+      "Enhanced VZP Navigator",
+      "Usage Analytics Dashboard",
+      "Favorites and Quick Access",
+      "Multi-Language Support",
+      "GDPR Compliance Documentation"
+    ]
+  },
+  "summary": {
+    "total_ideas": 30,
+    "by_type": {
+      "code_improvements": 5,
+      "ui_ux_improvements": 5,
+      "security_hardening": 5,
+      "documentation_gaps": 5,
+      "performance_optimizations": 5,
+      "code_quality": 5
+    },
+    "by_status": {
+      "draft": 30
+    }
+  },
+  "generated_at": "2025-12-25T14:15:24.127033",
+  "updated_at": "2025-12-25T14:27:40.999Z"
+}

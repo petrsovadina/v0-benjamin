@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/data_processing/parsers/sukl_dlp_parser.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import pandas as pd\nfrom typing import List, Dict\nimport logging\n\nlogger = logging.getLogger(__name__)\n\nclass SuklDlpParser:\n    def __init__(self, file_path: str):\n        self.file_path = file_path\n\n    def parse(self, limit: int = None) -> List[Dict]:\n        \"\"\"\n        Parses the S\u00daKL DLP CSV file.\n        Expected columns (Czech): K\u00f3d S\u00daKL, N\u00e1zev, Dopln\u011bk, ...\n        \"\"\"\n        logger.info(f\"Parsing DLP file: {self.file_path}\")\n        try:\n            # Note: encoding is usually cp1250 or utf-8 for Czech data\n            df = pd.read_csv(self.file_path, encoding=\"cp1250\", delimiter=\";\")\n            \n            # Rename columns to standardized English names if needed\n            # For now, keeping the manual mapping to ensure compatibility\n            \n            # Sanitize NaNs: replace with None (which becomes JSON null) or empty string\n            df = df.where(pd.notnull(df), None)\n            \n            items = []\n            count = 0\n            \n            for _, row in df.iterrows():\n                if limit and count >= limit:\n                    break\n                    \n                item = {\n                    \"sukl_code\": str(row.get(\"KOD_SUKL\", row.get(\"K\u00f3d S\u00daKL\", \"\"))).zfill(7),\n                    \"name\": row.get(\"NAZEV\", row.get(\"N\u00e1zev\", \"\")),\n                    \"strength\": row.get(\"SILA\", row.get(\"S\u00edla\", \"\")),\n                    \"form\": row.get(\"FORMA\", row.get(\"L\u00e9kov\u00e1 forma\", \"\")),\n                    \"package\": row.get(\"BALENI\", row.get(\"Velikost balen\u00ed\", \"\")),\n                    \"route\": row.get(\"CESTA\", row.get(\"Cesta pod\u00e1n\u00ed\", \"\")),\n                    \"atc_code\": row.get(\"ATC_WHO\", row.get(\"ATC\", \"\")),\n                    \"active_substances\": row.get(\"LL\", row.get(\"L\u00e9\u010div\u00e1 l\u00e1tka\", \"\")),\n                    \"dispensing\": row.get(\"VYDEJ\", row.get(\"V\u00fddej\", \"\")),\n                    \"registration_status\": row.get(\"REG\", row.get(\"Stav registrace\", \"\")),\n                    \"holder\": row.get(\"DRZ\", row.get(\"Dr\u017eitel rozhodnut\u00ed\", \"\")),\n                    \"is_available\": row.get(\"DODAVKY\") == \"A\" or row.get(\"Dod\u00e1vky\") == \"A\",\n                }\n                items.append(item)\n                count += 1\n            \n            # Deduplicate items by sukl_code, keeping the last one (or first?)\n            # Usually last update is better, but here it's likely just duplicate lines.\n            unique_items = {i['sukl_code']: i for i in items}.values()\n            items = list(unique_items)\n            \n            logger.info(f\"Parsed {len(items)} unique drugs from DLP.\")\n            return items\n        except Exception as e:\n            logger.error(f\"Error parsing DLP file: {e}\")\n            raise\n",
+        "last_modified": "2025-12-25T21:22:14.924485"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.450401",
+  "last_updated": "2025-12-25T01:36:13.462878"
+}

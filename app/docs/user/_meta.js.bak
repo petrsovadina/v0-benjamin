@@ -1,0 +1,4 @@
+export default {
+    "index": "Přehled",
+    "user-guide": "Uživatelská Příručka"
+}

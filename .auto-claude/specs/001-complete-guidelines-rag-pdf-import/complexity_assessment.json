@@ -1,0 +1,87 @@
+{
+  "complexity": "complex",
+  "workflow_type": "feature",
+  "confidence": 0.88,
+  "reasoning": "This task requires building a complete RAG pipeline with multiple external integrations (PDF parsing, vector database), infrastructure setup, and medical-domain expertise. The high-risk nature of medical citations, multi-format PDF support, and Czech language handling pushes this firmly into complex territory. Estimated 15-20+ files across PDF processing, chunking, embeddings, vector storage, and metadata tracking.",
+
+  "analysis": {
+    "scope": {
+      "estimated_files": 18,
+      "estimated_services": 1,
+      "is_cross_cutting": false,
+      "notes": "Primary backend work: admin endpoint enhancement, PDF processing service, chunking logic, embedding integration, vector DB client, database models, error handling, logging, and comprehensive tests. Possible frontend admin UI enhancements."
+    },
+    "integrations": {
+      "external_services": [
+        "PDF parsing library (PyMuPDF/pdfplumber/PyPDF2)",
+        "Vector database (Qdrant/Pinecone/Weaviate/Chroma/Supabase Vector)",
+        "Embedding service (via LangChain - likely already integrated)"
+      ],
+      "new_dependencies": [
+        "pymupdf or pdfplumber",
+        "vector DB client library",
+        "tesseract-ocr (optional, for scanned PDFs)"
+      ],
+      "research_needed": true,
+      "notes": "Need to research: (1) Best PDF library for Czech language + medical formatting, (2) Vector database choice (check if Supabase Vector is already available), (3) Chunking strategies that preserve medical context and citations, (4) OCR necessity for scanned guideline PDFs"
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": true,
+      "config_changes": true,
+      "notes": "Vector database setup required (may use Supabase's pgvector extension, avoiding separate infrastructure). New env vars: vector DB connection, embedding model config, upload size limits. Database schema for guideline metadata (doc name, upload date, page count, processing status). No Docker changes if using Supabase Vector; otherwise need vector DB container."
+    },
+    "knowledge": {
+      "patterns_exist": true,
+      "research_required": true,
+      "unfamiliar_tech": [
+        "Vector database indexing",
+        "Medical document chunking strategies",
+        "Czech language PDF parsing edge cases"
+      ],
+      "notes": "LangChain is already integrated (seen in project_index), so embedding patterns exist. However, medical document chunking requires research - must preserve clinical context and citation accuracy. Czech language handling (diacritics, encoding) needs investigation. Multi-format PDF support (3+ formats) requires testing different parsers."
+    },
+    "risk": {
+      "level": "high",
+      "concerns": [
+        "Medical citation accuracy critical for patient safety",
+        "Czech language encoding and special characters (ě, š, č, ř, ž, ý, á, í, é, ú, ů)",
+        "PDF format variety (scanned vs. digital, different guideline sources)",
+        "Large file uploads - security (malicious PDFs, zip bombs)",
+        "Chunking quality directly affects retrieval accuracy",
+        "Metadata integrity - wrong page number = incorrect citation",
+        "Performance degradation with large documents"
+      ],
+      "notes": "Medical domain demands highest accuracy - incorrect citations could lead to clinical errors. Must handle edge cases: scanned PDFs (OCR needed), complex tables/diagrams (preserve context), multi-column layouts (reading order). Security: file type validation, size limits, virus scanning."
+    }
+  },
+
+  "recommended_phases": [
+    "discovery",
+    "requirements",
+    "research",
+    "context",
+    "spec_writing",
+    "self_critique",
+    "planning",
+    "validation"
+  ],
+
+  "flags": {
+    "needs_research": true,
+    "needs_self_critique": true,
+    "needs_infrastructure_setup": true
+  },
+
+  "validation_recommendations": {
+    "risk_level": "high",
+    "skip_validation": false,
+    "minimal_mode": false,
+    "test_types_required": ["unit", "integration", "e2e"],
+    "security_scan_required": true,
+    "staging_deployment_required": false,
+    "reasoning": "Medical domain with citation accuracy requirements demands comprehensive testing across all layers. Security scan essential for file upload endpoint (malicious PDFs, size limits, type validation). E2E tests must verify full pipeline: upload → parse → chunk → embed → store → retrieve with correct metadata. No staging deployment needed since this is a new feature with no breaking changes to existing functionality."
+  },
+
+  "created_at": "2025-12-24T10:30:00Z"
+}

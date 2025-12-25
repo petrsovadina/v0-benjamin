@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/app/api/v1/deps.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from fastapi import Depends, HTTPException, status\nfrom fastapi.security import HTTPBearer, HTTPAuthorizationCredentials\nfrom backend.app.core.database import get_supabase_client\nfrom backend.app.core.config import settings\nfrom typing import Optional, Dict, Any\nfrom supabase.client import Client\n\nsecurity = HTTPBearer()\n\nasync def get_current_user_token(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:\n    return credentials.credentials\n\nasync def get_current_user(token: str = Depends(get_current_user_token)) -> Dict[str, Any]:\n    \"\"\"\n    Validates the token with Supabase Auth and returns the User object.\n    Also ensures the user exists in 'public.users'.\n    \"\"\"\n    supabase = get_supabase_client()\n    \n    try:\n        # 1. Validate Token and Get Auth User\n        user_response = supabase.auth.get_user(token)\n        if not user_response or not user_response.user:\n             raise HTTPException(\n                status_code=status.HTTP_401_UNAUTHORIZED,\n                detail=\"Invalid authentication credentials\",\n                headers={\"WWW-Authenticate\": \"Bearer\"},\n            )\n        auth_user = user_response.user\n        \n        # 2. Sync with public.users\n        # Check if user exists\n        res = supabase.table(\"users\").select(\"*\").eq(\"auth_id\", auth_user.id).execute()\n        \n        if not res.data:\n            # First time login - Create user record\n            # Extract metadata\n            metadata = auth_user.user_metadata or {}\n            first_name = metadata.get(\"first_name\", \"Unknown\")\n            last_name = metadata.get(\"last_name\", \"User\")\n            \n            new_user = {\n                \"auth_id\": auth_user.id,\n                \"email\": auth_user.email,\n                \"first_name\": first_name,\n                \"last_name\": last_name,\n                \"role\": \"physician\" # Default\n            }\n            \n            # Insert and get Query Response\n            insert_res = supabase.table(\"users\").insert(new_user).execute()\n            if insert_res.data:\n                return insert_res.data[0]\n            else:\n                 raise HTTPException(status_code=500, detail=\"Failed to create user profile\")\n        \n        return res.data[0]\n        \n    except Exception as e:\n        # If it's already an HTTPException, re-raise\n        if isinstance(e, HTTPException):\n            raise e\n        print(f\"Auth Error: {e}\")\n        raise HTTPException(\n            status_code=status.HTTP_401_UNAUTHORIZED,\n            detail=\"Could not validate credentials\",\n            headers={\"WWW-Authenticate\": \"Bearer\"},\n        )\n",
+        "last_modified": "2025-12-25T21:22:14.823403"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:12.521302",
+  "last_updated": "2025-12-25T01:36:12.534121"
+}

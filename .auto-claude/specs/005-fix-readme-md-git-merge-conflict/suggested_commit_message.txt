@@ -1,0 +1,3 @@
+chore(readme): resolve git merge conflicts
+
+Remove unresolved git merge conflict markers (<<<<<<< HEAD) from README.md that were blocking proper file rendering. This ensures the project entry point is clear and accessible for new developers.

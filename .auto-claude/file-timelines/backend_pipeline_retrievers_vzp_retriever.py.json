@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/pipeline/retrievers/vzp_retriever.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from typing import List, Dict, Any, Optional\nimport logging\nfrom backend.data_processing.utils.supabase_client import SupabaseSingleton\n\nlogger = logging.getLogger(__name__)\n\nclass VzpRetriever:\n    \"\"\"\n    Retrieves drug information combined with pricing data for VZP Navigator.\n    \"\"\"\n    def __init__(self):\n        self.supabase = SupabaseSingleton.get_client()\n\n\n    async def search_drugs_with_pricing(self, query: str) -> List[Dict[str, Any]]:\n        \"\"\"\n        Searches for drugs and manually joins pricing info.\n        \"\"\"\n        try:\n            # 1. Search Drugs\n            normalized_query = query.lower().strip()\n            \n            response = self.supabase.table(\"drugs\") \\\n                .select(\"*\") \\\n                .ilike(\"name_normalized\", f\"%{normalized_query}%\") \\\n                .limit(10) \\\n                .execute()\n\n\n            \n            drugs = response.data\n            if not drugs:\n                return []\n                \n            # 2. Fetch Pricing for these drugs\n            # Collect SUKL codes\n            codes = [d[\"sukl_code\"] for d in drugs]\n            \n            pricing_map = {}\n            if codes:\n                try:\n                    pricing_response = self.supabase.table(\"drug_pricing\") \\\n                        .select(\"*\") \\\n                        .in_(\"sukl_code\", codes) \\\n                        .execute()\n                    \n                    # Map code -> pricing object (using the first match if duplicate)\n                    for p in pricing_response.data:\n                        if p[\"sukl_code\"] not in pricing_map:\n                            pricing_map[p[\"sukl_code\"]] = p\n                except Exception as pe:\n                    logger.warning(f\"Failed to fetch pricing: {pe}\")\n            \n            formatted_results = []\n            \n            for drug in drugs:\n                code = drug[\"sukl_code\"]\n                pricing = pricing_map.get(code, {})\n                \n                # Determine coverage status\n                max_price = pricing.get(\"max_price_manufacturer\") or 0\n                reimbursement = pricing.get(\"reimbursement_amount\") or 0\n                copayment = pricing.get(\"max_copayment\") or 0\n                \n                coverage_status = \"limited\"\n                if reimbursement > 0:\n                    if reimbursement >= max_price and max_price > 0:\n                         coverage_status = \"full\"\n                    else:\n                         coverage_status = \"partial\"\n                \n                formatted_results.append({\n                    \"id\": code,\n                    \"name\": drug[\"name\"],\n                    \"inn\": drug[\"active_substance\"] or \"N/A\",\n                    \"atc\": drug[\"atc_code\"] or \"N/A\",\n                    \"form\": f\"{drug.get('strength', '')} {drug.get('pharmaceutical_form', '')}\".strip(),\n                    \"coverage\": coverage_status,\n                    \"pricing\": {\n                        \"max_price\": max_price,\n                        \"reimbursement\": reimbursement,\n                        \"copayment\": copayment\n                    },\n                    \"conditions\": [\"Dle SPC\"], \n                    \"alternatives\": [\"Konzultujte s l\u00e9ka\u0159em\"] \n                })\n                \n            return formatted_results\n            \n        except Exception as e:\n            logger.error(f\"Error querying VZP data: {str(e)}\")\n            return []\n\n",
+        "last_modified": "2025-12-25T21:22:15.352424"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.936326",
+  "last_updated": "2025-12-25T01:36:13.949713"
+}

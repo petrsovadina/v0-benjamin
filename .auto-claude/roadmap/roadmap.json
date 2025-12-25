@@ -1,0 +1,732 @@
+{
+  "id": "roadmap-2024-12-24T10-50-00Z",
+  "project_name": "Czech MedAI (Benjamin)",
+  "version": "1.0",
+  "vision": "AI-powered clinical assistant designed specifically for Czech healthcare, providing evidence-based answers with citations from SÚKL, VZP, and Czech medical guidelines",
+  "target_audience": {
+    "primary": "Czech medical professionals (doctors, physicians) who need quick, evidence-based clinical answers in Czech language",
+    "secondary": [
+      "Healthcare administrators verifying VZP (health insurance) drug coverage",
+      "Medical specialists looking up clinical guidelines",
+      "Hospital staff preparing discharge summaries (epicrisis)"
+    ]
+  },
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Foundation & MVP Completion",
+      "description": "Complete the core MVP features, address technical debt, and ensure production readiness. Focus on finishing partially implemented features and ensuring reliability.",
+      "order": 1,
+      "status": "planned",
+      "features": [
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5",
+        "feature-6"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-1-1",
+          "title": "Guidelines RAG Complete",
+          "description": "Users can search and retrieve information from Czech medical guidelines with proper citations",
+          "features": [
+            "feature-1",
+            "feature-2"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-1-2",
+          "title": "Production Ready",
+          "description": "Application is secure, tested, and ready for production deployment",
+          "features": [
+            "feature-3",
+            "feature-4",
+            "feature-5",
+            "feature-6"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Core Clinical Features",
+      "description": "Implement high-value clinical features that directly address user pain points and differentiate from competitors. Focus on epicrisis generation and drug safety.",
+      "order": 2,
+      "status": "planned",
+      "features": [
+        "feature-7",
+        "feature-8",
+        "feature-9",
+        "feature-10",
+        "feature-11"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-2-1",
+          "title": "Documentation Automation",
+          "description": "Doctors can automatically generate discharge summaries (epicrisis) in Czech format",
+          "features": [
+            "feature-7"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-2-2",
+          "title": "Enhanced Drug Safety",
+          "description": "System provides drug interaction warnings and intelligent drug information summaries",
+          "features": [
+            "feature-8",
+            "feature-9",
+            "feature-10"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-2-3",
+          "title": "VZP Integration Complete",
+          "description": "Full insurance verification with reimbursement details and alternatives",
+          "features": [
+            "feature-11"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Enhanced User Experience",
+      "description": "Improve the clinical workflow with voice input, patient context management, and clinical templates. Make the system faster and more intuitive for daily use.",
+      "order": 3,
+      "status": "planned",
+      "features": [
+        "feature-12",
+        "feature-13",
+        "feature-14",
+        "feature-15",
+        "feature-16"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-3-1",
+          "title": "Voice-Powered Queries",
+          "description": "Doctors can speak queries directly without typing, reducing friction during consultations",
+          "features": [
+            "feature-12"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-3-2",
+          "title": "Patient Context Awareness",
+          "description": "System maintains patient profiles and provides personalized recommendations",
+          "features": [
+            "feature-13",
+            "feature-14"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-3-3",
+          "title": "Clinical Productivity Tools",
+          "description": "Templates, favorites, and quick access features for common clinical tasks",
+          "features": [
+            "feature-15",
+            "feature-16"
+          ],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Scale & Growth",
+      "description": "Expand the platform for team collaboration, build analytics for insights, and create integrations for broader adoption. Prepare for market expansion.",
+      "order": 4,
+      "status": "planned",
+      "features": [
+        "feature-17",
+        "feature-18",
+        "feature-19",
+        "feature-20",
+        "feature-21"
+      ],
+      "milestones": [
+        {
+          "id": "milestone-4-1",
+          "title": "Team Collaboration",
+          "description": "Clinics and hospital teams can collaborate with shared knowledge and workflows",
+          "features": [
+            "feature-17",
+            "feature-18"
+          ],
+          "status": "planned"
+        },
+        {
+          "id": "milestone-4-2",
+          "title": "Platform Expansion",
+          "description": "Mobile app and API integrations enable broader adoption and third-party integration",
+          "features": [
+            "feature-19",
+            "feature-20",
+            "feature-21"
+          ],
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feature-1",
+      "title": "Complete Guidelines RAG PDF Import",
+      "description": "Implement the full PDF import pipeline for Czech medical guidelines, including document parsing, chunking, embedding generation, and storage in the vector database. Enable reliable retrieval of guideline content for AI responses.",
+      "rationale": "Czech doctors need access to local clinical guidelines - this is a critical gap that general AI tools (ChatGPT, Claude) cannot address. Evidence-based recommendations require proper guideline citations.",
+      "priority": "must",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "planned",
+      "acceptance_criteria": [
+        "PDF documents can be uploaded via admin endpoint",
+        "Documents are parsed, chunked, and embedded in vector database",
+        "Chunks maintain source metadata (document name, page number)",
+        "At least 3 different guideline formats are supported",
+        "Import progress and errors are properly logged"
+      ],
+      "user_stories": [
+        "As an admin, I want to upload Czech medical guideline PDFs so that doctors can search this content",
+        "As a doctor, I want to see which guideline a recommendation comes from so that I can verify the source"
+      ],
+      "linked_spec_id": "001-complete-guidelines-rag-pdf-import",
+      "competitor_insight_ids": [
+        "pain-1-4",
+        "pain-2-2",
+        "gap-5"
+      ]
+    },
+    {
+      "id": "feature-2",
+      "title": "Guidelines Semantic Search Endpoint",
+      "description": "Complete the guidelines search endpoint with proper vector similarity search. Separate guideline retrieval from general knowledge retrieval to provide more relevant, focused results from Czech medical guidelines.",
+      "rationale": "The current implementation falls back to general retrieval (TODO noted in code). Doctors need targeted guideline search to quickly find relevant clinical recommendations.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [
+        "feature-1"
+      ],
+      "status": "planned",
+      "acceptance_criteria": [
+        "Dedicated /guidelines/search endpoint is implemented",
+        "Vector similarity search queries the guidelines table specifically",
+        "Results include relevance scores and source citations",
+        "Response time is under 2 seconds for guideline queries",
+        "Search supports natural language Czech queries"
+      ],
+      "user_stories": [
+        "As a doctor, I want to search Czech clinical guidelines in natural language so that I can quickly find relevant recommendations",
+        "As a specialist, I want to filter guidelines by medical specialty so that I see only relevant content"
+      ],
+      "linked_spec_id": "002-guidelines-semantic-search-endpoint",
+      "competitor_insight_ids": [
+        "pain-3-3",
+        "pain-3-5",
+        "pain-5-1",
+        "pain-5-2",
+        "gap-5"
+      ]
+    },
+    {
+      "id": "feature-3",
+      "title": "Production CORS Configuration",
+      "description": "Replace the wildcard CORS configuration with proper origin restrictions for production deployment. Implement environment-based CORS settings to maintain security while supporting development workflows.",
+      "rationale": "Current configuration allows all origins (security risk noted as TODO in code). Production deployment requires proper access controls to prevent unauthorized API access.",
+      "priority": "must",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "planned",
+      "acceptance_criteria": [
+        "CORS origins are configured via environment variables",
+        "Production environment restricts to specific frontend domains",
+        "Development environment allows localhost origins",
+        "Preflight requests are properly handled",
+        "CORS configuration is documented"
+      ],
+      "user_stories": [
+        "As a developer, I want environment-specific CORS settings so that the API is secure in production while easy to develop locally"
+      ],
+      "linked_spec_id": "003-production-cors-configuration",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-4",
+      "title": "End-to-End Testing Suite",
+      "description": "Implement comprehensive E2E testing covering critical user flows: authentication, chat queries, drug search, and VZP verification. Ensure the application works correctly from a user perspective.",
+      "rationale": "E2E testing is noted as incomplete. Medical applications require high reliability - automated testing prevents regressions and ensures consistent user experience.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "planned",
+      "acceptance_criteria": [
+        "E2E tests cover authentication flow (login, logout, session)",
+        "E2E tests cover AI chat with response verification",
+        "E2E tests cover drug search with SÚKL data",
+        "E2E tests cover VZP verification flow",
+        "Tests run in CI pipeline on every PR",
+        "Test coverage report is generated"
+      ],
+      "user_stories": [
+        "As a developer, I want automated E2E tests so that I can confidently deploy changes without breaking critical features"
+      ],
+      "linked_spec_id": "004-end-to-end-testing-suite",
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-5",
+      "title": "History Interface Click Handler",
+      "description": "Complete the history interface by implementing proper click handling to load previous chat sessions. Replace the console.log placeholder with functional navigation and session restoration.",
+      "rationale": "Current implementation has placeholder click handling (noted in code). Users expect to click on history items to resume previous conversations - this is table-stakes UX.",
+      "priority": "must",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Clicking a history item loads the full conversation",
+        "Previous messages are displayed correctly",
+        "User can continue the conversation from history",
+        "Active session is visually indicated",
+        "Loading state is shown while fetching history"
+      ],
+      "user_stories": [
+        "As a doctor, I want to click on a previous conversation so that I can continue where I left off",
+        "As a user, I want to review my past queries so that I can reference previous answers"
+      ],
+      "competitor_insight_ids": [
+        "pain-2-3"
+      ]
+    },
+    {
+      "id": "feature-6",
+      "title": "GDPR Compliance Documentation",
+      "description": "Create comprehensive GDPR compliance documentation including data processing policies, user consent mechanisms, data retention policies, and privacy notice. Ensure EU data hosting is properly documented.",
+      "rationale": "GDPR compliance is a key differentiator vs US-hosted competitors (ChatGPT, Claude, Google). Czech doctors need assurance that patient data is handled properly to use the tool in clinical settings.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Privacy policy is accessible to all users",
+        "Data processing agreement template is available",
+        "Cookie consent mechanism is implemented",
+        "User can request data export (GDPR right to portability)",
+        "User can request data deletion (GDPR right to erasure)",
+        "EU hosting is documented and verifiable"
+      ],
+      "user_stories": [
+        "As a hospital administrator, I want to review GDPR compliance documentation so that I can approve the tool for clinical use",
+        "As a user, I want to understand how my data is processed so that I can use the tool with confidence"
+      ],
+      "competitor_insight_ids": [
+        "pain-1-5",
+        "gap-6"
+      ]
+    },
+    {
+      "id": "feature-8",
+      "title": "Drug Interaction Checker",
+      "description": "Implement drug-drug interaction checking using SÚKL data and medical databases. Alert doctors to potential interactions when prescribing medications, with severity levels and clinical recommendations.",
+      "rationale": "Drug interactions are a critical safety concern. While UpToDate offers this in English, no Czech-localized solution exists. This feature adds significant clinical value and builds trust.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "User can check interactions between 2 or more drugs",
+        "Interactions are classified by severity (severe, moderate, mild)",
+        "Clinical recommendations are provided for each interaction",
+        "Interactions are sourced with proper citations",
+        "Integration with chat - AI warns about interactions in drug discussions",
+        "Support for both brand names and generic names"
+      ],
+      "user_stories": [
+        "As a doctor, I want to check drug interactions before prescribing so that I can ensure patient safety",
+        "As a physician, I want to see interaction severity so that I can prioritize which interactions to address"
+      ],
+      "competitor_insight_ids": [
+        "pain-1-1",
+        "pain-2-1"
+      ]
+    },
+    {
+      "id": "feature-9",
+      "title": "AI-Generated Drug Summaries",
+      "description": "Generate concise, clinically relevant summaries from SPC/PIL documents using AI. Provide quick answers about dosing, contraindications, side effects without reading full documentation.",
+      "rationale": "Reading full SPC/PIL documents is time-consuming (noted as competitor pain point for SÚKL website). AI-generated summaries provide quick access to critical drug information during consultations.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Summaries are generated for key sections: dosing, contraindications, side effects, interactions",
+        "Summaries are available in Czech language",
+        "Full SPC/PIL is linked for detailed information",
+        "Summaries are cached for performance",
+        "Generation time is under 3 seconds",
+        "Accuracy is validated against source documents"
+      ],
+      "user_stories": [
+        "As a doctor, I want quick drug summaries so that I can get key information without reading full documentation",
+        "As a physician, I want to see dosing recommendations quickly so that I can prescribe correctly during consultations"
+      ],
+      "competitor_insight_ids": [
+        "pain-5-5"
+      ]
+    },
+    {
+      "id": "feature-10",
+      "title": "Drug Comparison Tool",
+      "description": "Enable side-by-side comparison of multiple drugs on key attributes: efficacy, pricing, insurance coverage, side effects, contraindications. Help doctors choose between alternatives.",
+      "rationale": "Comparing drugs on SÚKL website requires multiple separate searches (competitor pain point). An intelligent comparison tool saves time and helps with prescribing decisions.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-2",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "User can select 2-5 drugs for comparison",
+        "Comparison shows pricing, VZP coverage, active ingredients",
+        "Side effects are compared with frequency indicators",
+        "Contraindications differences are highlighted",
+        "Export comparison as PDF is available",
+        "AI provides recommendation based on comparison"
+      ],
+      "user_stories": [
+        "As a doctor, I want to compare similar drugs so that I can choose the best option for my patient",
+        "As a physician, I want to see price and insurance differences so that I can help patients afford their medication"
+      ],
+      "competitor_insight_ids": [
+        "pain-5-3"
+      ]
+    },
+    {
+      "id": "feature-11",
+      "title": "Enhanced VZP Navigator",
+      "description": "Complete and enhance the VZP Navigator with full insurance verification, including detailed reimbursement levels, patient co-pay calculations, and suggestions for covered alternatives when a drug isn't fully covered.",
+      "rationale": "VZP verification is a unique differentiator - no competitor provides this. Partial implementation exists but needs completion. Critical for prescription decisions to ensure patient affordability.",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Full drug coverage status is shown (fully covered, partially covered, not covered)",
+        "Patient co-pay amount is calculated and displayed",
+        "Alternative covered drugs are suggested when original is not covered",
+        "VZP codes and reference numbers are shown",
+        "Integration with chat - AI mentions coverage in drug discussions",
+        "Historical coverage changes are noted if available"
+      ],
+      "user_stories": [
+        "As a doctor, I want to verify drug insurance coverage so that I can prescribe affordable medications",
+        "As a physician, I want to see covered alternatives so that I can help uninsured patients find options"
+      ],
+      "competitor_insight_ids": [
+        "pain-1-2",
+        "pain-3-4",
+        "gap-2"
+      ]
+    },
+    {
+      "id": "feature-12",
+      "title": "Voice Query Interface",
+      "description": "Integrate voice transcription into the main chat interface, allowing doctors to speak queries directly. Leverage existing Whisper API transcription endpoint with a streamlined UX for hands-free operation.",
+      "rationale": "Typing during patient consultations is disruptive. Voice input enables natural conversation flow. Transcription API already exists - this feature integrates it into the main workflow.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-3",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Microphone button is available in chat interface",
+        "Real-time transcription is shown while speaking",
+        "Czech language speech is accurately recognized",
+        "User can edit transcription before sending",
+        "Voice activation works on mobile browsers",
+        "Response time for transcription is under 2 seconds"
+      ],
+      "user_stories": [
+        "As a doctor, I want to speak my questions so that I can keep my hands free during patient examination",
+        "As a physician, I want voice input so that I can use the system while walking between patients"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-13",
+      "title": "Patient Context Management",
+      "description": "Implement persistent patient context that can be attached to chat sessions. Store relevant patient information (allergies, current medications, conditions) to provide personalized recommendations.",
+      "rationale": "No competitor maintains patient context across sessions (Claude pain point). Personalized recommendations based on patient history are more clinically relevant and safer.",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-6"
+      ],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "User can create and manage patient profiles",
+        "Profiles include allergies, current medications, conditions",
+        "Patient context is sent with queries for personalized responses",
+        "AI considers patient factors in recommendations",
+        "Data is stored securely with proper encryption",
+        "GDPR data export/deletion includes patient data"
+      ],
+      "user_stories": [
+        "As a doctor, I want to save patient allergies so that the AI considers them when suggesting medications",
+        "As a physician, I want to attach patient context to my queries so that recommendations are personalized"
+      ],
+      "competitor_insight_ids": [
+        "pain-2-3",
+        "pain-5-4"
+      ]
+    },
+    {
+      "id": "feature-14",
+      "title": "Prescription Safety Alerts",
+      "description": "Implement intelligent alerts when prescriptions conflict with patient context. Warn about allergies, contraindications based on patient conditions, and potential duplicate therapies.",
+      "rationale": "Patient context becomes valuable when paired with safety alerts. This feature combines patient data with drug information to prevent prescribing errors.",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-3",
+      "dependencies": [
+        "feature-13",
+        "feature-8"
+      ],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "System alerts on drug-allergy conflicts",
+        "System alerts on drug-condition contraindications",
+        "Duplicate therapy warnings are shown",
+        "Alerts are severity-classified",
+        "User can acknowledge and override alerts with documentation",
+        "Alert history is logged for compliance"
+      ],
+      "user_stories": [
+        "As a doctor, I want to be warned about allergy conflicts so that I don't prescribe dangerous medications",
+        "As a physician, I want alerts about contraindications so that I can make safer prescribing decisions"
+      ],
+      "competitor_insight_ids": [
+        "pain-1-3"
+      ]
+    },
+    {
+      "id": "feature-15",
+      "title": "Clinical Query Templates",
+      "description": "Create a library of pre-built query templates for common clinical scenarios. Templates provide structured prompts for drug dosing, differential diagnosis, treatment protocols, etc.",
+      "rationale": "Doctors often ask similar types of questions. Templates reduce friction and ensure consistent, high-quality responses for common clinical queries.",
+      "priority": "could",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-3",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Template library with at least 20 common clinical scenarios",
+        "Templates are categorized by specialty and use case",
+        "User can customize and save personal templates",
+        "Templates include placeholder variables for patient-specific data",
+        "Quick access to templates from chat interface",
+        "Community-contributed templates (future enhancement)"
+      ],
+      "user_stories": [
+        "As a doctor, I want pre-built query templates so that I can quickly ask common clinical questions",
+        "As a specialist, I want templates for my specialty so that I get relevant queries without typing everything"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-16",
+      "title": "Favorites and Quick Access",
+      "description": "Allow users to save favorite drugs, guidelines, and queries for quick access. Implement a customizable quick access panel on the dashboard for frequently used items.",
+      "rationale": "Doctors repeatedly access the same drugs and guidelines. Favorites and quick access reduce time to find commonly needed information.",
+      "priority": "could",
+      "complexity": "low",
+      "impact": "medium",
+      "phase_id": "phase-3",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "User can mark drugs, guidelines, and queries as favorites",
+        "Favorites are accessible from dashboard",
+        "Quick access panel is customizable",
+        "Favorites sync across devices",
+        "Recent items are auto-suggested",
+        "One-click access to favorite items"
+      ],
+      "user_stories": [
+        "As a doctor, I want to save frequently used drugs so that I can access them quickly",
+        "As a physician, I want quick access to my common queries so that I can work more efficiently"
+      ],
+      "competitor_insight_ids": [
+        "pain-3-5"
+      ]
+    },
+    {
+      "id": "feature-17",
+      "title": "Team and Clinic Management",
+      "description": "Enable multi-user access for clinics and hospital departments. Implement role-based permissions, shared knowledge bases, and team analytics.",
+      "rationale": "Healthcare is team-based. Growing from individual doctors to clinic/hospital teams requires proper multi-user support. This enables broader adoption and enterprise sales.",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-6"
+      ],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Admin can create and manage team/clinic accounts",
+        "Role-based permissions (admin, doctor, nurse, etc.)",
+        "Shared guidelines and templates within team",
+        "Team usage analytics dashboard",
+        "Billing at team/organization level",
+        "Team onboarding workflow"
+      ],
+      "user_stories": [
+        "As a clinic administrator, I want to manage doctor accounts so that I can control access to the system",
+        "As a department head, I want to see usage analytics so that I can understand how my team uses the tool"
+      ],
+      "competitor_insight_ids": [
+        "pain-4-3",
+        "gap-4"
+      ]
+    },
+    {
+      "id": "feature-18",
+      "title": "Usage Analytics Dashboard",
+      "description": "Implement comprehensive analytics for administrators showing query patterns, popular topics, response quality metrics, and usage trends. Enable data-driven improvements.",
+      "rationale": "Understanding how doctors use the system enables continuous improvement. Analytics help identify popular queries, gaps in knowledge, and areas for enhancement.",
+      "priority": "could",
+      "complexity": "medium",
+      "impact": "medium",
+      "phase_id": "phase-4",
+      "dependencies": [],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Dashboard shows query volume over time",
+        "Popular topics and drugs are identified",
+        "Response satisfaction metrics are tracked",
+        "User engagement metrics (DAU, MAU, retention)",
+        "Export analytics data as CSV/PDF",
+        "Admin can filter by user, date range, query type"
+      ],
+      "user_stories": [
+        "As a product manager, I want to see usage analytics so that I can prioritize features",
+        "As an admin, I want to understand popular queries so that I can improve the knowledge base"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-19",
+      "title": "Public API for Integrations",
+      "description": "Create a documented public API enabling third-party integrations with hospital information systems (HIS), electronic health records (EHR), and other medical software.",
+      "rationale": "Hospital systems need API access for integration with existing workflows. A public API enables embedding Czech MedAI into existing clinical software.",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-6"
+      ],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "RESTful API with comprehensive documentation",
+        "API authentication via API keys and OAuth",
+        "Rate limiting and usage quotas",
+        "SDKs for common languages (Python, JavaScript)",
+        "Sandbox environment for testing",
+        "API versioning strategy"
+      ],
+      "user_stories": [
+        "As a hospital IT administrator, I want API access so that I can integrate Czech MedAI with our HIS",
+        "As a developer, I want SDK documentation so that I can build integrations quickly"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feature-21",
+      "title": "Multi-Language Support",
+      "description": "Add support for additional languages beyond Czech, starting with Slovak (similar healthcare system). Enable the platform to serve a broader Central European market.",
+      "rationale": "Slovak healthcare system is similar to Czech. Expanding language support opens new markets with relatively low effort given shared medical terminology.",
+      "priority": "wont",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-4",
+      "dependencies": [
+        "feature-1",
+        "feature-11"
+      ],
+      "status": "under_review",
+      "acceptance_criteria": [
+        "Slovak language interface is available",
+        "Slovak drug database integration (ŠUKL)",
+        "Slovak insurance verification (if applicable)",
+        "Language can be switched per user",
+        "Medical terminology is properly translated",
+        "UI supports RTL languages for future expansion"
+      ],
+      "user_stories": [
+        "As a Slovak doctor, I want to use the system in Slovak so that I can work in my native language",
+        "As a product team, I want multi-language support so that we can expand to new markets"
+      ],
+      "competitor_insight_ids": []
+    }
+  ],
+  "metadata": {
+    "created_at": "2024-12-24T10:55:00Z",
+    "updated_at": "2025-12-25T21:01:46.895Z",
+    "generated_by": "roadmap_features agent",
+    "prioritization_framework": "MoSCoW",
+    "competitor_analysis_used": true,
+    "total_features": 21,
+    "features_addressing_competitors": 15,
+    "priority_breakdown": {
+      "must": 7,
+      "should": 8,
+      "could": 5,
+      "wont": 1
+    },
+    "complexity_breakdown": {
+      "low": 4,
+      "medium": 9,
+      "high": 8
+    },
+    "impact_breakdown": {
+      "high": 14,
+      "medium": 7,
+      "low": 0
+    }
+  }
+}

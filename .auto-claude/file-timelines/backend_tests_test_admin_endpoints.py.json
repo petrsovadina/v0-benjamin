@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/tests/test_admin_endpoints.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import pytest\nimport io\nimport tempfile\nimport os\nfrom fastapi.testclient import TestClient\nfrom backend.main import app\nfrom unittest.mock import patch, MagicMock\n\nclient = TestClient(app)\n\n\ndef test_upload_guideline_success(tmp_path):\n    \"\"\"Test successful PDF file upload.\"\"\"\n    upload_dir = str(tmp_path / \"guidelines_pdfs\")\n    os.makedirs(upload_dir, exist_ok=True)\n\n    pdf_content = b\"%PDF-1.4 test content\"\n    files = {\"file\": (\"test_guideline.pdf\", io.BytesIO(pdf_content), \"application/pdf\")}\n\n    with patch(\"backend.app.api.v1.endpoints.admin.UPLOAD_DIR\", upload_dir), \\\n         patch(\"backend.app.api.v1.endpoints.admin.run_ingestion_task\"):\n        response = client.post(\"/api/v1/admin/upload/guideline\", files=files)\n\n    assert response.status_code == 200\n    data = response.json()\n    assert data[\"filename\"] == \"test_guideline.pdf\"\n    assert data[\"status\"] == \"uploaded\"\n    assert \"message\" in data\n\n\ndef test_upload_guideline_invalid_file_type():\n    \"\"\"Test rejection of non-PDF files.\"\"\"\n    txt_content = b\"This is a text file\"\n    files = {\"file\": (\"document.txt\", io.BytesIO(txt_content), \"text/plain\")}\n\n    response = client.post(\"/api/v1/admin/upload/guideline\", files=files)\n\n    assert response.status_code == 400\n    data = response.json()\n    assert data[\"detail\"][\"error_code\"] == \"INVALID_FILE_TYPE\"\n    assert \".pdf\" in str(data[\"detail\"][\"context\"][\"allowed_extensions\"])\n\n\ndef test_upload_guideline_file_too_large():\n    \"\"\"Test rejection of files exceeding size limit.\"\"\"\n    # Create content larger than 50MB limit\n    large_content = b\"x\" * (51 * 1024 * 1024)\n    files = {\"file\": (\"large_file.pdf\", io.BytesIO(large_content), \"application/pdf\")}\n\n    response = client.post(\"/api/v1/admin/upload/guideline\", files=files)\n\n    assert response.status_code == 400\n    data = response.json()\n    assert data[\"detail\"][\"error_code\"] == \"FILE_TOO_LARGE\"\n    assert data[\"detail\"][\"context\"][\"max_size_mb\"] == 50.0\n\n\ndef test_upload_guideline_no_file():\n    \"\"\"Test error when no file is provided.\"\"\"\n    response = client.post(\"/api/v1/admin/upload/guideline\")\n\n    assert response.status_code == 422\n\n\ndef test_upload_guideline_docx_rejected():\n    \"\"\"Test rejection of Word documents.\"\"\"\n    docx_content = b\"PK\\x03\\x04 fake docx\"\n    files = {\"file\": (\"document.docx\", io.BytesIO(docx_content), \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\")}\n\n    response = client.post(\"/api/v1/admin/upload/guideline\", files=files)\n\n    assert response.status_code == 400\n    data = response.json()\n    assert data[\"detail\"][\"error_code\"] == \"INVALID_FILE_TYPE\"\n",
+        "last_modified": "2025-12-25T21:22:15.390540"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.273280",
+  "last_updated": "2025-12-25T01:36:14.287901"
+}

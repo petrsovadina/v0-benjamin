@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/data/raw/scau_leciva.csv",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "K\u00f3d S\u00daKL;N\u00e1zev;Dopln\u011bk n\u00e1zvu;Maxim\u00e1ln\u00ed cena v\u00fdrobce;V\u00fd\u0161e \u00fahrady;Doplatek;Zapo\u010ditateln\u00fd doplatek;Typ \u00fahrady;Platnost od\n0000001;ALGIFEN;TBL;100,00;80,50;19,50;10,00;I;2025-01-01\n0000002;IBALGIN;TBL;50,00;25,00;25,00;0,00;pln\u00e1;2025-01-01\n",
+        "last_modified": "2025-12-25T21:22:14.871415"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:12.931680",
+  "last_updated": "2025-12-25T01:36:12.946358"
+}

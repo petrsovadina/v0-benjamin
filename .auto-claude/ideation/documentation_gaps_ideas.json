@@ -1,0 +1,115 @@
+{
+  "documentation_gaps": [
+    {
+      "id": "doc-001",
+      "type": "documentation_gaps",
+      "title": "Fix README.md Git Merge Conflict",
+      "description": "The main README.md file contains unresolved git merge conflicts (<<<<<<< HEAD markers at lines 3 and 168). This makes the project entry point confusing for new developers and prevents proper documentation rendering on GitHub.",
+      "rationale": "The README is the primary onboarding point for all developers. Having merge conflicts visible breaks trust, looks unprofessional, and makes it unclear which version of setup instructions to follow. This is a critical blocker for developer experience.",
+      "category": "readme",
+      "targetAudience": "developers",
+      "affectedAreas": ["README.md"],
+      "currentDocumentation": "Two conflicting versions of README content with unresolved merge markers",
+      "proposedContent": "Resolve the merge conflict by combining the best elements from both versions: the detailed v2.0 architecture overview, backend API documentation references, and the user-friendly installation steps. Ensure consistent formatting and accurate version numbers.",
+      "priority": "critical",
+      "estimatedEffort": "low"
+    },
+    {
+      "id": "doc-002",
+      "type": "documentation_gaps",
+      "title": "Add JSDoc Documentation for lib/ TypeScript Functions",
+      "description": "The lib/ directory contains 6 critical TypeScript files (auth-actions.ts, utils.ts, supabase/*.ts) with public functions that have zero JSDoc documentation. Functions like signUp(), signIn(), signOut(), createClient() lack parameter descriptions, return types, error handling documentation, and usage examples.",
+      "rationale": "These authentication and Supabase utility functions are used across the entire frontend application. Without documentation, developers must read source code to understand behavior, error states, and proper usage. This slows onboarding and increases bug risk.",
+      "category": "api_docs",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "lib/auth-actions.ts",
+        "lib/utils.ts",
+        "lib/supabase/client.ts",
+        "lib/supabase/server.ts",
+        "lib/supabase/middleware.ts",
+        "lib/supabase/database.types.ts"
+      ],
+      "currentDocumentation": "None - functions have no JSDoc comments",
+      "proposedContent": "Add comprehensive JSDoc blocks for all exported functions including: @description, @param with types and descriptions, @returns with type and description, @throws for error cases, @example for common usage patterns. For database.types.ts, add interface-level documentation explaining each table's purpose.",
+      "priority": "high",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "doc-003",
+      "type": "documentation_gaps",
+      "title": "Create Component Documentation for Dashboard Components",
+      "description": "The components/dashboard/ directory contains 18 React components (chat-interface.tsx, vzp-search-interface.tsx, etc.) with no component-level documentation. While some have TypeScript interfaces, there are no JSDoc comments explaining component purpose, props, events, or usage patterns.",
+      "rationale": "Dashboard components are the core UI of the application. New developers joining the project cannot quickly understand what each component does, what props it accepts, or how components relate to each other. This is especially important for the medical domain where UI accuracy matters.",
+      "category": "api_docs",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/epicrisis-generator.tsx",
+        "components/dashboard/translator-interface.tsx",
+        "components/dashboard/chat-message.tsx",
+        "components/dashboard/chat-citations.tsx"
+      ],
+      "currentDocumentation": "TypeScript interfaces exist for props but no descriptive documentation",
+      "proposedContent": "Add JSDoc blocks to each component with: @description explaining the component's purpose and behavior, @param for each prop with clear descriptions, @example showing typical usage, and inline comments for complex logic (e.g., citation mapping, streaming response handling).",
+      "priority": "medium",
+      "estimatedEffort": "medium"
+    },
+    {
+      "id": "doc-004",
+      "type": "documentation_gaps",
+      "title": "Create Environment Variables Reference Guide",
+      "description": "Environment variables are scattered across multiple locations: .env, .env.local, backend/.env, with different variables required for different components (frontend, backend, pipeline). There's no consolidated reference documenting all required and optional environment variables with their purposes.",
+      "rationale": "The project requires 10+ environment variables (OPENAI_API_KEY, ANTHROPIC_API_KEY, GOOGLE_API_KEY, SUPABASE_URL, SUPABASE_KEY, NEXT_PUBLIC_API_URL, etc.). New developers spend significant time hunting through READMEs to understand what's needed, leading to failed setups and confusion.",
+      "category": "troubleshooting",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "docs/ENVIRONMENT.md (new file)",
+        "README.md",
+        "backend/README.md"
+      ],
+      "currentDocumentation": "Partial mentions in README and backend/README, no consolidated reference",
+      "proposedContent": "Create docs/ENVIRONMENT.md with: complete table of all environment variables (name, required/optional, default value, description, example), sections for frontend vs backend vs pipeline variables, setup instructions for local development vs production, and troubleshooting tips for common configuration errors.",
+      "priority": "high",
+      "estimatedEffort": "low"
+    },
+    {
+      "id": "doc-005",
+      "type": "documentation_gaps",
+      "title": "Add Architecture Diagram and Data Flow Documentation",
+      "description": "The project has a complex architecture with Next.js frontend, FastAPI backend, LangGraph orchestration, Supabase database, and external APIs (PubMed, SÚKL, OpenAI, Anthropic). There's no visual system architecture diagram or data flow documentation explaining how components interact.",
+      "rationale": "Czech MedAI is a medical AI assistant with multiple data sources (PubMed, SÚKL, VZP, Guidelines) flowing through various services. Understanding this architecture is critical for debugging, extending features, and ensuring data accuracy. The product-description/ folder has specs but no technical architecture diagrams.",
+      "category": "architecture",
+      "targetAudience": "developers",
+      "affectedAreas": [
+        "docs/ARCHITECTURE.md (new file)",
+        "product-description/"
+      ],
+      "currentDocumentation": "Scattered text descriptions in README and product-description/, no visual diagrams",
+      "proposedContent": "Create docs/ARCHITECTURE.md with: Mermaid diagrams showing system architecture (frontend → API → LangGraph → data sources), data flow for chat queries (user input → backend → LLM → citations → response), SÚKL pipeline flow diagram, database schema relationships diagram, and descriptions of each component's responsibility.",
+      "priority": "medium",
+      "estimatedEffort": "medium"
+    }
+  ],
+  "metadata": {
+    "filesAnalyzed": 48,
+    "documentedFunctions": 12,
+    "undocumentedFunctions": 35,
+    "readmeLastUpdated": "Has merge conflicts - date unclear",
+    "existingDocs": [
+      "docs/TESTING.md",
+      "docs/FRONTEND.md",
+      "docs/DEPLOYMENT.md",
+      "backend/README.md",
+      "product-description/ (10 files)"
+    ],
+    "criticalIssues": [
+      "README.md has unresolved git merge conflicts",
+      "lib/ TypeScript files have 0% JSDoc coverage",
+      "18 dashboard components have no documentation"
+    ],
+    "generatedAt": "2025-12-25T14:15:00Z"
+  }
+}

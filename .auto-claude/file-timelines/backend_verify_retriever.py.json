@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/verify_retriever.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import asyncio\nimport sys\nimport os\n\n# Ensure backend modules are found\nsys.path.append(os.getcwd())\n\nfrom backend.pipeline.retrievers.sukl_retriever import SuklRetriever\n\nasync def verify_rag():\n    print(\"--- Verifying RAG (SuklRetriever) ---\")\n    retriever = SuklRetriever()\n    query = \"Eliquis\"\n    print(f\"Searching for: '{query}'\")\n    \n    try:\n        result = await retriever.search_drugs(query)\n        print(\"\\n--- Search Result ---\")\n        print(result)\n        print(\"---------------------\")\n        \n        if \"Eliquis\" in result and \"S\u00daKL\" in result:\n             print(\"\u2705 RAG Verification PASSED: Found drug in DB.\")\n        else:\n             print(\"\u274c RAG Verification FAILED: Results empty or malformed.\")\n             \n    except Exception as e:\n        print(f\"\u274c RAG Verification EXCEPTION: {e}\")\n\nif __name__ == \"__main__\":\n    asyncio.run(verify_rag())\n",
+        "last_modified": "2025-12-25T21:22:15.408108"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.433574",
+  "last_updated": "2025-12-25T01:36:14.447138"
+}

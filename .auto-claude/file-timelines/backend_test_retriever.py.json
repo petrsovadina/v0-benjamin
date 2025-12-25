@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/test_retriever.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import asyncio\nimport os\nfrom dotenv import load_dotenv\nfrom backend.pipeline.retrievers.sukl_retriever import SuklRetriever\n\n# Load env from root\nload_dotenv(\".env\") \n\nasync def test():\n    print(\"Testing SuklRetriever...\")\n    try:\n        retriever = SuklRetriever()\n        \n        # Debug: List all drugs content\n        print(\"DEBUG: Listing all drugs in DB...\")\n        debug_response = retriever.supabase.table(\"drugs\").select(\"*\").limit(10).execute()\n        print(f\"DEBUG: Found {len(debug_response.data)} items.\")\n        for d in debug_response.data:\n            print(f\"- {d.get('name')} (Norm: {d.get('name_normalized')})\")\n            \n        query = \"Eliquis\"\n        print(f\"Searching for: {query}\")\n        result = await retriever.search_drugs(query)\n        print(\"--- Result ---\")\n        print(result)\n        print(\"--------------\")\n        \n        if \"Found\" in result:\n            print(\"SUCCESS: Retrieved drug info.\")\n        else:\n            print(\"FAILURE: No info found.\")\n            \n    except Exception as e:\n        print(f\"ERROR: {e}\")\n\nif __name__ == \"__main__\":\n    asyncio.run(test())\n",
+        "last_modified": "2025-12-25T21:22:15.375204"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.167378",
+  "last_updated": "2025-12-25T01:36:14.181723"
+}

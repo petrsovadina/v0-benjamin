@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/mcp_servers/pubmed_server.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from mcp.server.fastmcp import FastMCP\nfrom typing import List, Dict, Any\nimport json\nimport logging\nfrom paper_search_mcp.academic_platforms.pubmed import PubMedSearcher\n\n# Configure logging\nlogging.basicConfig(level=logging.INFO)\nlogger = logging.getLogger(\"pubmed_server\")\n\n# Initialize FastMCP server\nmcp = FastMCP(\"Czech MedAI PubMed Server\")\n\n# Initialize Searcher\npubmed_searcher = PubMedSearcher()\n\n@mcp.tool()\nasync def search_literature(query: str, max_results: int = 5) -> str:\n    \"\"\"\n    Search PubMed for medical literature.\n    Returns JSON string with list of papers including title, abstract, and citation info.\n    \n    Args:\n        query: Search query (e.g. \"diabetes treatment\")\n        max_results: Max number of results (default 5)\n    \"\"\"\n    logger.info(f\"Searching PubMed for: {query}\")\n    try:\n        # Note: PubMedSearcher.search is synchronous using 'requests'\n        # In a high-concurrency production env, this should be offloaded to a thread\n        # papers = await to_thread(pubmed_searcher.search, query, max_results)\n        \n        papers = pubmed_searcher.search(query, max_results=max_results)\n        \n        results = []\n        for p in papers:\n            # Convert Paper object to dict\n            # Paper class usually has to_dict(), if not we construct it\n            if hasattr(p, 'to_dict'):\n                p_data = p.to_dict()\n            else:\n                p_data = {\n                    \"title\": p.title,\n                    \"url\": p.url,\n                    \"abstract\": p.abstract,\n                    \"authors\": p.authors,\n                    \"year\": p.published_date.year if p.published_date else None,\n                    \"pmid\": p.paper_id,\n                    \"doi\": p.doi\n                }\n            results.append(p_data)\n            \n        return json.dumps({\n            \"status\": \"success\",\n            \"source\": \"pubmed\",\n            \"query\": query,\n            \"results\": results\n        })\n        \n    except Exception as e:\n        logger.error(f\"PubMed search failed: {e}\")\n        return json.dumps({\n            \"status\": \"error\",\n            \"message\": str(e)\n        })\n\nif __name__ == \"__main__\":\n    mcp.run()\n",
+        "last_modified": "2025-12-25T21:22:15.330520"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.756215",
+  "last_updated": "2025-12-25T01:36:13.768951"
+}

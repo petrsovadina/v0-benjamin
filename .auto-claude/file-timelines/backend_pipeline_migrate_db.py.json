@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/pipeline/migrate_db.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import os\nimport asyncio\nfrom pathlib import Path\nfrom dotenv import load_dotenv\nfrom supabase import create_client, Client\n\n# Load env from backend root\nenv_path = Path(__file__).resolve().parents[1] / '.env'\nload_dotenv(dotenv_path=env_path)\n\nasync def run_migration():\n    url: str = os.environ.get(\"SUPABASE_URL\")\n    key: str = os.environ.get(\"SUPABASE_SERVICE_KEY\") or os.environ.get(\"SUPABASE_KEY\")\n    \n    if not url or not key:\n        print(\"Error: Missing SUPABASE_URL or SUPABASE_KEY/SERVICE_KEY\")\n        return\n\n    supabase: Client = create_client(url, key)\n    \n    migration_file = Path(__file__).resolve().parents[3] / 'scripts/03-create-drugs-table.sql'\n    \n    if not migration_file.exists():\n        print(f\"Error: Migration file not found at {migration_file}\")\n        return\n        \n    print(f\"Reading migration file: {migration_file}\")\n    with open(migration_file, 'r') as f:\n        sql = f.read()\n\n    print(\"Executing SQL migration...\")\n    try:\n        # Supabase-py client doesn't support direct SQL execution easily without postgres connection or via rpc.\n        # However, we can use the rest API 'rpc' if we had a function, but for raw SQL we often need the Service Key and direct postgres connection.\n        # BUT, newer Supabase libraries/dashboards allow SQL execution.\n        # Alternatively, we can use 'postgres' library if we have the connection string.\n        # Let's check if the user provided a connection string? No.\n        \n        # ACTUALLY: The Supabase Python client is limited for DDL. \n        # Standard way is to use the CLI or Dashboard. \n        # But we are an agent. We can try to use a specific endpoint or just print instructions?\n        # A trick: If we have a stored procedure 'exec_sql', we can call it.\n        # If not, we might be stuck without a direct postgres connection string.\n        \n        # Wait, the .env usually has DATABASE_URL for Prisma/variants.\n        # The user provided SUPABASE_URL (HTTP).\n        \n        # Let's try to see if there is a hack or if I should just use the Tool `mcp_supabase-mcp-server_execute_sql` if I had it.\n        # I HAVE `mcp_supabase-mcp-server_execute_sql` in my available tools!\n        # I should use that instead of writing a python script to do it!\n        \n        pass \n    except Exception as e:\n        print(f\"Migration failed: {e}\")\n\nif __name__ == \"__main__\":\n    print(\"Please use the MCP tool to execute SQL if possible, or run this manually.\")\n",
+        "last_modified": "2025-12-25T21:22:15.340606"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.844632",
+  "last_updated": "2025-12-25T01:36:13.857719"
+}

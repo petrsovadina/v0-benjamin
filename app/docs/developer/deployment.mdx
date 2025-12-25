@@ -1,0 +1,97 @@
+# 🚀 Deployment Guide - Benjamin v0.3
+
+Tento dokument popisuje postup nasazení backendu (FastAPI) a frontendu (Next.js) aplikace Benjamin.
+
+## 📋 Prerekvizity
+
+- **Docker** & **Docker Compose** (pro kontejnerizované nasazení)
+- **Node.js 18+** (pro frontend build)
+- **Python 3.11+** (pro backend manual run)
+- **Supabase Project** (databáze a auth)
+
+## 🛠️ Konfigurace prostředí
+
+Před spuštěním je nutné nastavit proměnné prostředí. Použijte `.env.example` jako šablonu.
+
+### Backend (`backend/.env`)
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+SUPABASE_URL=https://xyz.supabase.co
+SUPABASE_SERVICE_KEY=...
+# ... další proměnné z backend/.env.example
+```
+
+### Frontend (`.env.local` nebo `.env.production`)
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xyz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_API_URL=https://api.benjamin.cz # URL vašeho nasazeného backendu
+```
+
+---
+
+## 🐳 Nasazení Backendu (Docker)
+
+Backend je připraven pro nasazení v Docker kontejneru.
+**DŮLEŽITÉ:** Všechny příkazy spouštějte z **kořenového adresáře** projektu.
+
+### 1. Build Image
+```bash
+# Specifikujeme Dockerfile v backend složce, ale kontext je root
+docker build -t benjamin-backend:v0.3 -f backend/Dockerfile .
+```
+
+### 2. Spuštění Kontejneru
+```bash
+docker run -d \
+  -p 8000:8000 \
+  --env-file backend/.env \
+  --name benjamin-api \
+  benjamin-backend:v0.3
+```
+
+Aplikace poběží na `http://localhost:8000`.
+Health check: `GET http://localhost:8000/health`
+
+---
+
+## 🖥️ Manuální Spuštění (Lokální Vývoj)
+
+Pro lokální vývoj bez Dockeru:
+
+### 1. Python prostředí
+```bash
+# Vytvoření venv
+python -m venv backend/venv
+
+# Aktivace
+source backend/venv/bin/activate  # macOS/Linux
+
+# Instalace závislostí
+pip install -r backend/requirements.txt
+```
+
+### 2. Spuštění Serveru
+```bash
+# Spouštějte z kořenového adresáře projektu!
+uvicorn backend.main:app --reload --port 8000
+```
+
+---
+
+## 🌐 Nasazení Frontendu (Vercel/Netlify)
+
+Frontend je standardní Next.js aplikace.
+
+### Vercel (Doporučeno)
+1. Propojte GitHub repository s Vercelem.
+2. V nastavení projektu přidejte Environment Variables z `.env.production`.
+3. Deploy proběhne automaticky.
+    - **Build Command:** `next build` (nebo `pnpm build`)
+    - **Install Command:** `pnpm install`
+
+---
+
+## 📝 Poznámky k Produkci
+- **Databáze:** Ujistěte se, že jste aplikovali všechny SQL migrace (`supabase/migrations`).
+- **Rate Limiting:** V produkci (např. za Nginx/Traefik) může být nutné nastavit `slowapi` na použití `X-Forwarded-For` hlavičky pro správnou detekci IP adresy.

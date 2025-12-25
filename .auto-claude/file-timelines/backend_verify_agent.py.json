@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/verify_agent.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import asyncio\nimport os\nimport sys\nfrom dotenv import load_dotenv\nfrom langchain_core.messages import HumanMessage\n\n# Ensure backend modules are found\nsys.path.append(os.getcwd())\n\nfrom backend.agent_graph import app\n\nload_dotenv()\n\nasync def verify_agent():\n    print(\"--- Starting Verification ---\")\n    query = \"Jak\u00e1 je cena l\u00e9ku Eliquis?\"\n    print(f\"User Query: {query}\")\n    \n    inputs = {\"messages\": [HumanMessage(content=query)]}\n    \n    try:\n        print(\"Invoking Agent Graph...\")\n        result = await app.ainvoke(inputs)\n        last_message = result[\"messages\"][-1]\n        print(\"\\n--- AGENT RESPONSE ---\")\n        print(last_message.content)\n        print(\"----------------------\")\n        \n        # Check if tool was called (by checking intermediate steps or just context)\n        # In this simple graph, we just check the output contains retrieval info.\n        if \"Eliquis\" in last_message.content:\n            print(\"\u2705 Verification PASSED: Response mentions the drug.\")\n        else:\n            print(\"\u26a0\ufe0f Verification WARNING: Response might be hallucinated or generic.\")\n            \n    except Exception as e:\n        print(f\"\u274c Verification FAILED: {e}\")\n        import traceback\n        traceback.print_exc()\n\nif __name__ == \"__main__\":\n    asyncio.run(verify_agent())\n",
+        "last_modified": "2025-12-25T21:22:15.403459"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.389663",
+  "last_updated": "2025-12-25T01:36:14.403340"
+}

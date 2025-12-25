@@ -1,0 +1,28 @@
+{
+  "file_path": ".auto-claude/specs/001-complete-guidelines-rag-pdf-import/memory/session_insights/session_001.json",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "{\n  \"session_number\": 1,\n  \"timestamp\": \"2025-12-25T00:38:16.730824+00:00\",\n  \"subtasks_completed\": [\n    \"subtask-6-2\"\n  ],\n  \"discoveries\": {\n    \"file_insights\": {\n      \"modified_files\": [\n        \"backend/tests/test_search_service.py\"\n      ],\n      \"primary_test_class\": \"TestSearchGuidelinesSemanticSearch\",\n      \"test_focus\": \"Supabase RPC method parameter validation for search guidelines\"\n    },\n    \"patterns_discovered\": [\n      \"Mocking Supabase RPC calls in async pytest tests\",\n      \"Validating method parameters using call arguments\",\n      \"Checking default and custom threshold/count parameters\",\n      \"Extracting parameters from mock call arguments\"\n    ],\n    \"gotchas_discovered\": [\n      \"Parameter dictionary passed as a positional argument, not keyword argument\",\n      \"Need to access parameters through call_args[0][1] instead of call_args[1]\"\n    ],\n    \"approach_outcome\": {\n      \"subtask_id\": \"subtask-6-2\",\n      \"status\": \"SUCCESS\",\n      \"changes_made\": \"Updated test assertions to correctly validate Supabase RPC method parameters\",\n      \"commit_hash\": \"8f2510c5\"\n    },\n    \"recommendations\": [\n      \"Review all similar test cases to ensure consistent parameter validation\",\n      \"Consider creating helper methods to standardize mock call argument extraction\",\n      \"Add comments explaining the parameter passing mechanism for future reference\"\n    ],\n    \"subtask_id\": \"subtask-6-2\",\n    \"session_num\": 1,\n    \"success\": true,\n    \"changed_files\": [\n      \"backend/tests/test_search_service.py\"\n    ]\n  },\n  \"what_worked\": [\n    \"Implemented subtask: subtask-6-2\"\n  ],\n  \"what_failed\": [],\n  \"recommendations_for_next_session\": []\n}",
+        "last_modified": "2025-12-25T21:22:14.733830"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:35:52.212029",
+  "last_updated": "2025-12-25T01:35:52.224813"
+}

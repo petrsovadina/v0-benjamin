@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/services/logger.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import logging\nimport json\nimport sys\nfrom datetime import datetime, timezone\nfrom typing import Any, Dict, Optional\n\nclass StructuredLogger:\n    \"\"\"\n    Logger that outputs logs in JSON format, suitable for cloud environments (AWS, Google Cloud, Docker).\n    \"\"\"\n    def __init__(self, name: str):\n        self.logger = logging.getLogger(name)\n        self.logger.setLevel(logging.INFO)\n        \n        # Prevent adding multiple handlers if already exists\n        if not self.logger.handlers:\n            handler = logging.StreamHandler(sys.stdout)\n            formatter = self.JsonFormatter()\n            handler.setFormatter(formatter)\n            self.logger.addHandler(handler)\n            # Prevent propagation to root logger to avoid double logging\n            self.logger.propagate = False\n\n    class JsonFormatter(logging.Formatter):\n        def format(self, record: logging.LogRecord) -> str:\n            log_record = {\n                \"timestamp\": datetime.now(timezone.utc).isoformat().replace(\"+00:00\", \"Z\"),\n                \"level\": record.levelname,\n                \"message\": record.getMessage(),\n                \"logger_name\": record.name,\n                \"module\": record.module,\n                \"function\": record.funcName,\n                \"line\": record.lineno,\n            }\n            \n            # Add extra fields if available\n            if hasattr(record, \"props\") and isinstance(record.props, dict):\n                log_record.update(record.props)\n                \n            # Add exception info if present\n            if record.exc_info:\n                log_record[\"exception\"] = self.formatException(record.exc_info)\n                \n            return json.dumps(log_record)\n\n    def info(self, message: str, **kwargs):\n        self.logger.info(message, extra={\"props\": kwargs})\n\n    def error(self, message: str, error: Optional[Exception] = None, **kwargs):\n        if error:\n            self.logger.error(f\"{message}: {str(error)}\", exc_info=error, extra={\"props\": kwargs})\n        else:\n            self.logger.error(message, extra={\"props\": kwargs})\n            \n        # Attempt to log to Supabase for errors (Fire and forget style)\n        try:\n           self._log_to_supabase(\"ERROR\", message, error, **kwargs)\n        except Exception:\n           pass # Never break execution because of logging failure\n\n    def warning(self, message: str, **kwargs):\n        self.logger.warning(message, extra={\"props\": kwargs})\n\n    def debug(self, message: str, **kwargs):\n        self.logger.debug(message, extra={\"props\": kwargs})\n        \n    def _log_to_supabase(self, level: str, message: str, error: Optional[Exception] = None, **kwargs):\n        # Local import to avoid circular dependency\n        try:\n            from backend.data_processing.utils.supabase_client import SupabaseSingleton\n            client = SupabaseSingleton.get_client()\n            \n            payload = {\n                \"level\": level,\n                \"message\": message,\n                \"module\": kwargs.get(\"module\") or \"unknown\",\n                \"metadata\": kwargs,\n                \"error_details\": str(error) if error else None\n            }\n            \n            # Note: In a real async app, this should be awaited or put in a background task. \n            # Since SupabaseSingleton uses sync client in some contexts, we need to be careful.\n            # For this MVP python logging implementation, we will skip the DB write if explicitly async context is strictly required\n            # or use the sync postgrest feature if available.\n            # HOWEVER: The current implementation of SupabaseSingleton returns a client that *can* be used synchronously.\n            \n            client.table(\"app_errors\").insert(payload).execute()\n        except Exception:\n            # Silent fail for now to avoid loops\n            pass\n\n# Global instance factory\ndef get_logger(name: str) -> StructuredLogger:\n    return StructuredLogger(name)\n",
+        "last_modified": "2025-12-25T21:22:15.369772"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.110389",
+  "last_updated": "2025-12-25T01:36:14.122587"
+}

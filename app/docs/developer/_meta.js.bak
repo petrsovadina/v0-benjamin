@@ -1,0 +1,7 @@
+export default {
+    "index": "Overview",
+    "deployment": "Deployment Guide",
+    "product-spec": "Product Specifications",
+    "data-pipeline": "Data Pipeline",
+    "structure": "Project Structure"
+}

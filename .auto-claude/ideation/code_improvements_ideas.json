@@ -1,0 +1,110 @@
+{
+  "code_improvements": [
+    {
+      "id": "ci-001",
+      "type": "code_improvements",
+      "title": "Persist User Settings to Backend",
+      "description": "The settings interface has a complete UI for user profile and preferences but currently only updates local state - changes are lost on refresh. Add backend persistence using the existing Supabase patterns.",
+      "rationale": "The SettingsInterface component already has the complete form UI with state management. The Supabase client pattern is established in auth-context.tsx and history-interface.tsx. The backend API structure exists in FastAPI. This is simply connecting existing frontend form to backend storage.",
+      "builds_upon": ["SettingsInterface UI", "Supabase client pattern", "User authentication context"],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/settings-interface.tsx",
+        "lib/supabase/client.ts",
+        "backend/app/api/v1/endpoints/users.py"
+      ],
+      "existing_patterns": [
+        "Supabase table operations in history-interface.tsx",
+        "Auth token handling in chat-interface.tsx",
+        "Form state management in settings-interface.tsx"
+      ],
+      "implementation_approach": "1. Add user_settings table to Supabase schema 2. Create backend endpoint following ai.py pattern 3. Add useEffect to fetch settings on mount using createClient pattern 4. Update handleSave to POST to backend like other interfaces",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-002",
+      "type": "code_improvements",
+      "title": "Add Copy-to-Clipboard to Chat Messages",
+      "description": "The translator and epicrisis interfaces have copy buttons for output text. Extend this pattern to individual chat messages so users can easily copy AI responses.",
+      "rationale": "The copy-to-clipboard pattern using navigator.clipboard.writeText() is already implemented in translator-interface.tsx and epicrisis-generator.tsx. ChatMessage component renders individual messages but lacks this feature. Direct pattern replication.",
+      "builds_upon": ["Translator copy button", "Epicrisis copy button", "ChatMessage component"],
+      "estimated_effort": "trivial",
+      "affected_files": [
+        "components/dashboard/chat-message.tsx"
+      ],
+      "existing_patterns": [
+        "Copy button in translator-interface.tsx: <Button onClick={() => navigator.clipboard.writeText(output)}>Kopirovat</Button>",
+        "Conditional rendering: {output && <Button>}"
+      ],
+      "implementation_approach": "Add a copy icon button to the ChatMessage component for assistant messages. Use the same navigator.clipboard.writeText(message.content) pattern. Show only on hover using group/hover Tailwind classes.",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-003",
+      "type": "code_improvements",
+      "title": "Add Loading Skeleton States",
+      "description": "Replace text-only loading states with skeleton UI for better perceived performance. History shows 'Nacitam historii...' and VZP shows loading in button text - both could use skeleton components.",
+      "rationale": "The ThinkingIndicator component shows a loading pattern exists. Radix UI is installed (used throughout for primitives). Loading states currently use text or spinner but skeleton cards would follow modern UI patterns already established with Card component usage.",
+      "builds_upon": ["ThinkingIndicator pattern", "Card component structure", "VzpResultCard layout"],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/history-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/ui/skeleton.tsx"
+      ],
+      "existing_patterns": [
+        "ThinkingIndicator with pulse animation",
+        "Card component structure for result items",
+        "Tailwind animate utilities (already using Loader2 spin)"
+      ],
+      "implementation_approach": "1. Create Skeleton component in ui/ folder following Button/Card pattern 2. Create HistoryItemSkeleton matching Card layout in history-interface 3. Create VzpResultSkeleton matching VzpResultCard layout 4. Replace loading text with skeleton array.map",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-004",
+      "type": "code_improvements",
+      "title": "Export Query History to JSON/CSV",
+      "description": "Add export functionality to the history interface allowing users to download their query history. The data is already fetched and displayed - just needs export button and file generation.",
+      "rationale": "History interface already fetches complete query data from backend. The data structure is well-defined (HistoryItem interface). The copy-to-clipboard pattern in translator shows user expectation for data export. This extends that pattern to bulk export.",
+      "builds_upon": ["History data fetching", "Copy button pattern", "HistoryItem interface"],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/history-interface.tsx"
+      ],
+      "existing_patterns": [
+        "Data fetching in history-interface.tsx useEffect",
+        "Button component with icon (Copy button in translator)",
+        "JSON.stringify for data serialization"
+      ],
+      "implementation_approach": "1. Add export button next to search input 2. Create exportToJSON function that converts historyItems to JSON blob and triggers download 3. Optionally add exportToCSV using simple string concatenation for CSV format 4. Use URL.createObjectURL pattern for file download",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    },
+    {
+      "id": "ci-005",
+      "type": "code_improvements",
+      "title": "Add Keyboard Shortcuts for Common Actions",
+      "description": "Add keyboard shortcuts for common actions like Cmd+Enter to send message, Cmd+K for search, Escape to clear. The handleKeyDown pattern already exists for Enter key handling.",
+      "rationale": "The handleKeyDown pattern is established in chat-interface.tsx (Enter to send), vzp-search-interface.tsx (Enter to search). This pattern can be extended globally with more shortcuts using the same event handler approach.",
+      "builds_upon": ["handleKeyDown in chat-interface", "handleKeyDown in vzp-search-interface", "Input component key handling"],
+      "estimated_effort": "small",
+      "affected_files": [
+        "components/dashboard/chat-interface.tsx",
+        "components/dashboard/vzp-search-interface.tsx",
+        "components/dashboard/history-interface.tsx",
+        "lib/hooks/useKeyboardShortcuts.ts"
+      ],
+      "existing_patterns": [
+        "handleKeyDown in chat-interface.tsx checking e.key === 'Enter'",
+        "e.preventDefault() for preventing default behavior",
+        "Checking for modifier keys: e.shiftKey, e.metaKey"
+      ],
+      "implementation_approach": "1. Create useKeyboardShortcuts hook following useAuth pattern 2. Register global shortcuts at layout level 3. Add Cmd+Enter as alternative to clicking Send button 4. Add Escape to clear input fields 5. Optional: Show shortcuts in tooltip on hover",
+      "status": "draft",
+      "created_at": "2025-12-25T14:15:00.000Z"
+    }
+  ]
+}

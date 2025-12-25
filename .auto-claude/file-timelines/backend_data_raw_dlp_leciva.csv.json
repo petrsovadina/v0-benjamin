@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/data/raw/dlp_leciva.csv",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "K\u00f3d S\u00daKL;N\u00e1zev;Dopln\u011bk n\u00e1zvu;\u00da\u010dinn\u00e1 l\u00e1tka;ATC;S\u00edla;Forma;Balen\u00ed;Cesta pod\u00e1n\u00ed;Zam\u011bnitelnost;Dr\u017eitel\n0000001;ALGIFEN;TBL NOB 20;METAMIZOL SODN\u00dd;A03DA02;500MG;Tableta;20;Peror\u00e1ln\u00ed pod\u00e1n\u00ed;NE;Zentiva\n0000002;IBALGIN;TBL FLM 100;IBUPROFEN;M01AE01;400MG;Potahovan\u00e1 tableta;100;Peror\u00e1ln\u00ed pod\u00e1n\u00ed;ANO;Sanofi\n",
+        "last_modified": "2025-12-25T21:22:14.870124"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:12.899394",
+  "last_updated": "2025-12-25T01:36:12.930287"
+}

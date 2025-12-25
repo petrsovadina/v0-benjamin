@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/tests/test_sukl_retriever.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import pytest\nfrom unittest.mock import AsyncMock, MagicMock, patch\nfrom backend.pipeline.retrievers.sukl_retriever import SuklRetriever\n\n@pytest.fixture\ndef mock_supabase():\n    with patch(\"backend.pipeline.retrievers.sukl_retriever.SupabaseSingleton\") as MockSingleton:\n        mock_client = MagicMock()\n        MockSingleton.get_client.return_value = mock_client\n        yield mock_client\n\n@pytest.mark.asyncio\nasync def test_search_drugs_found(mock_supabase):\n    # Setup mock response\n    mock_response = MagicMock()\n    mock_response.data = [\n        {\n            \"name\": \"PARALEN\",\n            \"sukl_code\": \"0123456\",\n            \"active_substance\": \"paracetamol\",\n            \"strength\": \"500MG\",\n            \"pharmaceutical_form\": \"TBL NOB\"\n        }\n    ]\n    \n    # Mock chain: table().select().ilike().limit().execute()\n    mock_supabase.table.return_value \\\n        .select.return_value \\\n        .ilike.return_value \\\n        .limit.return_value \\\n        .execute.return_value = mock_response\n\n    retriever = SuklRetriever()\n    result = await retriever.search_drugs(\"paralen\")\n\n    assert \"Found 1 drugs\" in result\n    assert \"PARALEN\" in result\n    assert \"S\u00daKL: 0123456\" in result\n    # Check URL generation\n    assert \"https://www.sukl.cz/modules/medication/detail.php?code=0123456\" in result\n\n@pytest.mark.asyncio\nasync def test_search_drugs_not_found(mock_supabase):\n    mock_response = MagicMock()\n    mock_response.data = []\n    \n    mock_supabase.table.return_value \\\n        .select.return_value \\\n        .ilike.return_value \\\n        .limit.return_value \\\n        .execute.return_value = mock_response\n\n    retriever = SuklRetriever()\n    result = await retriever.search_drugs(\"nonexistent\")\n\n    assert \"No drugs found\" in result\n",
+        "last_modified": "2025-12-25T21:22:15.401003"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.361014",
+  "last_updated": "2025-12-25T01:36:14.373606"
+}

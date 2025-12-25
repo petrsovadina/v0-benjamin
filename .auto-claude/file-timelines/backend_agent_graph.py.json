@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/agent_graph.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from typing import TypedDict, Annotated, Sequence, Literal\nfrom langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage\nfrom langgraph.graph import StateGraph, END, MessageGraph\nfrom langchain_anthropic import ChatAnthropic\nfrom langchain_core.tools import tool\nfrom langgraph.prebuilt import ToolNode, tools_condition\nimport operator\nimport os\nfrom dotenv import load_dotenv\n\n# Import our custom retrievers\nfrom backend.pipeline.retrievers.pubmed import PubMedRetriever\nfrom backend.pipeline.retrievers.sukl_retriever import SuklRetriever\nfrom pathlib import Path\n\n# Load settings (handles .env validation)\nfrom backend.data_processing.config.settings import settings\n\n# Define the state\nclass AgentState(TypedDict):\n    messages: Annotated[Sequence[BaseMessage], operator.add]\n\n# Define tools\n@tool\nasync def search_pubmed(query: str):\n    \"\"\"\n    Search PubMed for medical articles. Use this when the user asks about clinical studies, \n    drugs, or medical conditions that require evidence.\n    \"\"\"\n    retriever = PubMedRetriever()\n    return await retriever.search(query)\n\n@tool\nasync def search_sukl_drugs(query: str):\n    \"\"\"\n    Search for official drug information in the Czech S\u00daKL database.\n    Use this when user asks about specific drugs, prices, active substances, or packaging available in Czechia.\n    \"\"\"\n    retriever = SuklRetriever()\n    return await retriever.search_drugs(query)\n\ntools = [search_pubmed, search_sukl_drugs]\n\n# Define LLM (Claude 3.5 Sonnet)\nllm = ChatAnthropic(\n    model=\"claude-3-haiku-20240307\",\n    temperature=0,\n    api_key=settings.ANTHROPIC_API_KEY\n)\n\n# Bind tools to LLM\nllm_with_tools = llm.bind_tools(tools)\n\n# Import System Prompt\nfrom backend.services.prompts import SYSTEM_PROMPT\n\n# Define nodes\ndef reasoner(state: AgentState):\n    \"\"\"\n    The main reasoning node. Decides whether to call a tool or answer directly.\n    Injects System Message tailored for clinical accuracy.\n    \"\"\"\n    messages = list(state[\"messages\"])\n    \n    # Ensure System Message is at the start\n    if not isinstance(messages[0], SystemMessage):\n        messages.insert(0, SystemMessage(content=SYSTEM_PROMPT))\n        \n    response = llm_with_tools.invoke(messages)\n    return {\"messages\": [response]}\n\n# Build the graph\nworkflow = StateGraph(AgentState)\n\nworkflow.add_node(\"agent\", reasoner)\nworkflow.add_node(\"tools\", ToolNode(tools))\n\nworkflow.set_entry_point(\"agent\")\n\n# Conditional edge: If agent wants to call a tool -> \"tools\", else -> END\nworkflow.add_conditional_edges(\n    \"agent\",\n    tools_condition,\n)\n\nworkflow.add_edge(\"tools\", \"agent\") # Loop back after tool usage\n\napp = workflow.compile()\n",
+        "last_modified": "2025-12-25T21:22:14.815857"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:12.451581",
+  "last_updated": "2025-12-25T01:36:12.464628"
+}

@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/services/cache.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import time\nfrom typing import Any, Dict, Optional, Tuple\n\nclass SimpleCache:\n    \"\"\"\n    A simple in-memory cache with TTL (Time To Live).\n    \"\"\"\n    def __init__(self):\n        self._cache: Dict[str, Tuple[Any, float]] = {}\n        self._hits = 0\n        self._misses = 0\n\n    def get(self, key: str) -> Optional[Any]:\n        \"\"\"\n        Retrieve a value from the cache. Returns None if key not found or expired.\n        \"\"\"\n        if key in self._cache:\n            value, expiry = self._cache[key]\n            if time.time() < expiry:\n                self._hits += 1\n                return value\n            else:\n                try:\n                    del self._cache[key]\n                except KeyError:\n                    pass\n        \n        self._misses += 1\n        return None\n\n    def set(self, key: str, value: Any, ttl: int = 300):\n        \"\"\"\n        Set a value in the cache with a TTL (default 5 minutes).\n        \"\"\"\n        expiry = time.time() + ttl\n        self._cache[key] = (value, expiry)\n\n    def clear(self):\n        \"\"\"\n        Clear all cache entries.\n        \"\"\"\n        self._cache.clear()\n        self._hits = 0\n        self._misses = 0\n\n    def get_stats(self) -> Dict[str, Any]:\n        \"\"\"\n        Returns cache statistics.\n        \"\"\"\n        total = self._hits + self._misses\n        hit_rate = (self._hits / total) if total > 0 else 0.0\n        return {\n            \"hits\": self._hits,\n            \"misses\": self._misses,\n            \"total_requests\": total,\n            \"hit_rate\": round(hit_rate, 2),\n            \"size\": len(self._cache)\n        }\n\n# Global instance\ncache = SimpleCache()\n",
+        "last_modified": "2025-12-25T21:22:15.366875"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:14.081154",
+  "last_updated": "2025-12-25T01:36:14.094082"
+}

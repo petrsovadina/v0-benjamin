@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/probe_sukl_api.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import requests\nimport sys\n\nBASE_URL = \"https://testapi.sukl.cz\"\n\nPOSSIBLE_SWAGGER_PATHS = [\n    \"/swagger\",\n    \"/swagger/index.html\",\n    \"/swagger-ui.html\",\n    \"/api/docs\",\n    \"/docs\",\n    \"/cis/swagger\",\n    \"/cis/docs\"\n]\n\ndef probe_url(path):\n    url = f\"{BASE_URL}{path}\"\n    try:\n        response = requests.get(url, timeout=5, verify=False)\n        print(f\"[{response.status_code}] {url} (Content-Type: {response.headers.get('Content-Type')})\")\n        if response.status_code == 200:\n            return True\n    except Exception as e:\n        print(f\"[ERR] {url}: {e}\")\n    return False\n\nprint(f\"Probing {BASE_URL} for API documentation...\")\nfound = False\nfor path in POSSIBLE_SWAGGER_PATHS:\n    if probe_url(path):\n        found = True\n\nif not found:\n    print(\"No obvious Swagger/Docs path found.\")\n    # Try fetching the root page content again to find links\n    try:\n        r = requests.get(BASE_URL, verify=False)\n        print(f\"\\nRoot page content snippet:\\n{r.text[:500]}\")\n    except Exception as e:\n        print(f\"Failed to fetch root: {e}\")\n",
+        "last_modified": "2025-12-25T21:22:15.355515"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.965541",
+  "last_updated": "2025-12-25T01:36:13.979289"
+}

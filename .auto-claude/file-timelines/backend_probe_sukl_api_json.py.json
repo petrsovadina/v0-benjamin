@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/probe_sukl_api_json.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "import requests\n\nBASE_URL = \"https://testapi.sukl.cz\"\n\nPOSSIBLE_JSON_PATHS = [\n    \"/swagger/v1/swagger.json\",\n    \"/v1/swagger.json\",\n    \"/api-docs\",\n    \"/docs/swagger.json\",\n    \"/swagger.json\",\n    \"/cis/swagger/v1/swagger.json\",\n    \"/lek13/swagger/v1/swagger.json\"\n]\n\ndef probe_url(path):\n    url = f\"{BASE_URL}{path}\"\n    try:\n        response = requests.get(url, timeout=5, verify=False)\n        ct = response.headers.get('Content-Type', '')\n        print(f\"[{response.status_code}] {url} (Content-Type: {ct})\")\n        if response.status_code == 200 and ('json' in ct):\n            return True\n            print(f\"FOUND JSON: {response.text[:100]}...\")\n    except Exception as e:\n        print(f\"[ERR] {url}: {e}\")\n    return False\n\nprint(f\"Probing JSON specs on {BASE_URL}...\")\nfor path in POSSIBLE_JSON_PATHS:\n    if probe_url(path):\n        break\n",
+        "last_modified": "2025-12-25T21:22:15.356565"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.980663",
+  "last_updated": "2025-12-25T01:36:13.993878"
+}

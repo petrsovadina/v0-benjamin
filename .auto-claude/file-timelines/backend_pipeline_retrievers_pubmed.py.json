@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/pipeline/retrievers/pubmed.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from typing import List, Dict, Any, Optional\nfrom backend.services.logger import get_logger\nfrom backend.services.cache import cache\nfrom backend.data_processing.config.settings import settings\nimport httpx\nimport xml.etree.ElementTree as ET\n\nlogger = get_logger(__name__)\n\nclass PubMedRetriever:\n    \"\"\"\n    Simple retriever for PubMed using E-utilities.\n    No MCP overhead, just direct API calls.\n    \"\"\"\n    BASE_URL = \"https://eutils.ncbi.nlm.nih.gov/entrez/eutils\"\n\n    def __init__(self, email: str = None):\n        self.email = email or settings.PUBMED_EMAIL or \"benjamin-ai@example.com\"  # NCBI requires an email\n\n    async def search(self, query: str, max_results: int = 3) -> str:\n        \"\"\"\n        Performs a search and returns a formatted string with results.\n        This is the method the Agent will call.\n        \"\"\"\n        # Check cache\n        cache_key = f\"pubmed:{query}:{max_results}\"\n        cached_result = cache.get(cache_key)\n        if cached_result:\n            logger.info(\"PubMed search cache hit\", query=query)\n            return cached_result\n\n        logger.info(f\"Searching PubMed for: {query}\")\n        try:\n            ids = await self._get_ids(query, max_results)\n            if not ids:\n                logger.info(\"No PubMed results found\", query=query)\n                return \"No results found on PubMed.\"\n            \n            articles = await self._fetch_details(ids)\n            result = self._format_results(articles)\n            \n            # Save to cache (TTL 1 hour for PubMed calls)\n            cache.set(cache_key, result, ttl=3600)\n            \n            logger.info(\"PubMed search returned results\", count=len(articles))\n            return result\n        except Exception as e:\n            logger.error(\"Error connecting to PubMed\", error=e)\n            return f\"Error connecting to PubMed: {str(e)}\"\n\n    async def _get_ids(self, query: str, max_results: int) -> List[str]:\n        params = {\n            \"db\": \"pubmed\",\n            \"term\": query,\n            \"retmode\": \"json\",\n            \"retmax\": max_results,\n            \"email\": self.email\n        }\n        async with httpx.AsyncClient(timeout=10.0) as client:\n            resp = await client.get(f\"{self.BASE_URL}/esearch.fcgi\", params=params)\n            resp.raise_for_status()\n            data = resp.json()\n            return data.get(\"esearchresult\", {}).get(\"idlist\", [])\n\n    async def _fetch_details(self, ids: List[str]) -> List[Dict[str, Any]]:\n        if not ids:\n            return []\n            \n        params = {\n            \"db\": \"pubmed\",\n            \"id\": \",\".join(ids),\n            \"retmode\": \"xml\",\n            \"email\": self.email\n        }\n        async with httpx.AsyncClient(timeout=10.0) as client:\n            resp = await client.get(f\"{self.BASE_URL}/efetch.fcgi\", params=params)\n            resp.raise_for_status()\n            return self._parse_xml(resp.text)\n\n    def _parse_xml(self, xml_content: str) -> List[Dict[str, Any]]:\n        root = ET.fromstring(xml_content)\n        articles = []\n        \n        for article in root.findall(\".//PubmedArticle\"):\n            title = article.find(\".//ArticleTitle\")\n            title_text = title.text if title is not None else \"No Title\"\n            \n            abstract_texts = article.findall(\".//AbstractText\")\n            abstract = \" \".join([t.text for t in abstract_texts if t.text])\n            \n            pmid = article.find(\".//PMID\")\n            pmid_text = pmid.text if pmid is not None else \"N/A\"\n            \n            articles.append({\n                \"title\": title_text,\n                \"abstract\": abstract,\n                \"pmid\": pmid_text,\n                \"url\": f\"https://pubmed.ncbi.nlm.nih.gov/{pmid_text}/\"\n            })\n        return articles\n\n    def _format_results(self, articles: List[Dict[str, Any]]) -> str:\n        output = \"PubMed Search Results:\\n\\n\"\n        for i, art in enumerate(articles, 1):\n            output += f\"{i}. {art['title']}\\n\"\n            output += f\"   PMID: {art['pmid']} | URL: {art['url']}\\n\"\n            output += f\"   Abstract: {art['abstract'][:500]}...\\n\\n\" # Truncate abstract\n        return output\n",
+        "last_modified": "2025-12-25T21:22:15.348743"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.905747",
+  "last_updated": "2025-12-25T01:36:13.920211"
+}

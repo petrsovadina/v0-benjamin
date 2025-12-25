@@ -1,0 +1,28 @@
+{
+  "file_path": "backend/data_processing/loaders/pricing_loader.py",
+  "main_branch_history": [],
+  "task_views": {
+    "001-complete-guidelines-rag-pdf-import": {
+      "task_id": "001-complete-guidelines-rag-pdf-import",
+      "branch_point": {
+        "commit_hash": "d092d181e511c0ef7a36dcfd2dfe3f083cbae73e",
+        "content": "",
+        "timestamp": "2025-12-25T01:35:52.079046"
+      },
+      "worktree_state": {
+        "content": "from typing import List, Dict, Any\nimport logging\nfrom backend.data_processing.utils.supabase_client import SupabaseSingleton\n\nlogger = logging.getLogger(__name__)\n\nclass PricingLoader:\n    \"\"\"\n    Loads pricing data into Supabase 'drug_pricing' table.\n    \"\"\"\n    def __init__(self):\n        self.supabase = SupabaseSingleton.get_client()\n\n    def load_pricing(self, pricing_items: List[Dict[str, Any]], batch_size: int = 100):\n        total = len(pricing_items)\n        logger.info(f\"Starting update of pricing for {total} items in 'drugs' table...\")\n        \n        # We need to transform items to match 'drugs' columns\n        # parser returns: sukl_code, max_price_manufacturer, reimbursement_amount, max_copayment, coverage_type, is_reimbursed, valid_from\n        # drugs table has: sukl_code, max_price, patient_copay, is_reimbursed, reimbursement_group...\n        \n        for i in range(0, total, batch_size):\n            batch = pricing_items[i : i + batch_size]\n            \n            # Prepare updates batch\n            updates = []\n            for item in batch:\n                updates.append({\n                    \"sukl_code\": item[\"sukl_code\"],\n                    \"name\": item.get(\"name\", \"Nezn\u00e1m\u00fd l\u00e9k\"), # Fallback if missing\n                    \"max_price\": item[\"max_price_manufacturer\"], \n                    \"patient_copay\": item[\"max_copayment\"],\n                    \"is_reimbursed\": item[\"is_reimbursed\"],\n                    \"reimbursement_group\": item[\"coverage_type\"],\n                })\n\n            try:\n                # Upsert is safer than update if we are not sure if drug exists, \n                # but we only want to update existing drugs.\n                # However, supabase-py upsert works well.\n                # Important: We must use on_conflict on sukl_code to update.\n                \n                data = self.supabase.table(\"drugs\").upsert(\n                    updates, \n                    on_conflict=\"sukl_code\"\n                ).execute()\n                \n                logger.info(f\"Updated pricing for batch {i//batch_size + 1}/{(total//batch_size) + 1}\")\n            except Exception as e:\n                logger.error(f\"Error updating pricing batch {i}: {e}\")\n                # Log a few details for debugging\n                if updates:\n                    logger.error(f\"Sample data: {updates[0]}\")\n                \n        logger.info(\"Pricing update complete.\")\n",
+        "last_modified": "2025-12-25T21:22:14.910082"
+      },
+      "task_intent": {
+        "title": "001-complete-guidelines-rag-pdf-import",
+        "description": "",
+        "from_plan": false
+      },
+      "commits_behind_main": 0,
+      "status": "active",
+      "merged_at": null
+    }
+  },
+  "created_at": "2025-12-25T01:36:13.298430",
+  "last_updated": "2025-12-25T01:36:13.311637"
+}

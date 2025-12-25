@@ -1,0 +1,8 @@
+{
+  "feature": "Production CORS Configuration",
+  "description": "# Konfigurace CORS pro produkční prostředí\n\nNahraďte konfiguraci CORS s univerzálními znaky správnými omezeními původu pro nasazení v produkčním prostředí. Implementujte nastavení CORS založené na prostředí, abyste zachovali bezpečnost a zároveň podpořili vývojové pracovní postupy.\n\n## Odůvodnění\nSoučasná konfigurace povoluje všechny původní zdroje (bezpečnostní riziko označené v kódu jako TODO). Nasazení v produkčním prostředí vyžaduje správné řízení přístupu, aby se zabránilo neoprávněnému přístupu k API.\n\n## Příběhy uživatelů\n- Jako vývojář chci nastavení CORS specifické pro dané prostředí, aby bylo API v produkčním prostředí bezpečné a zároveň snadno vyvíjitelné lokálně.\n\n## Kritéria přijatelnosti\n- [ ] Původ CORS je konfigurován prostřednictvím proměnných prostředí.\n- [ ] Produkční prostředí omezuje konkrétní frontendové domény.\n- [ ] Vývojové prostředí povoluje původ localhost.\n- [ ] Preflight požadavky jsou správně zpracovány.\n- [ ] Konfigurace CORS je zdokumentována.",
+  "created_at": "2025-12-24T02:07:45.622Z",
+  "updated_at": "2025-12-25T01:35:31.264Z",
+  "status": "pending",
+  "phases": []
+}

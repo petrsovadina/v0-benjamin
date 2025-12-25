@@ -1,0 +1,142 @@
+{
+  "project_name": "Czech MedAI (Benjamin)",
+  "project_type": "web-app",
+  "tech_stack": {
+    "primary_language": "TypeScript",
+    "frameworks": [
+      "Next.js 16",
+      "FastAPI",
+      "React 19",
+      "LangGraph",
+      "Tailwind CSS 4"
+    ],
+    "key_dependencies": [
+      "@supabase/supabase-js",
+      "Radix UI",
+      "React Hook Form",
+      "Zod",
+      "LangChain",
+      "pgvector",
+      "Anthropic Claude 3.5",
+      "OpenAI GPT-4o"
+    ]
+  },
+  "target_audience": {
+    "primary_persona": "Czech healthcare professionals (doctors, physicians) who need quick, reliable, evidence-based clinical information in Czech language",
+    "secondary_personas": [
+      "Hospital administrators seeking AI tools for medical staff",
+      "Clinic chain managers looking for integrated healthcare solutions",
+      "Healthcare IT departments evaluating EHR integrations"
+    ],
+    "pain_points": [
+      "Time-consuming search for evidence-based clinical answers in Czech",
+      "Difficulty verifying VZP (health insurance) reimbursements for medications",
+      "Lack of AI tools trained on Czech medical data (SÚKL, guidelines)",
+      "Need for quick access to drug information, SPC/PIL documents",
+      "Manual generation of medical reports (epikrízy) is tedious",
+      "General LLMs don't understand Czech healthcare terminology and regulations"
+    ],
+    "goals": [
+      "Get rapid evidence-based clinical answers with citations (PubMed, SÚKL, Czech guidelines)",
+      "Quickly verify medication reimbursements through VZP Navigator",
+      "Access comprehensive Czech drug database with semantic search",
+      "Stay updated on SÚKL alerts and medication safety notices",
+      "Automate medical documentation like discharge summaries",
+      "Integrate AI assistant with existing EHR systems"
+    ],
+    "usage_context": "During clinical practice in hospitals and clinics - quick consultations between patient visits, medication verification during prescribing, documentation at end of shift, research for complex cases"
+  },
+  "product_vision": {
+    "one_liner": "AI assistant for Czech doctors providing instant, evidence-based clinical answers with citations from PubMed, SÚKL, and Czech medical guidelines",
+    "problem_statement": "Czech healthcare professionals waste valuable time searching for clinical information across multiple sources (PubMed, SÚKL, VZP, guidelines). General AI assistants lack understanding of Czech medical terminology, local drug databases, and health insurance regulations, making them unreliable for clinical decision support.",
+    "value_proposition": "Czech MedAI is the only AI assistant specifically trained on Czech healthcare data - SÚKL drug database, VZP reimbursement data, and Czech clinical guidelines. It provides trusted, cited answers in seconds rather than minutes, in native Czech language, with GDPR-compliant EU hosting.",
+    "success_metrics": [
+      "Response time under 5 seconds for clinical queries",
+      "Citation accuracy rate above 95%",
+      "User adoption rate among target physicians",
+      "Monthly active users and query volume",
+      "Premium subscription conversion rate",
+      "Reduction in time spent on clinical information lookup (measured via user surveys)",
+      "NPS score from healthcare professional users"
+    ]
+  },
+  "current_state": {
+    "maturity": "mvp",
+    "existing_features": [
+      "AI Chat interface with Czech language support",
+      "Evidence-based responses with PubMed citations",
+      "SÚKL Knowledge Base with semantic drug search",
+      "Drug information including SPC/PIL documents",
+      "VZP Navigator (partial - reimbursement verification)",
+      "Chat history persistence",
+      "User authentication via Supabase",
+      "Dark/light theme support",
+      "Health check endpoints",
+      "API routes for drugs, queries, AI operations"
+    ],
+    "known_gaps": [
+      "Guidelines RAG - PDF import and vector search (in development)",
+      "Complete VZP Navigator with full coverage",
+      "Drug interaction checking",
+      "Epikríza (discharge summary) auto-generation",
+      "EHR integration API",
+      "E2E testing framework",
+      "SÚKL Alerts notification system",
+      "DeepConsult deep analysis feature",
+      "Mobile-responsive optimization"
+    ],
+    "technical_debt": [
+      "CORS set to allow all origins (TODO in main.py - needs production restriction)",
+      "Guideline vector search not implemented (TODO in search_service.py)",
+      "Separate guideline retrieval step needed (TODO in graph.py)",
+      "History interface has incomplete click handling (TODO in component)",
+      "Testing framework not yet configured",
+      "Git merge conflict markers in README.md"
+    ]
+  },
+  "competitive_context": {
+    "alternatives": [
+      "ChatGPT/GPT-4 (general purpose, no Czech medical specialization)",
+      "Google Bard/Gemini (general purpose AI)",
+      "UpToDate (English, subscription-based clinical reference)",
+      "Medscape (English-focused medical reference)",
+      "Isabel Healthcare (diagnostic support, international)",
+      "Manual lookup across SÚKL, VZP, PubMed websites"
+    ],
+    "differentiators": [
+      "Native Czech language support with medical terminology",
+      "Trained on SÚKL drug database - Czech-specific medications",
+      "VZP reimbursement verification (unique to Czech market)",
+      "Czech clinical guidelines integration",
+      "GDPR-compliant EU data hosting",
+      "Designed specifically for Czech healthcare regulatory context",
+      "Evidence citations from local authoritative sources"
+    ],
+    "market_position": "First-mover in Czech healthcare AI assistant market. Positioned as the premium, localized alternative to general-purpose AI tools that lack Czech medical context. Targets the underserved niche of Czech-speaking healthcare professionals who need reliable, citable clinical support.",
+    "competitor_pain_points": [],
+    "competitor_analysis_available": false
+  },
+  "constraints": {
+    "technical": [
+      "Requires OpenAI API key for text embeddings (text-embedding-ada-002)",
+      "Depends on Anthropic Claude or OpenAI for LLM responses",
+      "PostgreSQL with pgvector extension required for vector search",
+      "Supabase dependency for auth, database, and real-time features",
+      "Initial SÚKL data pipeline setup requires several minutes to run"
+    ],
+    "resources": [
+      "Appears to be small development team based on git history",
+      "Active development phase - features being added incrementally",
+      "Proprietary software - not open source"
+    ],
+    "dependencies": [
+      "SÚKL data source for Czech drug information",
+      "VZP API/data for reimbursement information",
+      "PubMed for scientific article citations",
+      "Czech medical guidelines PDFs for RAG",
+      "Third-party LLM providers (Anthropic, OpenAI)",
+      "Supabase cloud infrastructure"
+    ]
+  },
+  "created_at": "2025-12-25T13:45:00Z"
+}
