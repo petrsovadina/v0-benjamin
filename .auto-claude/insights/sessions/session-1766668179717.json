@@ -61,8 +61,52 @@
           "timestamp": "2025-12-25T13:10:04.300Z"
         }
       ]
+    },
+    {
+      "id": "msg-1766712735195",
+      "role": "user",
+      "content": "Jake mame plany s projektem?",
+      "timestamp": "2025-12-26T01:32:15.195Z"
+    },
+    {
+      "id": "msg-1766712803595",
+      "role": "assistant",
+      "content": "Výborně! Podívám se na konkrétní plány projektu - zkontroluju `.auto-claude/roadmap.json` a existující specifikace tasků.\nVýborně! Mám kompletní přehled o plánech projektu. Pojďme to shrnout:\n# 🎯 **Plány s projektem Czech MedAI**\n## 📊 **Aktuální roadmapa**\nProjekt má definovanou **roadmap verze 1.0** s **21 features** rozdělených do **4 hlavních fází**:\n---\n## **FÁZE 1: Foundation & MVP Completion** 📍 *AKTUÁLNÍ PRIORITA*\n**Cíl:** Dokončit MVP, odstranit technický dluh, zajistit produkční připravenost\n### ✅ **Must Have (kritické)**\n1. ✅ **Complete Guidelines RAG PDF Import** (`task-001`)\n   - Import českých doporučených postupů (PDF)\n   - Chunking, embeddingy, vektorová databáze\n   - **Status:** Probíhá implementace\n2. ✅ **Guidelines Semantic Search Endpoint** (`task-002`)\n   - Sémantické vyhledávání v guidelines\n   - Vektorové podobnostní vyhledávání\n   - **Status:** Připraveno k implementaci\n3. ✅ **Production CORS Configuration** (`task-003`)\n   - Bezpečná CORS konfigurace pro produkci\n   - Environment-based nastavení\n   - **Status:** Specifikováno\n4. ✅ **End-to-End Testing Suite** (`task-004`)\n   - E2E testy pro kritické flow\n   - CI/CD integrace\n   - **Status:** Rozpracováno\n5. 🟡 **History Interface Click Handler**\n   - Funkční navigace historie chatu\n   - Obnovení předchozích konverzací\n   - **Status:** Under review\n6. 📄 **GDPR Compliance Documentation**\n   - Kompletní GDPR dokumentace\n   - Privacy policy, data processing agreements\n   - **Status:** Under review\n---\n## **FÁZE 2: Core Clinical Features** 💊\n**Cíl:** High-value klinické funkce, diferenciace od konkurence\n### 🚀 **Should Have (vysoká priorita)**\n7. 💊 **Drug Interaction Checker**\n   - Kontrola lékových interakcí\n   - Severity levels, klinická doporučení\n   - **Impact:** Kritická bezpečnostní funkce\n8. 📋 **AI-Generated Drug Summaries**\n   - AI sumarizace SPC/PIL dokumentů\n   - Rychlý přístup k dávkování, kontraindikacím\n   - **Impact:** Úspora času lékařů\n9. 🔍 **Drug Comparison Tool**\n   - Porovnání léků side-by-side\n   - Ceny, úhrady, účinky, kontraindikace\n   - **Impact:** Podpora rozhodování\n10. 💰 **Enhanced VZP Navigator**\n    - Kompletní verifikace úhrad VZP\n    - Výpočet spoluúčasti pacienta\n    - Návrhy alternativ s úhradou\n    - **Impact:** Unikátní differentiator!\n---\n## **FÁZE 3: Enhanced User Experience** 🎤\n**Cíl:** Zlepšení klinického workflow, rychlejší použití\n11. 🎤 **Voice Query Interface**\n    - Hlasové dotazy (hands-free)\n    - Integrace Whisper API\n    - **Impact:** Použitelnost během vyšetření\n12. 👤 **Patient Context Management**\n    - Perzistentní kontext pacienta\n    - Alergie, medikace, diagnózy\n    - **Impact:** Personalizovaná doporučení\n13. ⚠️ **Prescription Safety Alerts**\n    - Upozornění na konflikty s alergií\n    - Kontraindikace s diagnózami\n    - **Impact:** Prevence chyb\n14. 📝 **Clinical Query Templates**\n    - Šablony pro časté dotazy\n    - Specializované promptní šablony\n    - **Impact:** Konzistentní kvalita\n15. ⭐ **Favorites and Quick Access**\n    - Oblíbené léky, guidelines, dotazy\n    - Customizovatelný dashboard\n    - **Impact:** Zvýšená efektivita\n---\n## **FÁZE 4: Scale & Growth** 🚀\n**Cíl:** Škálování, týmová spolupráce, integrace\n16. 👥 **Team and Clinic Management**\n    - Multi-user přístup\n    - Role-based permissions\n    - **Impact:** Enterprise adoption\n17. 📊 **Usage Analytics Dashboard**\n    - Analytika využití\n    - Popular topics, metriky kvality\n    - **Impact:** Data-driven improvements\n18. 🔌 **Public API for Integrations**\n    - Veřejné API pro HIS/EHR integrace\n    - OAuth, rate limiting\n    - **Impact:** Embedding do klinických systémů\n19. 🌍 **Multi-Language Support**\n    - Slovenština jako první\n    - **Impact:** Expanze na nové trhy\n---\n## 📈 **Prioritizace (MoSCoW)**\n| Priorita | Počet | Funkce |\n|----------|-------|--------|\n| **Must Have** | 7 | Guidelines RAG, Search, CORS, E2E tests, History, GDPR |\n| **Should Have** | 8 | Drug checker, Summaries, VZP Navigator, Voice, Patient context |\n| **Could Have** | 5 | Templates, Favorites, Team mgmt, Analytics, API |\n| **Won't Have** | 1 | Multi-language (zatím odloženo) |\n---\n## 🎯 **Komplexita vs. Impact**\n### **High Impact + High Complexity** ⚠️\n- Guidelines RAG Import\n- Drug Interaction Checker\n- Patient Context Management\n- Enhanced VZP Navigator\n### **High Impact + Medium Complexity** ✨ *SWEET SPOT*\n- Guidelines Search Endpoint\n- AI Drug Summaries\n- Voice Interface\n### **Quick Wins** ⚡ (Low Complexity + Medium Impact)\n- History Click Handler\n- Production CORS\n- Clinical Templates\n---\n## 🔥 **Co je TERAZ priorita?**\n### **Immediate Focus (Q1 2025)**\n1. ✅ Dokončit **Guidelines RAG Pipeline** (task-001)\n2. ✅ Implementovat **Guidelines Search** (task-002)\n3. ✅ Opravit **History Interface** (jednoduchá oprava)\n4. ✅ Nastavit **Production CORS** (bezpečnost)\n5. ✅ Rozšířit **E2E Testing** (stabilita)\n### **Next Up (Q2 2025)**\n- Drug Interaction Checker\n- Enhanced VZP Navigator (propojení s reálnou DB)\n- AI Drug Summaries\n---\n## 💡 **Strategické závěry**\n### **Unikátní differentiátory**\n1. 🇨🇿 **České guidelines** - žádná konkurence\n2. 💰 **VZP Navigator** - unikátní funkce\n3. 📋 **SÚKL integrace** - lokální data\n4. 🔒 **GDPR compliance** - EU hosting vs. US nástroje\n### **Konkurenční výhody**\n- UpToDate nemá české guidelines ani VZP\n- ChatGPT/Claude nemají kontext českého zdravotnictví\n- SÚKL web je pomalý a neprohledávatelný\n---\n## 🚦 **Status Overview**\n| Status | Počet features | Funkce |\n|--------|----------------|--------|\n| ✅ **Planned** | 4 | Guidelines Import/Search, CORS, E2E tests |\n| 🟡 **Under Review** | 17 | Většina features ve fázích 2-4 |\n| 🚀 **In Progress** | ~1-2 | Guidelines Import (právě implementuješ) |\n| ✔️ **Completed** | 0 | Zatím žádná z roadmapy dokončená |\n---\n**Chceš se ponořit do detailů některé fáze nebo featury? Nebo chceš diskutovat o prioritizaci?** 🚀",
+      "timestamp": "2025-12-26T01:33:23.595Z",
+      "toolsUsed": [
+        {
+          "name": "Read",
+          "input": ".../Develope/v0-benjamin/.auto-claude/roadmap.json",
+          "timestamp": "2025-12-26T01:32:22.108Z"
+        },
+        {
+          "name": "Bash",
+          "input": "",
+          "timestamp": "2025-12-26T01:32:22.956Z"
+        },
+        {
+          "name": "Bash",
+          "input": "",
+          "timestamp": "2025-12-26T01:32:26.929Z"
+        },
+        {
+          "name": "Read",
+          "input": "...sovadina/Desktop/Develope/v0-benjamin/README.md",
+          "timestamp": "2025-12-26T01:32:27.536Z"
+        },
+        {
+          "name": "Read",
+          "input": "...e/v0-benjamin/.auto-claude/roadmap/roadmap.json",
+          "timestamp": "2025-12-26T01:32:32.261Z"
+        },
+        {
+          "name": "Bash",
+          "input": "",
+          "timestamp": "2025-12-26T01:32:32.946Z"
+        }
+      ]
     }
   ],
   "createdAt": "2025-12-25T13:09:39.717Z",
-  "updatedAt": "2025-12-25T13:10:57.938Z"
+  "updatedAt": "2025-12-26T01:33:23.595Z"
 }

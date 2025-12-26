@@ -15,7 +15,9 @@
           "id": "subtask-1-1",
           "description": "Add Playwright and v8-to-istanbul to package.json devDependencies",
           "service": "main",
-          "files_to_modify": ["package.json"],
+          "files_to_modify": [
+            "package.json"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -30,8 +32,12 @@
           "description": "Create playwright.config.ts with setup project, webServer, and Chromium configuration",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["playwright.config.ts"],
-          "patterns_from": ["spec.md"],
+          "files_to_create": [
+            "playwright.config.ts"
+          ],
+          "patterns_from": [
+            "spec.md"
+          ],
           "verification": {
             "type": "command",
             "command": "test -f playwright.config.ts && echo 'OK'",
@@ -43,7 +49,9 @@
           "id": "subtask-1-3",
           "description": "Update .gitignore to exclude playwright/.auth/, playwright-report/, test-results/",
           "service": "main",
-          "files_to_modify": [".gitignore"],
+          "files_to_modify": [
+            ".gitignore"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -60,7 +68,9 @@
       "name": "Authentication E2E Tests",
       "type": "implementation",
       "description": "Create auth setup for session persistence and authentication flow tests covering login, logout, session management",
-      "depends_on": ["phase-1-setup"],
+      "depends_on": [
+        "phase-1-setup"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
@@ -68,8 +78,13 @@
           "description": "Create auth.setup.ts to authenticate and save session state to playwright/.auth/user.json",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["tests/auth.setup.ts"],
-          "patterns_from": ["components/auth/login-form.tsx", "lib/auth-actions.ts"],
+          "files_to_create": [
+            "tests/auth.setup.ts"
+          ],
+          "patterns_from": [
+            "components/auth/login-form.tsx",
+            "lib/auth-actions.ts"
+          ],
           "verification": {
             "type": "command",
             "command": "test -f tests/auth.setup.ts && echo 'OK'",
@@ -83,8 +98,13 @@
           "description": "Create auth.spec.ts with login, logout, invalid credentials, and protected route tests",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["tests/auth.spec.ts"],
-          "patterns_from": ["components/auth/login-form.tsx", "lib/auth-actions.ts"],
+          "files_to_create": [
+            "tests/auth.spec.ts"
+          ],
+          "patterns_from": [
+            "components/auth/login-form.tsx",
+            "lib/auth-actions.ts"
+          ],
           "verification": {
             "type": "command",
             "command": "grep -q 'login with valid credentials' tests/auth.spec.ts && echo 'OK'",
@@ -100,7 +120,9 @@
       "name": "AI Chat E2E Tests",
       "type": "implementation",
       "description": "Create E2E tests for AI chat flow covering query/response, citations, and error handling",
-      "depends_on": ["phase-2-auth"],
+      "depends_on": [
+        "phase-2-auth"
+      ],
       "parallel_safe": true,
       "subtasks": [
         {
@@ -108,8 +130,12 @@
           "description": "Create chat.spec.ts with initial greeting, message sending, response verification, and API mocking tests",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["tests/chat.spec.ts"],
-          "patterns_from": ["components/dashboard/chat-interface.tsx"],
+          "files_to_create": [
+            "tests/chat.spec.ts"
+          ],
+          "patterns_from": [
+            "components/dashboard/chat-interface.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "grep -q 'displays initial AI greeting' tests/chat.spec.ts && echo 'OK'",
@@ -125,7 +151,9 @@
       "name": "Drug Search E2E Tests",
       "type": "implementation",
       "description": "Create E2E tests for drug search functionality with SUKL data integration",
-      "depends_on": ["phase-2-auth"],
+      "depends_on": [
+        "phase-2-auth"
+      ],
       "parallel_safe": true,
       "subtasks": [
         {
@@ -133,8 +161,12 @@
           "description": "Create drug-search.spec.ts with search by name, ATC code, empty results, and result display tests",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["tests/drug-search.spec.ts"],
-          "patterns_from": ["components/dashboard/vzp-search-interface.tsx"],
+          "files_to_create": [
+            "tests/drug-search.spec.ts"
+          ],
+          "patterns_from": [
+            "components/dashboard/vzp-search-interface.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "grep -q 'search by drug name' tests/drug-search.spec.ts && echo 'OK'",
@@ -150,7 +182,9 @@
       "name": "VZP Verification E2E Tests",
       "type": "implementation",
       "description": "Create E2E tests for VZP insurance verification covering coverage status display",
-      "depends_on": ["phase-2-auth"],
+      "depends_on": [
+        "phase-2-auth"
+      ],
       "parallel_safe": true,
       "subtasks": [
         {
@@ -158,8 +192,12 @@
           "description": "Create vzp-verification.spec.ts with VZP search, coverage status (full/partial/limited), and empty results tests",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["tests/vzp-verification.spec.ts"],
-          "patterns_from": ["components/dashboard/vzp-search-interface.tsx"],
+          "files_to_create": [
+            "tests/vzp-verification.spec.ts"
+          ],
+          "patterns_from": [
+            "components/dashboard/vzp-search-interface.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "grep -q 'displays coverage status' tests/vzp-verification.spec.ts && echo 'OK'",
@@ -175,7 +213,11 @@
       "name": "CI/CD Integration",
       "type": "implementation",
       "description": "Create GitHub Actions workflow for Playwright tests and update existing CI pipeline",
-      "depends_on": ["phase-3-chat", "phase-4-drugs", "phase-5-vzp"],
+      "depends_on": [
+        "phase-3-chat",
+        "phase-4-drugs",
+        "phase-5-vzp"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
@@ -183,8 +225,12 @@
           "description": "Create .github/workflows/playwright.yml with Playwright installation, test run, and artifact upload",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": [".github/workflows/playwright.yml"],
-          "patterns_from": [".github/workflows/ci.yml"],
+          "files_to_create": [
+            ".github/workflows/playwright.yml"
+          ],
+          "patterns_from": [
+            ".github/workflows/ci.yml"
+          ],
           "verification": {
             "type": "command",
             "command": "test -f .github/workflows/playwright.yml && echo 'OK'",
@@ -197,7 +243,9 @@
           "id": "subtask-6-2",
           "description": "Add e2e-test job to existing ci.yml that depends on frontend-build",
           "service": "main",
-          "files_to_modify": [".github/workflows/ci.yml"],
+          "files_to_modify": [
+            ".github/workflows/ci.yml"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -215,7 +263,9 @@
       "name": "Final Verification",
       "type": "integration",
       "description": "Run all tests locally and verify CI configuration is correct",
-      "depends_on": ["phase-6-ci"],
+      "depends_on": [
+        "phase-6-ci"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
@@ -252,12 +302,18 @@
   "summary": {
     "total_phases": 7,
     "total_subtasks": 11,
-    "services_involved": ["main"],
+    "services_involved": [
+      "main"
+    ],
     "parallelism": {
       "max_parallel_phases": 3,
       "parallel_groups": [
         {
-          "phases": ["phase-3-chat", "phase-4-drugs", "phase-5-vzp"],
+          "phases": [
+            "phase-3-chat",
+            "phase-4-drugs",
+            "phase-5-vzp"
+          ],
           "reason": "All depend only on phase-2-auth, different test files with no conflicts"
         }
       ],
@@ -270,7 +326,9 @@
     "risk_level": "medium",
     "skip_validation": false,
     "test_creation_phase": "post_implementation",
-    "test_types_required": ["integration"],
+    "test_types_required": [
+      "integration"
+    ],
     "security_scanning_required": false,
     "staging_deployment_required": false,
     "acceptance_criteria": [
@@ -317,21 +375,56 @@
     },
     "integration_tests": {
       "required": true,
-      "commands": ["npx playwright test --project=chromium"],
-      "services_to_test": ["main"]
+      "commands": [
+        "npx playwright test --project=chromium"
+      ],
+      "services_to_test": [
+        "main"
+      ]
     },
     "e2e_tests": {
       "required": true,
-      "commands": ["npx playwright test"],
-      "flows": ["auth-login", "auth-logout", "chat-query", "drug-search", "vzp-verification"]
+      "commands": [
+        "npx playwright test"
+      ],
+      "flows": [
+        "auth-login",
+        "auth-logout",
+        "chat-query",
+        "drug-search",
+        "vzp-verification"
+      ]
     },
     "browser_verification": {
       "required": true,
       "pages": [
-        {"url": "http://localhost:3000/auth/login", "checks": ["renders", "form-fields-present"]},
-        {"url": "http://localhost:3000/dashboard", "checks": ["requires-auth", "redirects-if-unauthenticated"]},
-        {"url": "http://localhost:3000/dashboard/chat", "checks": ["chat-input-visible", "initial-message-shown"]},
-        {"url": "http://localhost:3000/dashboard/vzp-navigator", "checks": ["search-form-visible"]}
+        {
+          "url": "http://localhost:3000/auth/login",
+          "checks": [
+            "renders",
+            "form-fields-present"
+          ]
+        },
+        {
+          "url": "http://localhost:3000/dashboard",
+          "checks": [
+            "requires-auth",
+            "redirects-if-unauthenticated"
+          ]
+        },
+        {
+          "url": "http://localhost:3000/dashboard/chat",
+          "checks": [
+            "chat-input-visible",
+            "initial-message-shown"
+          ]
+        },
+        {
+          "url": "http://localhost:3000/dashboard/vzp-navigator",
+          "checks": [
+            "search-form-visible"
+          ]
+        }
       ]
     },
     "database_verification": {
@@ -350,6 +443,8 @@
   },
   "qa_signoff": null,
   "created_at": "2025-12-24T02:08:03.198Z",
-  "updated_at": "2025-12-26T02:30:00.000Z",
-  "status": "pending"
+  "updated_at": "2025-12-26T01:38:36.498Z",
+  "status": "done",
+  "planStatus": "completed",
+  "recoveryNote": "Task recovered from stuck state at 2025-12-26T01:37:55.640Z"
 }

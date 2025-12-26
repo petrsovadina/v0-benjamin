@@ -6,13 +6,14 @@
   "phaseModels": {
     "spec": "opus",
     "planning": "opus",
-    "coding": "sonnet",
-    "qa": "sonnet"
+    "coding": "opus",
+    "qa": "opus"
   },
   "phaseThinking": {
     "spec": "ultrathink",
     "planning": "high",
     "coding": "low",
     "qa": "low"
-  }
+  },
+  "requireReviewBeforeCoding": false
 }

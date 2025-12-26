@@ -16,8 +16,12 @@
           "description": "Create pyproject.toml with pytest and coverage configuration",
           "service": "backend",
           "files_to_modify": [],
-          "files_to_create": ["backend/pyproject.toml"],
-          "patterns_from": ["backend/tests/test_api_integration.py"],
+          "files_to_create": [
+            "backend/pyproject.toml"
+          ],
+          "patterns_from": [
+            "backend/tests/test_api_integration.py"
+          ],
           "verification": {
             "type": "command",
             "command": "cd backend && python -c \"import tomllib; f=open('pyproject.toml','rb'); print('OK' if 'pytest' in str(tomllib.load(f)) else 'FAIL')\"",
@@ -30,8 +34,12 @@
           "description": "Create conftest.py with shared fixtures (mock_supabase, mock_graph_app, TestClient)",
           "service": "backend",
           "files_to_modify": [],
-          "files_to_create": ["backend/tests/conftest.py"],
-          "patterns_from": ["backend/tests/test_api_integration.py"],
+          "files_to_create": [
+            "backend/tests/conftest.py"
+          ],
+          "patterns_from": [
+            "backend/tests/test_api_integration.py"
+          ],
           "verification": {
             "type": "command",
             "command": "cd backend && python -c \"from tests.conftest import mock_supabase, mock_graph_app; print('OK')\"",
@@ -67,7 +75,9 @@
           "id": "subtask-2-1",
           "description": "Add test dependencies to package.json (vitest, testing-library, jsdom)",
           "service": "main",
-          "files_to_modify": ["package.json"],
+          "files_to_modify": [
+            "package.json"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -82,7 +92,9 @@
           "description": "Create vitest.config.ts with jsdom environment and React plugin",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["vitest.config.ts"],
+          "files_to_create": [
+            "vitest.config.ts"
+          ],
           "patterns_from": [],
           "verification": {
             "type": "command",
@@ -96,7 +108,9 @@
           "description": "Create vitest.setup.ts with @testing-library/jest-dom import",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["vitest.setup.ts"],
+          "files_to_create": [
+            "vitest.setup.ts"
+          ],
           "patterns_from": [],
           "verification": {
             "type": "command",
@@ -109,7 +123,9 @@
           "id": "subtask-2-4",
           "description": "Install frontend test dependencies with pnpm",
           "service": "main",
-          "files_to_modify": ["pnpm-lock.yaml"],
+          "files_to_modify": [
+            "pnpm-lock.yaml"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -126,7 +142,9 @@
       "name": "Frontend Component Tests",
       "type": "implementation",
       "description": "Create unit tests for core UI components using React Testing Library",
-      "depends_on": ["phase-2-frontend-setup"],
+      "depends_on": [
+        "phase-2-frontend-setup"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
@@ -134,8 +152,12 @@
           "description": "Create Button component tests (render, click handlers, variants)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["components/__tests__/button.test.tsx"],
-          "patterns_from": ["components/ui/button.tsx"],
+          "files_to_create": [
+            "components/__tests__/button.test.tsx"
+          ],
+          "patterns_from": [
+            "components/ui/button.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run components/__tests__/button.test.tsx --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -148,8 +170,12 @@
           "description": "Create Input component tests (render, placeholder, type handling)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["components/__tests__/input.test.tsx"],
-          "patterns_from": ["components/ui/input.tsx"],
+          "files_to_create": [
+            "components/__tests__/input.test.tsx"
+          ],
+          "patterns_from": [
+            "components/ui/input.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run components/__tests__/input.test.tsx --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -162,8 +188,12 @@
           "description": "Create Card component tests (render, structure, className merging)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["components/__tests__/card.test.tsx"],
-          "patterns_from": ["components/ui/card.tsx"],
+          "files_to_create": [
+            "components/__tests__/card.test.tsx"
+          ],
+          "patterns_from": [
+            "components/ui/card.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run components/__tests__/card.test.tsx --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -176,8 +206,12 @@
           "description": "Create ChatInterface component tests (message rendering, input handling)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["components/__tests__/chat-interface.test.tsx"],
-          "patterns_from": ["components/dashboard/chat-interface.tsx"],
+          "files_to_create": [
+            "components/__tests__/chat-interface.test.tsx"
+          ],
+          "patterns_from": [
+            "components/dashboard/chat-interface.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run components/__tests__/chat-interface.test.tsx --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -190,8 +224,12 @@
           "description": "Create Sidebar component tests (navigation links, active state)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["components/__tests__/sidebar.test.tsx"],
-          "patterns_from": ["components/dashboard/sidebar.tsx"],
+          "files_to_create": [
+            "components/__tests__/sidebar.test.tsx"
+          ],
+          "patterns_from": [
+            "components/dashboard/sidebar.tsx"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run components/__tests__/sidebar.test.tsx --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -206,7 +244,9 @@
       "name": "Frontend Library Tests",
       "type": "implementation",
       "description": "Create unit tests for lib utility functions and server actions",
-      "depends_on": ["phase-2-frontend-setup"],
+      "depends_on": [
+        "phase-2-frontend-setup"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
@@ -214,8 +254,12 @@
           "description": "Create utils.ts tests (cn function, class merging edge cases)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["lib/__tests__/utils.test.ts"],
-          "patterns_from": ["lib/utils.ts"],
+          "files_to_create": [
+            "lib/__tests__/utils.test.ts"
+          ],
+          "patterns_from": [
+            "lib/utils.ts"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run lib/__tests__/utils.test.ts --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -228,8 +272,12 @@
           "description": "Create auth-actions.ts tests (signUp, signIn, signOut with mocked Supabase)",
           "service": "main",
           "files_to_modify": [],
-          "files_to_create": ["lib/__tests__/auth-actions.test.ts"],
-          "patterns_from": ["lib/auth-actions.ts"],
+          "files_to_create": [
+            "lib/__tests__/auth-actions.test.ts"
+          ],
+          "patterns_from": [
+            "lib/auth-actions.ts"
+          ],
           "verification": {
             "type": "command",
             "command": "pnpm vitest run lib/__tests__/auth-actions.test.ts --reporter=verbose 2>&1 | grep -q 'pass' && echo 'OK'",
@@ -244,14 +292,20 @@
       "name": "Integration and Verification",
       "type": "integration",
       "description": "Add npm scripts, update .gitignore, verify end-to-end test execution",
-      "depends_on": ["phase-1-backend-config", "phase-3-component-tests", "phase-4-lib-tests"],
+      "depends_on": [
+        "phase-1-backend-config",
+        "phase-3-component-tests",
+        "phase-4-lib-tests"
+      ],
       "parallel_safe": false,
       "subtasks": [
         {
           "id": "subtask-5-1",
           "description": "Add test and test:coverage scripts to package.json",
           "service": "main",
-          "files_to_modify": ["package.json"],
+          "files_to_modify": [
+            "package.json"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -265,7 +319,9 @@
           "id": "subtask-5-2",
           "description": "Update .gitignore with coverage artifacts (.coverage, htmlcov/, coverage/)",
           "service": "main",
-          "files_to_modify": [".gitignore"],
+          "files_to_modify": [
+            ".gitignore"
+          ],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
@@ -323,16 +379,25 @@
   "summary": {
     "total_phases": 5,
     "total_subtasks": 17,
-    "services_involved": ["main", "backend"],
+    "services_involved": [
+      "main",
+      "backend"
+    ],
     "parallelism": {
       "max_parallel_phases": 2,
       "parallel_groups": [
         {
-          "phases": ["phase-1-backend-config", "phase-2-frontend-setup"],
+          "phases": [
+            "phase-1-backend-config",
+            "phase-2-frontend-setup"
+          ],
           "reason": "Both are setup phases with no dependencies, work on different services"
         },
         {
-          "phases": ["phase-3-component-tests", "phase-4-lib-tests"],
+          "phases": [
+            "phase-3-component-tests",
+            "phase-4-lib-tests"
+          ],
           "reason": "Both depend only on phase-2, create different test files"
         }
       ],
@@ -345,7 +410,10 @@
     "risk_level": "medium",
     "skip_validation": false,
     "test_creation_phase": "during_implementation",
-    "test_types_required": ["unit", "integration"],
+    "test_types_required": [
+      "unit",
+      "integration"
+    ],
     "security_scanning_required": false,
     "staging_deployment_required": false,
     "acceptance_criteria": [
@@ -395,13 +463,20 @@
   "qa_acceptance": {
     "unit_tests": {
       "required": true,
-      "commands": ["pnpm test", "cd backend && python -m pytest tests/"],
+      "commands": [
+        "pnpm test",
+        "cd backend && python -m pytest tests/"
+      ],
       "minimum_coverage": null
     },
     "integration_tests": {
       "required": true,
-      "commands": ["cd backend && python -m pytest tests/test_api_integration.py -v"],
-      "services_to_test": ["backend"]
+      "commands": [
+        "cd backend && python -m pytest tests/test_api_integration.py -v"
+      ],
+      "services_to_test": [
+        "backend"
+      ]
     },
     "e2e_tests": {
       "required": false,
@@ -419,13 +494,50 @@
     "configuration_verification": {
       "required": true,
       "checks": [
-        {"file": "vitest.config.ts", "exists": true, "contains": ["jsdom", "setupFiles"]},
-        {"file": "vitest.setup.ts", "exists": true, "contains": ["@testing-library/jest-dom"]},
-        {"file": "backend/pyproject.toml", "exists": true, "contains": ["pytest", "coverage"]},
-        {"file": "backend/tests/conftest.py", "exists": true, "contains": ["mock_supabase", "fixture"]},
-        {"file": "package.json", "contains": ["test", "vitest", "@testing-library/react"]}
+        {
+          "file": "vitest.config.ts",
+          "exists": true,
+          "contains": [
+            "jsdom",
+            "setupFiles"
+          ]
+        },
+        {
+          "file": "vitest.setup.ts",
+          "exists": true,
+          "contains": [
+            "@testing-library/jest-dom"
+          ]
+        },
+        {
+          "file": "backend/pyproject.toml",
+          "exists": true,
+          "contains": [
+            "pytest",
+            "coverage"
+          ]
+        },
+        {
+          "file": "backend/tests/conftest.py",
+          "exists": true,
+          "contains": [
+            "mock_supabase",
+            "fixture"
+          ]
+        },
+        {
+          "file": "package.json",
+          "contains": [
+            "test",
+            "vitest",
+            "@testing-library/react"
+          ]
+        }
       ]
     }
   },
-  "qa_signoff": null
+  "qa_signoff": null,
+  "status": "done",
+  "planStatus": "completed",
+  "updated_at": "2025-12-26T02:31:39.848Z"
 }

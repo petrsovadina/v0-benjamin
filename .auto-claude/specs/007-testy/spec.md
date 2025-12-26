@@ -1,8 +1,8 @@
-# Specification: E2E Test Suite for MedAI
+# E2E Test Suite for MedAI
 
 ## Overview
+Implementujte komplexní sadu testů End-to-End (E2E) pro českou aplikaci MedAI, lékařskou aplikaci vytvořenou pomocí Next.js a Supabase. Testovací sada bude pokrývat čtyři kritické uživatelské toky: autentizaci (přihlášení/odhlášení/relace), AI chat s ověřením odpovědí, vyhledávání léků s daty SUKL a ověření VZP (české zdravotní pojišťovny). Jedná se o funkci s vysokou prioritou, protože lékařské aplikace vyžadují vysokou spolehlivost – automatizované testování E2E zabraňuje regresím a zajišťuje konzistentní uživatelský zážitek v tomto kontextu zdravotní péče.
 
-Implement a comprehensive End-to-End (E2E) test suite using Playwright for MedAI, a Czech medical application built with Next.js and Supabase. The test suite will cover four critical user flows: authentication (login/logout/session), AI chat with response validation, drug search with SUKL data, and VZP (Czech health insurance) verification. This is a high-priority feature as medical applications require exceptional reliability - automated E2E testing prevents regressions and ensures consistent user experience in a healthcare context.
 
 ## Workflow Type
 

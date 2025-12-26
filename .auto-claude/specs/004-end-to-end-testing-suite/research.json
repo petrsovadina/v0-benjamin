@@ -1,0 +1,447 @@
+{
+  "integrations_researched": [
+    {
+      "name": "Playwright Test",
+      "type": "library",
+      "verified_package": {
+        "name": "@playwright/test",
+        "install_command": "npm i -D @playwright/test",
+        "post_install": "npx playwright install --with-deps",
+        "version": "latest",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "import { test, expect } from '@playwright/test'",
+          "import { defineConfig, devices } from '@playwright/test'"
+        ],
+        "initialization": "// Configuration in playwright.config.ts\nexport default defineConfig({\n  testDir: 'tests',\n  fullyParallel: true,\n  forbidOnly: !!process.env.CI,\n  retries: process.env.CI ? 2 : 0,\n  workers: process.env.CI ? 1 : undefined,\n  reporter: 'html',\n  use: {\n    baseURL: 'http://localhost:3000',\n    trace: 'on-first-retry'\n  }\n});",
+        "key_functions": [
+          "test('name', async ({ page }) => {})",
+          "expect(page).toHaveURL()",
+          "expect(locator).toContainText()",
+          "page.goto(url)",
+          "page.click(selector)",
+          "page.fill(selector, value)",
+          "page.getByRole()",
+          "page.getByLabel()",
+          "page.getByTestId()",
+          "page.waitForURL()",
+          "page.context().storageState()"
+        ],
+        "verified_against": "Context7 MCP: /microsoft/playwright.dev"
+      },
+      "configuration": {
+        "env_vars": [
+          "CI (enables CI-specific behavior)",
+          "PLAYWRIGHT_TEST_BASE_URL (override base URL)"
+        ],
+        "config_files": [
+          "playwright.config.ts"
+        ],
+        "dependencies": []
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "browsers": ["chromium", "firefox", "webkit"],
+        "notes": "Browsers are downloaded via 'npx playwright install --with-deps'"
+      },
+      "gotchas": [
+        "Since v1.38, browsers are NOT automatically downloaded during npm install - must run 'npx playwright install' separately",
+        "On CI, use 'npx playwright install --with-deps' to also install system dependencies",
+        "For authenticated tests, use storageState to avoid login in each test",
+        "webServer config must match Next.js dev server port (3000)",
+        "Use 'reuseExistingServer: !process.env.CI' to avoid conflicts in local dev"
+      ],
+      "research_sources": [
+        "Context7 MCP: /microsoft/playwright.dev",
+        "Context7 MCP: /vercel/next.js (testing/playwright docs)"
+      ]
+    },
+    {
+      "name": "Playwright Authentication Testing",
+      "type": "pattern",
+      "verified_package": {
+        "name": "@playwright/test (same package)",
+        "install_command": "included with @playwright/test",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "import { test as setup } from '@playwright/test'"
+        ],
+        "initialization": "// Authentication setup project in playwright.config.ts\nprojects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.ts/ },\n  {\n    name: 'chromium',\n    use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/user.json' },\n    dependencies: ['setup']\n  }\n]",
+        "key_functions": [
+          "await request.storageState({ path: authFile })",
+          "await page.context().storageState({ path: fileName })",
+          "test.use({ storageState: 'path/to/auth.json' })",
+          "test.use({ storageState: { cookies: [], origins: [] } }) // Reset auth"
+        ],
+        "verified_against": "Context7 MCP: /microsoft/playwright.dev (auth.mdx)"
+      },
+      "configuration": {
+        "storage_state_path": "playwright/.auth/user.json",
+        "notes": "Create auth setup test that logs in and saves storageState"
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "notes": "Authentication state is saved to JSON file and reused across tests"
+      },
+      "gotchas": [
+        "Setup project must be listed in dependencies array of other projects",
+        "storageState files contain sensitive session data - add to .gitignore",
+        "For multi-role testing, create separate auth files per role",
+        "Use 'storageState: { cookies: [], origins: [] }' to test unauthenticated flows"
+      ],
+      "research_sources": [
+        "Context7 MCP: /microsoft/playwright.dev (auth.mdx)"
+      ]
+    },
+    {
+      "name": "Playwright GitHub Actions CI",
+      "type": "infrastructure",
+      "verified_package": {
+        "name": "actions/checkout@v5, actions/setup-node@v5, actions/upload-artifact@v4",
+        "install_command": "N/A - GitHub Actions native",
+        "verified": true
+      },
+      "api_patterns": {
+        "workflow_file": ".github/workflows/playwright.yml",
+        "initialization": "name: Playwright Tests\non:\n  push:\n    branches: [ main, master ]\n  pull_request:\n    branches: [ main, master ]\njobs:\n  test:\n    timeout-minutes: 60\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v5\n    - uses: actions/setup-node@v5\n      with:\n        node-version: lts/*\n    - name: Install dependencies\n      run: npm ci\n    - name: Install Playwright Browsers\n      run: npx playwright install --with-deps\n    - name: Run Playwright tests\n      run: npx playwright test\n    - uses: actions/upload-artifact@v4\n      if: ${{ !cancelled() }}\n      with:\n        name: playwright-report\n        path: playwright-report/\n        retention-days: 30",
+        "key_functions": [
+          "actions/checkout@v5",
+          "actions/setup-node@v5",
+          "npx playwright install --with-deps",
+          "npx playwright test",
+          "actions/upload-artifact@v4"
+        ],
+        "verified_against": "Context7 MCP: /microsoft/playwright.dev (ci-intro.mdx)"
+      },
+      "configuration": {
+        "env_vars": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+          "NEXT_PUBLIC_API_URL"
+        ],
+        "config_files": [
+          ".github/workflows/playwright.yml"
+        ]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "runner": "ubuntu-latest",
+        "timeout": "60 minutes"
+      },
+      "gotchas": [
+        "Use 'if: ${{ !cancelled() }}' to upload report even on test failure",
+        "Set timeout-minutes to prevent hanging tests from consuming runner minutes",
+        "Use '--with-deps' flag to install browser system dependencies on CI",
+        "Consider using 'github' reporter for CI annotations",
+        "For fail-fast on PRs, use --only-changed=$GITHUB_BASE_REF"
+      ],
+      "research_sources": [
+        "Context7 MCP: /microsoft/playwright.dev (ci-intro.mdx, ci.mdx)"
+      ]
+    },
+    {
+      "name": "Playwright Coverage Reporting",
+      "type": "pattern",
+      "verified_package": {
+        "name": "v8-to-istanbul",
+        "install_command": "npm i -D v8-to-istanbul",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "const v8toIstanbul = require('v8-to-istanbul')"
+        ],
+        "initialization": "// Start coverage before navigation\nawait page.coverage.startJSCoverage();\nawait page.goto('url');\nconst coverage = await page.coverage.stopJSCoverage();\n\n// Convert to Istanbul format\nfor (const entry of coverage) {\n  const converter = v8toIstanbul('', 0, { source: entry.source });\n  await converter.load();\n  converter.applyCoverage(entry.functions);\n  console.log(JSON.stringify(converter.toIstanbul()));\n}",
+        "key_functions": [
+          "page.coverage.startJSCoverage()",
+          "page.coverage.stopJSCoverage()",
+          "page.coverage.startCSSCoverage()",
+          "page.coverage.stopCSSCoverage()",
+          "v8toIstanbul.applyCoverage()",
+          "v8toIstanbul.toIstanbul()"
+        ],
+        "verified_against": "Context7 MCP: /microsoft/playwright.dev (class-coverage.mdx)"
+      },
+      "configuration": {
+        "notes": "Coverage API only works with Chromium browsers"
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "notes": "HTML reporter built-in via 'reporter: html' in config"
+      },
+      "gotchas": [
+        "Coverage API is Chromium-only",
+        "Anonymous scripts are not included by default unless they have sourceURLs",
+        "Use 'reporter: html' for built-in HTML test reports",
+        "For full Istanbul reports, use v8-to-istanbul converter"
+      ],
+      "research_sources": [
+        "Context7 MCP: /microsoft/playwright.dev (class-coverage.mdx)"
+      ]
+    },
+    {
+      "name": "Next.js with Playwright",
+      "type": "pattern",
+      "verified_package": {
+        "name": "next + @playwright/test",
+        "install_command": "npm init playwright",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "import { test, expect } from '@playwright/test'"
+        ],
+        "initialization": "// playwright.config.ts with Next.js webServer\nexport default defineConfig({\n  webServer: {\n    command: 'npm run dev',\n    url: 'http://localhost:3000',\n    reuseExistingServer: !process.env.CI,\n  },\n  use: {\n    baseURL: 'http://localhost:3000',\n  },\n});",
+        "key_functions": [
+          "page.goto('/')",
+          "page.click('text=About')",
+          "expect(page).toHaveURL('/about')",
+          "expect(page.locator('h1')).toContainText('About')"
+        ],
+        "verified_against": "Context7 MCP: /vercel/next.js (testing/playwright.mdx)"
+      },
+      "configuration": {
+        "env_vars": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+          "NEXT_PUBLIC_API_URL"
+        ],
+        "config_files": [
+          "playwright.config.ts"
+        ]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "notes": "webServer auto-starts Next.js dev server before tests"
+      },
+      "gotchas": [
+        "Use 'pnpm dev' or 'npm run dev' as webServer command",
+        "Set reuseExistingServer: !process.env.CI to reuse local dev server",
+        "Next.js 16 uses React 19 - ensure Playwright can handle the new features",
+        "For production testing, use 'npm run build && npm run start'"
+      ],
+      "research_sources": [
+        "Context7 MCP: /vercel/next.js (testing/playwright.mdx)"
+      ]
+    },
+    {
+      "name": "Supabase Auth",
+      "type": "service",
+      "verified_package": {
+        "name": "@supabase/supabase-js, @supabase/ssr",
+        "install_command": "Already installed in project",
+        "version": "latest",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "import { createClient } from '@/lib/supabase/client'",
+          "import { createClient } from '@/lib/supabase/server'"
+        ],
+        "initialization": "const supabase = createClient()",
+        "key_functions": [
+          "supabase.auth.signUp({ email, password, options })",
+          "supabase.auth.signInWithPassword({ email, password })",
+          "supabase.auth.signOut()",
+          "supabase.auth.onAuthStateChange((event, session) => {})",
+          "supabase.auth.getSession()"
+        ],
+        "verified_against": "Context7 MCP: /supabase/supabase-js"
+      },
+      "configuration": {
+        "env_vars": [
+          "NEXT_PUBLIC_SUPABASE_URL",
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        ],
+        "config_files": [
+          "lib/supabase/client.ts",
+          "lib/supabase/server.ts"
+        ]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "notes": "Using Supabase hosted service"
+      },
+      "gotchas": [
+        "For E2E testing, create dedicated test users in Supabase",
+        "Session is stored in cookies via @supabase/ssr",
+        "signIn redirects to /dashboard on success",
+        "signOut redirects to /auth/login",
+        "Test environment may need separate Supabase project or mock"
+      ],
+      "research_sources": [
+        "Context7 MCP: /supabase/supabase-js",
+        "Project file: lib/auth-actions.ts"
+      ]
+    },
+    {
+      "name": "Python FastAPI Backend",
+      "type": "service",
+      "verified_package": {
+        "name": "fastapi, uvicorn, pytest, pytest-asyncio",
+        "install_command": "pip install -r backend/requirements.txt",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from fastapi import FastAPI",
+          "import pytest"
+        ],
+        "key_endpoints": [
+          "POST /api/chat - AI query endpoint",
+          "GET /api/drugs - Drug search (SUKL)",
+          "Various /api/v1/* endpoints"
+        ],
+        "verified_against": "Project files: backend/main.py, backend/requirements.txt"
+      },
+      "configuration": {
+        "env_vars": [
+          "ANTHROPIC_API_KEY",
+          "SUPABASE_URL",
+          "SUPABASE_KEY",
+          "OPENAI_API_KEY (optional)"
+        ],
+        "config_files": [
+          "backend/.env"
+        ]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "port": 8000,
+        "notes": "Backend must be running for E2E tests"
+      },
+      "gotchas": [
+        "Backend has 60 req/min rate limit on /api/chat",
+        "Requires ANTHROPIC_API_KEY for AI responses",
+        "Mock API responses for E2E tests to avoid hitting real AI service",
+        "Run from project root: uvicorn backend.main:app --reload --port 8000"
+      ],
+      "research_sources": [
+        "Project file: backend/main.py",
+        "Project file: CLAUDE.md"
+      ]
+    }
+  ],
+  "project_analysis": {
+    "existing_auth_routes": [
+      "/auth/login",
+      "/auth/register",
+      "/auth/forgot-password",
+      "/auth/reset-password"
+    ],
+    "protected_routes": [
+      "/dashboard",
+      "/dashboard/chat",
+      "/dashboard/history",
+      "/dashboard/settings",
+      "/dashboard/vzp-navigator",
+      "/dashboard/epikriza",
+      "/dashboard/guidelines",
+      "/dashboard/translator"
+    ],
+    "api_routes": [
+      "/api/chat",
+      "/api/epicrisis",
+      "/api/transcribe",
+      "/api/translate"
+    ],
+    "auth_implementation": {
+      "library": "@supabase/ssr",
+      "server_actions": "lib/auth-actions.ts (signUp, signIn, signOut)",
+      "client_context": "lib/auth-context.tsx",
+      "middleware": "middleware.ts"
+    },
+    "current_test_status": {
+      "frontend_e2e": "Not configured - no playwright.config.ts",
+      "backend_tests": "Exists in backend/tests/ using pytest",
+      "ci_pipeline": "Exists in .github/workflows/ci.yml - runs backend tests only"
+    }
+  },
+  "unverified_claims": [
+    {
+      "claim": "VZP verification process endpoint",
+      "reason": "Could not find specific VZP verification API endpoint in codebase - may be part of backend or LangGraph flow",
+      "risk_level": "medium"
+    },
+    {
+      "claim": "SUKL data integration endpoint",
+      "reason": "Drug search is mentioned but specific API endpoint for frontend not clearly identified in API routes",
+      "risk_level": "low"
+    }
+  ],
+  "recommendations": [
+    "Create dedicated test user credentials in Supabase for E2E testing",
+    "Consider mocking AI responses for faster, more reliable E2E tests",
+    "Use Playwright's webServer config to start both frontend (port 3000) and backend (port 8000)",
+    "Add playwright/.auth/ to .gitignore for authentication state files",
+    "Use HTML reporter for test results + CI artifact upload",
+    "Create separate test project for authenticated vs unauthenticated flows",
+    "Consider using test.describe.parallel() for independent test suites",
+    "For VZP/SUKL testing, may need to mock backend responses or use test database"
+  ],
+  "test_flow_recommendations": {
+    "authentication_flow": {
+      "tests": [
+        "Login with valid credentials -> redirect to dashboard",
+        "Login with invalid credentials -> show error",
+        "Registration with new email -> success message",
+        "Registration with existing email -> show error",
+        "Forgot password flow",
+        "Session persistence after page reload",
+        "Logout -> redirect to login"
+      ],
+      "selectors_to_use": [
+        "getByLabel('Email')",
+        "getByLabel('Heslo') or getByLabel('Password')",
+        "getByRole('button', { name: 'Přihlásit' })",
+        "getByRole('button', { name: 'Registrovat' })"
+      ]
+    },
+    "ai_chat_flow": {
+      "tests": [
+        "Submit query -> receive AI response",
+        "Response contains expected structure",
+        "Query history is saved",
+        "Error handling for API failures"
+      ],
+      "considerations": [
+        "Mock AI responses for speed/reliability",
+        "Verify response container appears",
+        "Check for loading states"
+      ]
+    },
+    "drug_search_flow": {
+      "tests": [
+        "Search for drug by name",
+        "View drug details",
+        "Filter/sort results"
+      ],
+      "considerations": [
+        "May need seed data in test database",
+        "Consider SUKL data availability"
+      ]
+    },
+    "vzp_verification_flow": {
+      "tests": [
+        "Navigate to VZP Navigator",
+        "Complete verification process",
+        "View results"
+      ],
+      "considerations": [
+        "Understand the exact user flow first",
+        "May need specific test data"
+      ]
+    }
+  },
+  "context7_libraries_used": [
+    "/microsoft/playwright.dev",
+    "/vercel/next.js",
+    "/supabase/supabase-js",
+    "/supabase/supabase"
+  ],
+  "created_at": "2024-12-26T02:30:00Z"
+}
