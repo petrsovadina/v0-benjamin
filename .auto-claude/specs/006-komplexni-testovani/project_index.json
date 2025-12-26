@@ -1,0 +1,658 @@
+{
+  "project_root": "/Users/petrsovadina/Desktop/Develope/v0-benjamin",
+  "project_type": "single",
+  "services": {
+    "main": {
+      "name": "main",
+      "path": "/Users/petrsovadina/Desktop/Develope/v0-benjamin",
+      "language": "TypeScript",
+      "framework": "Next.js",
+      "type": "frontend",
+      "package_manager": "pnpm",
+      "default_port": 3000,
+      "styling": "Tailwind CSS",
+      "dev_command": "npm run dev",
+      "key_directories": {
+        "lib": {
+          "path": "lib",
+          "purpose": "Library code"
+        },
+        "app": {
+          "path": "app",
+          "purpose": "Application code"
+        },
+        "components": {
+          "path": "components",
+          "purpose": "UI components"
+        }
+      },
+      "dependencies": [
+        "@hookform/resolvers",
+        "@radix-ui/react-accordion",
+        "@radix-ui/react-alert-dialog",
+        "@radix-ui/react-aspect-ratio",
+        "@radix-ui/react-avatar",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-collapsible",
+        "@radix-ui/react-context-menu",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-dropdown-menu",
+        "@radix-ui/react-hover-card",
+        "@radix-ui/react-label",
+        "@radix-ui/react-menubar",
+        "@radix-ui/react-navigation-menu",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-progress",
+        "@radix-ui/react-radio-group",
+        "@radix-ui/react-scroll-area",
+        "@radix-ui/react-select",
+        "@radix-ui/react-separator"
+      ],
+      "dev_dependencies": [
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "eslint",
+        "eslint-config-next",
+        "postcss",
+        "supabase",
+        "tailwindcss",
+        "tw-animate-css"
+      ],
+      "dockerfile": "Dockerfile",
+      "environment": {
+        "variables": {
+          "NEXT_PUBLIC_API_URL": {
+            "value": "http://localhost:8000",
+            "source": ".env",
+            "type": "url",
+            "sensitive": false,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_URL": {
+            "value": "https://higziqzcjmtmkzxbbzik.supabase.co",
+            "source": ".env.local",
+            "type": "url",
+            "sensitive": false,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+            "value": "<REDACTED>",
+            "source": ".env",
+            "type": "string",
+            "sensitive": true,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY": {
+            "value": "<REDACTED>",
+            "source": ".env.local",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_PORT": {
+            "value": "8080",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_API_KEY": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_RATE_LIMIT_ENABLED": {
+            "value": "true",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_RATE_LIMIT_WINDOW_MS": {
+            "value": "60000",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_RATE_LIMIT_MAX_REQUESTS": {
+            "value": "100",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_LOG_AUTH": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_TELEMETRY": {
+            "value": "false",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_MODE": {
+            "value": "standard # standard | langgraph",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_METADATA_BACKEND": {
+            "value": "sqlite",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_DB_PATH": {
+            "value": "./data/openmemory.sqlite",
+            "source": "../.env",
+            "type": "path",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_HOST": {
+            "value": "localhost",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_PORT": {
+            "value": "5432",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_DB": {
+            "value": "openmemory",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_USER": {
+            "value": "postgres",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_PASSWORD": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_PG_SCHEMA": {
+            "value": "public",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_TABLE": {
+            "value": "openmemory_memories",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_PG_SSL": {
+            "value": "disable # disable | require",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_VECTOR_BACKEND": {
+            "value": "sqlite",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_VECTOR_TABLE": {
+            "value": "openmemory_vectors",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_WEAVIATE_URL": {
+            "value": "",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_WEAVIATE_API_KEY": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_WEAVIATE_CLASS": {
+            "value": "OpenMemory",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_EMBEDDINGS": {
+            "value": "openai",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_EMBED_MODE": {
+            "value": "simple",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_ADV_EMBED_PARALLEL": {
+            "value": "false",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_EMBED_DELAY_MS": {
+            "value": "200",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_MAX_PAYLOAD_SIZE": {
+            "value": "1000000",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OPENAI_API_KEY": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "GEMINI_API_KEY": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "AWS_ACCESS_KEY_ID": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "AWS_SECRET_ACCESS_KEY": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "AWS_REGION": {
+            "value": "us-east-1",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OLLAMA_URL": {
+            "value": "http://localhost:11434",
+            "source": "../.env",
+            "type": "url",
+            "sensitive": false,
+            "required": false
+          },
+          "LOCAL_MODEL_PATH": {
+            "value": "/path/to/your/local/model",
+            "source": "../.env",
+            "type": "path",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_TIER": {
+            "value": "hybrid",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_KEYWORD_BOOST": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_KEYWORD_MIN_LENGTH": {
+            "value": "<REDACTED>",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": true,
+            "required": false
+          },
+          "OM_MIN_SCORE": {
+            "value": "0.3",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_DECAY_INTERVAL_MINUTES": {
+            "value": "120",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_DECAY_THREADS": {
+            "value": "3",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_DECAY_COLD_THRESHOLD": {
+            "value": "0.25",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_DECAY_REINFORCE_ON_QUERY": {
+            "value": "true",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_REGENERATION_ENABLED": {
+            "value": "true",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_MAX_VECTOR_DIM": {
+            "value": "1536",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_MIN_VECTOR_DIM": {
+            "value": "64",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_SUMMARY_LAYERS": {
+            "value": "3",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_USE_SUMMARY_ONLY": {
+            "value": "true",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_SUMMARY_MAX_LENGTH": {
+            "value": "300",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_SEG_SIZE": {
+            "value": "10000",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_AUTO_REFLECT": {
+            "value": "false",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_REFLECT_INTERVAL": {
+            "value": "10",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_REFLECT_MIN_MEMORIES": {
+            "value": "20",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_COMPRESSION_ENABLED": {
+            "value": "false",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_COMPRESSION_MIN_LENGTH": {
+            "value": "100",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_COMPRESSION_ALGORITHM": {
+            "value": "auto",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_LG_NAMESPACE": {
+            "value": "default",
+            "source": "../.env",
+            "type": "string",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_LG_MAX_CONTEXT": {
+            "value": "50",
+            "source": "../.env",
+            "type": "number",
+            "sensitive": false,
+            "required": false
+          },
+          "OM_LG_REFLECTIVE": {
+            "value": "true",
+            "source": "../.env",
+            "type": "boolean",
+            "sensitive": false,
+            "required": false
+          }
+        },
+        "required_count": 3,
+        "optional_count": 0,
+        "detected_count": 63
+      },
+      "api": {
+        "routes": [
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          }
+        ],
+        "total_routes": 13,
+        "methods": [
+          "POST",
+          "GET"
+        ],
+        "protected_routes": []
+      },
+      "monitoring": {
+        "health_checks": [
+          "/health",
+          "/health"
+        ]
+      }
+    }
+  },
+  "infrastructure": {
+    "dockerfile": "Dockerfile",
+    "ci": "GitHub Actions",
+    "ci_workflows": [
+      "issue-solver.yml",
+      "ci.yml"
+    ]
+  },
+  "conventions": {
+    "typescript": true
+  }
+}

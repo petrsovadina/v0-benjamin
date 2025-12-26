@@ -1,0 +1,23 @@
+{
+  "sourceType": "manual",
+  "category": "testing",
+  "priority": "urgent",
+  "complexity": "complex",
+  "impact": "high",
+  "model": "opus",
+  "thinkingLevel": "high",
+  "isAutoProfile": true,
+  "phaseModels": {
+    "spec": "opus",
+    "planning": "opus",
+    "coding": "sonnet",
+    "qa": "sonnet"
+  },
+  "phaseThinking": {
+    "spec": "ultrathink",
+    "planning": "high",
+    "coding": "low",
+    "qa": "low"
+  },
+  "baseBranch": "auto-claude"
+}
