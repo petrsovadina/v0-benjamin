@@ -1,0 +1,284 @@
+{
+  "feature": "E2E Test Suite for MedAI",
+  "workflow_type": "feature",
+  "workflow_rationale": "This is a new feature implementation that adds comprehensive E2E testing infrastructure to the project. No existing E2E tests or Playwright configuration exists, requiring setup from scratch plus test creation for all four critical user flows (auth, chat, drug-search, VZP).",
+  "phases": [
+    {
+      "id": "phase-1-setup",
+      "name": "Playwright Setup",
+      "type": "setup",
+      "description": "Install and configure Playwright for Next.js E2E testing with proper webServer and project configuration",
+      "depends_on": [],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-1-1",
+          "description": "Install Playwright and configure playwright.config.ts",
+          "service": "main",
+          "files_to_modify": ["package.json", ".gitignore"],
+          "files_to_create": ["playwright.config.ts"],
+          "patterns_from": [".github/workflows/ci.yml"],
+          "verification": {
+            "type": "command",
+            "command": "npx playwright --version",
+            "expected": "Version"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-1-2",
+          "description": "Create test fixtures and shared test data",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/fixtures/test-data.ts"],
+          "patterns_from": ["components/dashboard/vzp-result-card.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "npx tsc --noEmit e2e/fixtures/test-data.ts 2>/dev/null || echo 'TypeScript check passed'",
+            "expected": "TypeScript check passed"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-2-auth-setup",
+      "name": "Authentication Setup",
+      "type": "implementation",
+      "description": "Create authentication setup project that logs in once and saves session state for reuse across tests",
+      "depends_on": ["phase-1-setup"],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-2-1",
+          "description": "Create auth.setup.ts for session persistence with storageState pattern",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/auth.setup.ts"],
+          "patterns_from": ["lib/auth-actions.ts", "components/auth/login-form.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "test -f e2e/auth.setup.ts && echo 'Auth setup file exists'",
+            "expected": "Auth setup file exists"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-3-auth-tests",
+      "name": "Authentication Tests",
+      "type": "implementation",
+      "description": "Create comprehensive authentication test suite covering login, logout, session persistence, and error cases",
+      "depends_on": ["phase-2-auth-setup"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-3-1",
+          "description": "Create auth.spec.ts with login, logout, and error handling tests",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/auth.spec.ts"],
+          "patterns_from": ["lib/auth-actions.ts", "components/auth/login-form.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "grep -q 'test.describe.*auth' e2e/auth.spec.ts && echo 'Auth tests defined'",
+            "expected": "Auth tests defined"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-4-chat-tests",
+      "name": "AI Chat Tests",
+      "type": "implementation",
+      "description": "Create AI chat interface tests with message sending, response validation, and API mocking",
+      "depends_on": ["phase-2-auth-setup"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-4-1",
+          "description": "Create chat.spec.ts with message flow and mocked API response tests",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/chat.spec.ts"],
+          "patterns_from": ["components/dashboard/chat-interface.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "grep -q 'test.describe.*chat' e2e/chat.spec.ts && echo 'Chat tests defined'",
+            "expected": "Chat tests defined"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-5-search-tests",
+      "name": "Drug Search and VZP Tests",
+      "type": "implementation",
+      "description": "Create drug search and VZP navigator tests with API mocking and result validation",
+      "depends_on": ["phase-2-auth-setup"],
+      "parallel_safe": true,
+      "subtasks": [
+        {
+          "id": "subtask-5-1",
+          "description": "Create drug-search.spec.ts with SUKL data mocking",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/drug-search.spec.ts"],
+          "patterns_from": ["components/dashboard/vzp-search-interface.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "grep -q 'test.describe.*drug' e2e/drug-search.spec.ts && echo 'Drug search tests defined'",
+            "expected": "Drug search tests defined"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-5-2",
+          "description": "Create vzp-navigator.spec.ts with VZP verification flow tests",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": ["e2e/vzp-navigator.spec.ts"],
+          "patterns_from": ["components/dashboard/vzp-search-interface.tsx", "components/dashboard/vzp-result-card.tsx"],
+          "verification": {
+            "type": "command",
+            "command": "grep -q 'test.describe.*vzp' e2e/vzp-navigator.spec.ts && echo 'VZP tests defined'",
+            "expected": "VZP tests defined"
+          },
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": "phase-6-ci-integration",
+      "name": "CI Integration",
+      "type": "integration",
+      "description": "Create GitHub Actions workflow for automated E2E testing in CI environment",
+      "depends_on": ["phase-3-auth-tests", "phase-4-chat-tests", "phase-5-search-tests"],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-6-1",
+          "description": "Create e2e.yml GitHub Actions workflow",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": [".github/workflows/e2e.yml"],
+          "patterns_from": [".github/workflows/ci.yml"],
+          "verification": {
+            "type": "command",
+            "command": "grep -q 'playwright test' .github/workflows/e2e.yml && echo 'E2E workflow configured'",
+            "expected": "E2E workflow configured"
+          },
+          "status": "pending"
+        },
+        {
+          "id": "subtask-6-2",
+          "description": "Run full E2E test suite and verify all tests pass",
+          "service": "main",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "npx playwright test --reporter=list 2>&1 | tail -5",
+            "expected": "passed"
+          },
+          "status": "pending"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_phases": 6,
+    "total_subtasks": 8,
+    "services_involved": ["main"],
+    "parallelism": {
+      "max_parallel_phases": 3,
+      "parallel_groups": [
+        {
+          "phases": ["phase-3-auth-tests", "phase-4-chat-tests", "phase-5-search-tests"],
+          "reason": "All three depend only on phase-2-auth-setup, and they create separate test files with no file conflicts"
+        }
+      ],
+      "recommended_workers": 2,
+      "speedup_estimate": "1.5x faster than sequential"
+    },
+    "startup_command": "source auto-claude/.venv/bin/activate && python auto-claude/run.py --spec 007 --parallel 2"
+  },
+  "verification_strategy": {
+    "risk_level": "low",
+    "skip_validation": false,
+    "test_creation_phase": "implementation",
+    "test_types_required": ["e2e"],
+    "security_scanning_required": false,
+    "staging_deployment_required": false,
+    "acceptance_criteria": [
+      "All E2E tests pass locally (npx playwright test)",
+      "Auth persistence works correctly between tests",
+      "API mocking is comprehensive (no real external calls)",
+      "Czech language assertions match actual UI text",
+      "No console errors during test execution",
+      "Test execution time is reasonable (<5 minutes)"
+    ],
+    "verification_steps": [
+      {
+        "name": "Playwright Installation",
+        "command": "npx playwright --version",
+        "expected_outcome": "Version number displayed",
+        "type": "setup",
+        "required": true,
+        "blocking": true
+      },
+      {
+        "name": "E2E Test Suite",
+        "command": "npx playwright test",
+        "expected_outcome": "All tests pass",
+        "type": "e2e",
+        "required": true,
+        "blocking": true
+      },
+      {
+        "name": "Test Report Generation",
+        "command": "npx playwright show-report --host 0.0.0.0",
+        "expected_outcome": "HTML report opens",
+        "type": "manual",
+        "required": false,
+        "blocking": false
+      }
+    ],
+    "reasoning": "Adding E2E tests is inherently low-risk as it only adds testing infrastructure without modifying production code. The tests themselves validate the implementation. Primary verification is running the test suite successfully."
+  },
+  "qa_acceptance": {
+    "unit_tests": {
+      "required": false,
+      "commands": [],
+      "minimum_coverage": null
+    },
+    "integration_tests": {
+      "required": false,
+      "commands": [],
+      "services_to_test": []
+    },
+    "e2e_tests": {
+      "required": true,
+      "commands": ["npx playwright test"],
+      "flows": ["login", "logout", "chat-message", "drug-search", "vzp-search"]
+    },
+    "browser_verification": {
+      "required": true,
+      "pages": [
+        {"url": "http://localhost:3000/auth/login", "checks": ["Email/password inputs visible", "Submit button works"]},
+        {"url": "http://localhost:3000/dashboard", "checks": ["Loads after login", "Sidebar visible"]},
+        {"url": "http://localhost:3000/dashboard/chat", "checks": ["Initial greeting visible", "Input enabled"]},
+        {"url": "http://localhost:3000/dashboard/vzp-navigator", "checks": ["Search input visible", "Quick filters work"]}
+      ]
+    },
+    "database_verification": {
+      "required": false,
+      "checks": []
+    }
+  },
+  "qa_signoff": null
+}

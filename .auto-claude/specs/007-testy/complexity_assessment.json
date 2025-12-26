@@ -1,0 +1,100 @@
+{
+  "complexity": "standard",
+  "workflow_type": "feature",
+  "confidence": 0.85,
+  "reasoning": "E2E test suite implementation requires setting up testing infrastructure from scratch (no existing tests), creating 4 distinct test suites for critical user flows, and configuring Playwright with Next.js + Supabase authentication patterns. This is a greenfield testing implementation that needs research for proper setup but remains contained to a single service with well-documented tooling.",
+
+  "analysis": {
+    "scope": {
+      "estimated_files": 12,
+      "estimated_services": 1,
+      "is_cross_cutting": false,
+      "notes": "New files include: playwright.config.ts, test utilities, 4 test suites (auth, chat, drug-search, vzp), fixtures, mocks, and potentially CI config. All contained to testing infrastructure - no production code modifications."
+    },
+    "integrations": {
+      "external_services": ["Supabase Auth", "Python Backend API"],
+      "new_dependencies": ["@playwright/test"],
+      "research_needed": true,
+      "notes": "Need Playwright framework for E2E tests. Must mock external Python backend (chat API, VZP search) and handle Supabase authentication in test context. Playwright is well-documented but Supabase auth testing patterns require research."
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": false,
+      "config_changes": true,
+      "notes": "New playwright.config.ts required. May need .env.test for test-specific environment variables. No Docker or database changes needed for testing frontend flows."
+    },
+    "knowledge": {
+      "patterns_exist": false,
+      "research_required": true,
+      "unfamiliar_tech": ["@playwright/test", "Supabase auth testing"],
+      "notes": "Project has zero existing test infrastructure. Need to research: (1) Playwright + Next.js 16 integration, (2) Supabase auth mocking/handling in E2E tests, (3) API mocking strategies for external backend. All are well-documented but patterns must be established."
+    },
+    "risk": {
+      "level": "low",
+      "concerns": [
+        "External API availability for integration tests",
+        "Test flakiness with async AI responses",
+        "Authentication state management between tests"
+      ],
+      "notes": "Adding tests carries low risk as no production code is modified. Main concerns are test reliability and proper mocking of external services. Medical context demands comprehensive coverage but this is a quality concern, not an implementation risk."
+    }
+  },
+
+  "recommended_phases": [
+    "discovery",
+    "requirements",
+    "research",
+    "context",
+    "spec_writing",
+    "planning",
+    "validation"
+  ],
+
+  "flags": {
+    "needs_research": true,
+    "needs_self_critique": false,
+    "needs_infrastructure_setup": false
+  },
+
+  "validation_recommendations": {
+    "risk_level": "low",
+    "skip_validation": false,
+    "minimal_mode": true,
+    "test_types_required": ["unit"],
+    "security_scan_required": false,
+    "staging_deployment_required": false,
+    "reasoning": "Adding E2E tests is inherently low-risk as it only adds testing infrastructure without modifying production code. The tests themselves will validate the implementation. Minimal validation mode is appropriate - run the new test suite to verify tests work correctly."
+  },
+
+  "task_breakdown": {
+    "estimated_subtasks": 6,
+    "main_areas": [
+      "Playwright setup and configuration with Next.js",
+      "Test utilities and fixtures (auth helpers, API mocks)",
+      "Authentication flow tests (login/logout/session)",
+      "AI chat tests with response validation",
+      "Drug search tests with SUKL data mocking",
+      "VZP verification tests"
+    ]
+  },
+
+  "research_topics": [
+    {
+      "topic": "Playwright with Next.js 16",
+      "priority": "high",
+      "reason": "Core framework setup - need proper dev server integration"
+    },
+    {
+      "topic": "Supabase authentication in E2E tests",
+      "priority": "high",
+      "reason": "Authentication is foundational for all protected routes"
+    },
+    {
+      "topic": "API route mocking in Playwright",
+      "priority": "medium",
+      "reason": "Need to mock Python backend responses for chat and VZP endpoints"
+    }
+  ],
+
+  "created_at": "2025-12-26T12:00:00.000Z"
+}
