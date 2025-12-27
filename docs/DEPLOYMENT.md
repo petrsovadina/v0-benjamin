@@ -1,59 +1,76 @@
-# Deployment Guide
+# 🚀 Deployment Guide - Benjamin v0.3
 
-## Docker Deployment (Production)
+Tento dokument popisuje postup nasazení backendu (FastAPI) a frontendu (Next.js) aplikace Benjamin.
 
-The project includes a `docker-compose.prod.yml` file for orchestrating the frontend and backend services in a production environment.
+## 📋 Prerekvizity
 
-### Prerequisites
-- Docker Engine
-- Docker Compose
+- **Docker** & **Docker Compose** (pro kontejnerizované nasazení)
+- **Node.js 18+** (pro frontend build)
+- **Python 3.11+** (pro backend manual run)
+- **Supabase Project** (databáze a auth)
 
-### Configuration
-Create a `.env` file in the root directory (or ensure your environment variables are set in your CI/CD or hosting provider).
+## 🛠️ Konfigurace prostředí
 
-**Required Environment Variables:**
-```env
-# Backend & AI
-ANTHROPIC_API_KEY=sk-...
-OPENAI_API_KEY=sk-...
+Před spuštěním je nutné nastavit proměnné prostředí. Použijte `.env.example` jako šablonu.
 
-# Supabase
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_KEY=your-anon-or-service-key
-
-# Frontend
-NEXT_PUBLIC_API_URL=http://localhost:8000 # Or your production backend URL
+### Backend (`backend/.env`)
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+SUPABASE_URL=https://xyz.supabase.co
+SUPABASE_SERVICE_KEY=...
+# ... další proměnné z backend/.env.example
 ```
 
-### Running the Application
+### Frontend (`.env.local` nebo `.env.production`)
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xyz.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+NEXT_PUBLIC_API_URL=https://api.benjamin.cz # URL vašeho nasazeného backendu
+```
 
-1.  **Build and Start**:
-    ```bash
-    docker-compose -f docker-compose.prod.yml up --build -d
-    ```
+---
 
-2.  **Verify Status**:
-    ```bash
-    docker-compose -f docker-compose.prod.yml ps
-    ```
+## 🐳 Nasazení Backendu (Docker)
 
-3.  **Logs**:
-    ```bash
-    docker-compose -f docker-compose.prod.yml logs -f
-    ```
+Backend je připraven pro nasazení v Docker kontejneru.
 
-## Cloud Deployment
+### 1. Build Image
+V adresáři `backend/`:
+```bash
+docker build -t benjamin-backend:v0.3 .
+```
 
-### General Strategy
-- **Frontend**: Can be deployed to Vercel, Netlify, or as a standalone Docker container.
-- **Backend**: Can be deployed to any container orchestration service (AWS ECS, Google Cloud Run, DigitalOcean App Platform) or a VPS.
+### 2. Spuštění Kontejneru
+```bash
+docker run -d \
+  -p 8000:8000 \
+  --env-file .env \
+  --name benjamin-api \
+  benjamin-backend:v0.3
+```
 
-### Vercel (Frontend only)
-1.  Link your GitHub repository.
-2.  Configure Environment Variables (`NEXT_PUBLIC_API_URL`).
-3.  Deploy.
+Aplikace poběží na `http://localhost:8000`.
+Health check: `GET http://localhost:8000/health`
 
-### VPS (Docker)
-1.  Clone the repository to your server.
-2.  Set up the `.env` file.
-3.  Run the Docker Compose commands listed above.
+---
+
+## 🌐 Nasazení Frontendu (Vercel/Netlify)
+
+Frontend je standardní Next.js aplikace.
+
+### Vercel (Doporučeno)
+1. Propojte GitHub repository s Vercelem.
+2. V nastavení projektu přidejte Environment Variables z `.env.production`.
+3. Deploy proběhne automaticky.
+
+### Docker (Alternativa)
+Pro frontend zatím není Dockerfile optimalizován (používá se Vercel), ale lze použít standardní Next.js standalone build.
+
+---
+
+## 🔄 CI/CD Pipeline (Plánováno)
+Projekt bude brzy obsahovat GitHub Actions workflow pro automatické testování a build.
+
+## 📝 Poznámky k Produkci
+- **Databáze:** Ujistěte se, že jste aplikovali všechny SQL migrace (`supabase/migrations`).
+- **Rate Limiting:** V produkci (např. za Nginx/Traefik) může být nutné nastavit `slowapi` na použití `X-Forwarded-For` hlavičky pro správnou detekci IP adresy.

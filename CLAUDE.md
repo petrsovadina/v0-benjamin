@@ -2,172 +2,285 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Projekt Overview
 
-**Czech MedAI** (kódové označení *Benjamin*) je AI asistent pro české lékaře. Poskytuje evidence-based odpovědi na klinické otázky, ověřuje úhrady VZP a integruje data ze SÚKL, PubMed a českých doporučených postupů.
+
+## Project Overview
+
+**Czech MedAI (Benjamin)** is an AI assistant for Czech medical professionals, providing evidence-based clinical answers with citations from PubMed, SÚKL (State Institute for Drug Control), and Czech medical guidelines. The application includes VZP (health insurance) verification and EHR integration capabilities.
+
+This is a **full-stack project** with:
+- **Frontend**: Next.js 16 App Router application (TypeScript, React 19, Tailwind CSS)
+- **Backend**: Python FastAPI service with LangGraph-based clinical query processing
+- **Database**: Supabase (PostgreSQL with Row Level Security)
 
 ## Development Commands
 
 ### Frontend (Next.js)
+
 ```bash
-pnpm dev              # Spustit dev server (http://localhost:3000)
-pnpm build            # Build produkční verze
-pnpm lint             # ESLint kontrola
-pnpm start            # Spustit produkční server
+# Install dependencies
+pnpm install
+
+# Development server (http://localhost:3000)
+pnpm dev
+
+# Production build
+pnpm build
+
+# Start production server
+pnpm start
+
+# Linting
+pnpm lint
 ```
+
+**Note**: This project uses **pnpm** as the package manager, not npm or yarn.
 
 ### Backend (Python FastAPI)
-**DŮLEŽITÉ:** Všechny Python příkazy se spouštějí z **kořenového adresáře projektu** (`v0-benjamin`), nikoliv z `backend/`.
 
 ```bash
-# Vytvoření virtual environment
-python -m venv backend/venv
-source backend/venv/bin/activate  # macOS/Linux
-# .\backend\venv\Scripts\activate  # Windows
+# Navigate to backend directory
+cd backend/
 
-# Instalace závislostí
-pip install -r backend/requirements.txt
+# Install Python dependencies
+pip install -r requirements.txt
 
-# Spuštění API serveru
-uvicorn backend.main:app --reload --port 8000
-# API: http://localhost:8000
-# Docs: http://localhost:8000/docs
+# Run development server (http://localhost:8000)
+uvicorn main:app --reload
+
+# Run with specific host/port
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-### SÚKL Data Pipeline
-Pipeline pro stahování a zpracování dat ze SÚKL (léky, ceny, SPC dokumenty).
+## Architecture
+
+### Frontend Architecture (Next.js App Router)
+
+The frontend uses Next.js 16 App Router with a clear separation between:
+
+1. **Public Routes** (`app/`):
+   - Landing page (`app/page.tsx`)
+   - Authentication flows (`app/auth/login/`, `app/auth/register/`, etc.)
+   - Documentation (`app/docs/`)
+
+2. **Protected Routes** (`app/dashboard/`):
+   - Chat interface (`app/dashboard/chat/`)
+   - VZP Navigator (`app/dashboard/vzp-navigator/`)
+   - History (`app/dashboard/history/`)
+   - Settings (`app/dashboard/settings/`)
+
+3. **Component Organization**:
+   - `components/auth/` - Authentication forms and flows
+   - `components/dashboard/` - Dashboard-specific components (chat, VZP search, etc.)
+   - `components/landing/` - Marketing/landing page components
+   - `components/ui/` - Reusable UI components from Radix UI/shadcn
+
+4. **Library Structure** (`lib/`):
+   - `lib/supabase/` - Supabase client configuration (client-side, server-side, middleware)
+   - `lib/auth-actions.ts` - Server Actions for authentication
+   - `lib/auth-context.tsx` - Client-side authentication context
+   - `lib/utils.ts` - Utility functions (cn for className merging, etc.)
+
+**Path Aliases**: Use `@/` to import from the project root (e.g., `import { Button } from "@/components/ui/button"`)
+
+**Authentication Flow**:
+- Middleware (`middleware.ts`) intercepts all requests and updates Supabase session
+- Protected routes check authentication in Server Components using `lib/supabase/server.ts`
+- Client-side auth state managed via `AuthProvider` in `lib/auth-context.tsx`
+
+### Backend Architecture (Python FastAPI)
+
+The backend is a FastAPI application with LangGraph for clinical query processing:
+
+1. **Core Structure** (`backend/`):
+   - `main.py` - FastAPI application entry point
+   - `agent_graph.py` - LangGraph state machine for clinical queries
+   - `epicrisis_graph.py` - Specialized graph for epicrisis (medical summary) generation
+
+2. **API Organization** (`backend/app/`):
+   - `app/api/` - API route handlers
+   - `app/core/` - Core configuration and utilities
+   - `app/models/` - Pydantic models for request/response validation
+
+3. **Data Processing** (`backend/data_processing/`):
+   - Pipeline for processing medical data sources (SÚKL, PubMed, Czech guidelines)
+   - Data transformation and indexing for RAG (Retrieval-Augmented Generation)
+
+4. **MCP Servers** (`backend/mcp_servers/`):
+   - Model Context Protocol servers for external integrations
+
+**LangGraph State Machine**:
+The clinical query processing uses a state machine architecture (`agent_graph.py`) that:
+- Routes queries based on type (clinical question, drug information, VZP verification)
+- Retrieves relevant context from medical databases
+- Generates evidence-based responses with citations
+- Formats output with proper medical references
+
+### Database (Supabase)
+
+Key database tables (see README.md for full schema):
+
+- `profiles` - Extended user information beyond auth.users
+- `chat_messages` - Chat history with citations (JSONB)
+- `vzp_searches` - VZP search history
+
+**Row Level Security (RLS)**: All tables use RLS policies to ensure users can only access their own data.
+
+### Frontend-Backend Communication
+
+The frontend communicates with the backend via:
+1. **Direct API calls** to FastAPI endpoints (e.g., `/api/chat`, `/api/vzp-search`)
+2. **Supabase** for authentication, user profiles, and data persistence
+3. **Real-time subscriptions** via Supabase for live updates (if implemented)
+
+## Key Technical Details
+
+### TypeScript Configuration
+
+- **Strict mode enabled** - All types must be properly defined
+- **Path aliases**: `@/*` maps to project root
+- **JSX**: Uses `react-jsx` (no need to import React in files)
+- **Module resolution**: `bundler` mode for Next.js compatibility
+
+**Important**: The project has `ignoreBuildErrors: true` in `next.config.mjs` - this is a temporary configuration and should be removed once all TypeScript errors are resolved.
+
+### Styling
+
+- **Tailwind CSS 4.1.9** with custom configuration
+- **CSS Variables** for theming (defined in `app/globals.css`)
+- **Dark/Light Mode** via `next-themes` package
+- **Component Styling**: Use `cn()` utility from `lib/utils.ts` to merge Tailwind classes
+
+Example:
+```tsx
+import { cn } from "@/lib/utils"
+
+<div className={cn("base-classes", conditional && "conditional-classes", className)} />
+```
+
+### Supabase Integration
+
+**Three Supabase clients** depending on context:
+
+1. **Client-side** (`lib/supabase/client.ts`):
+   ```tsx
+   import { createClient } from "@/lib/supabase/client"
+   const supabase = createClient()
+   ```
+
+2. **Server Components** (`lib/supabase/server.ts`):
+   ```tsx
+   import { createClient } from "@/lib/supabase/server"
+   const supabase = await createClient()
+   ```
+
+3. **Middleware** (`lib/supabase/middleware.ts`):
+   Used automatically by `middleware.ts` to refresh sessions
+
+### Form Handling
+
+Forms use **React Hook Form** with **Zod** validation:
+
+```tsx
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+
+const schema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+})
+
+const form = useForm({
+  resolver: zodResolver(schema),
+})
+```
+
+### Adding UI Components
+
+This project uses **shadcn/ui** components. To add a new component:
 
 ```bash
-# Z kořenového adresáře (v0-benjamin):
-python -m backend.pipeline.run_pipeline --all           # Celý pipeline
-python -m backend.pipeline.run_pipeline --download      # Pouze stažení
-python -m backend.pipeline.run_pipeline --drugs         # Zpracování léků
-python -m backend.pipeline.run_pipeline --pricing       # Zpracování cen
-python -m backend.pipeline.run_pipeline --documents     # Zpracování SPC/PIL
-
-# Možnosti:
---limit <N>     # Zpracovat pouze N položek (pro testování)
---dry-run       # Běh bez zápisu do DB
+npx shadcn@latest add [component-name]
 ```
 
-### Testy
-```bash
-# Python testy
-cd backend && pytest
+Components are added to `components/ui/` and can be customized.
 
-# Frontend - momentálně není nakonfigurováno
+## Important Patterns
+
+### Server Actions vs. API Routes
+
+- **Server Actions** (`lib/auth-actions.ts`) - Preferred for simple mutations and authentication flows
+- **API Routes** (`app/api/`) - Used for complex logic or when you need more control over request/response
+
+### Protected Routes
+
+Protected routes should:
+1. Check authentication in Server Components using `lib/supabase/server.ts`
+2. Redirect to `/auth/login` if not authenticated
+3. Use `AuthProvider` in `layout.tsx` for client-side auth state
+
+Example:
+```tsx
+// app/dashboard/page.tsx
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
+
+export default async function DashboardPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/auth/login")
+  }
+
+  // Render protected content
+}
 ```
 
-## Architecture Overview
+### Error Handling
 
-### Hybridní architektura (Next.js + Python)
-
-**Frontend (Next.js 16 + TypeScript):**
-- `app/` - Next.js App Router stránky
-  - `app/dashboard/*` - Hlavní aplikace (Chat, History, Settings, VZP Navigator, Epikriza)
-  - `app/api/*` - Frontend API routes (proxy pro backend)
-  - `app/auth/*` - Autentizační stránky
-- `components/` - React komponenty (Shadcn/UI)
-- `lib/` - Shared utilities (Supabase client, auth actions)
-
-**Backend (Python 3.11+ + FastAPI):**
-- `backend/main.py` - FastAPI entry point s rate limitingem
-- `backend/app/` - Modulární FastAPI aplikace
-  - `app/core/` - **Klíčová logika**:
-    - `graph.py` - LangGraph orchestrátor pro klasifikaci dotazů a RAG
-    - `llm.py` - LLM providers (Anthropic Claude, OpenAI)
-    - `database.py` - Supabase klient
-    - `config.py` - Konfigurace
-  - `app/api/v1/endpoints/` - API endpointy (`query.py`, `drugs.py`, `admin.py`)
-  - `app/services/` - Business logika (search, chat history, cache)
-  - `app/schemas/` - Pydantic modely
-- `backend/data_processing/` - **ETL Pipeline pro SÚKL**:
-  - `downloaders/` - Stahování dat ze SÚKL
-  - `parsers/` - Parsování CSV/Excel dat
-  - `loaders/` - Nahrávání do Supabase
-  - `embeddings/` - Generování vektorových embeddingů
-- `backend/pipeline/` - Orchestrace ETL procesu
-- `backend/services/` - MCP servery a další služby
-
-### Důležité koncepty
-
-**LangGraph Flow (backend/app/core/graph.py):**
-- Klasifikátor dotazů na typy: `drug_info`, `guidelines`, `clinical`, `urgent`, `reimbursement`
-- Routing na základě typu dotazu
-- RAG retrieval z Supabase Vector Store
-- Generování odpovědí s citacemi
-
-**Data Flow:**
-1. Uživatel zadá dotaz (Next.js)
-2. Požadavek jde přes `/api/chat` (frontend proxy) na backend
-3. Backend klasifikuje dotaz (LangGraph)
-4. Podle typu: vyhledá kontext (SÚKL, Guidelines, PubMed)
-5. LLM vygeneruje odpověď s citacemi
-6. Odpověď se uloží do `queries` tabulky
-7. Historie chatu v `chat_sessions` a `chat_messages`
-
-**Database (Supabase PostgreSQL):**
-- `drugs` - SÚKL léky (DLP - Databáze léčivých přípravků)
-- `pricing` - Cenové údaje a úhrady VZP
-- `spc_documents` - Souhrny údajů o přípravku
-- `guidelines` - Doporučené postupy (vektorizované)
-- `queries` - Uživatelské dotazy a odpovědi
-- `chat_sessions`, `chat_messages` - Historie konverzací
-- Používá `pgvector` extension pro sémantické vyhledávání
+The project includes an error boundary (`components/error-boundary.tsx`) for graceful error handling in the UI.
 
 ## Environment Variables
 
-**Frontend (`.env.local`):**
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_API_URL=http://localhost:8000  # Backend URL
-```
+Required environment variables (see `.env.local` or backend `.env`):
 
-**Backend (`backend/.env`):**
-```bash
-OPENAI_API_KEY=        # Pro embeddings (volitelné)
-ANTHROPIC_API_KEY=     # Claude 3.5 Sonnet (POVINNÉ)
-GOOGLE_API_KEY=        # Pro audio transkripci (POVINNÉ)
-SUPABASE_URL=
-SUPABASE_KEY=          # Service Role Key (pro pipeline)
-```
+**Frontend**:
+- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` - Supabase anon key
 
-## Známé problémy a specifika
+**Backend**:
+- `OPENAI_API_KEY` - OpenAI API key for LLM
+- `ANTHROPIC_API_KEY` - Anthropic API key (optional)
+- Database connection strings for SÚKL and other data sources
 
-1. **Module Resolution:** Python pipeline se MUSÍ spouštět z kořenového adresáře, ne z `backend/`. Používá importy typu `backend.pipeline.*`.
+## Common Issues
 
-2. **Rate Limiting:** Backend má rate limit 60 požadavků/minutu na `/api/chat` endpoint.
+### Build Errors
 
-3. **SÚKL Data:** Aplikace vyžaduje nahraná data v DB. První setup musí spustit `--all` pipeline.
+If you encounter TypeScript errors during build:
+1. Check that all imports use the correct path aliases (`@/`)
+2. Verify Supabase types are generated: `supabase gen types typescript`
+3. Run `pnpm build` to see all type errors at once
 
-4. **LangGraph State:** `ClinicalState` obsahuje `messages`, `query_type`, `retrieved_context`, `final_answer`. Veškerá logika orchestrace je v `backend/app/core/graph.py`.
+### Supabase Session Issues
 
-5. **Caching:** Backend používá in-memory cache pro LLM odpovědi (`backend/services/cache.py`).
+If authentication seems broken:
+1. Verify middleware is running on all routes (check `middleware.ts` matcher config)
+2. Ensure you're using the correct Supabase client for the context (client vs. server)
+3. Check browser console for CORS errors or cookie issues
 
-6. **MCP Integration:** Backend podporuje MCP servery pro nástroje jako PubMed search (`paper-search-mcp`).
+## Testing
 
-## Import Paths
+**Note**: Testing framework is not yet configured. The project is set up for testing with Vitest or Jest + React Testing Library, but no tests are currently written.
 
-**Frontend:**
-- Používá `@/` alias pro root (`tsconfig.json`)
-- Příklad: `import { createClient } from '@/lib/supabase/client'`
+## Deployment
 
-**Backend:**
-- Absolutní importy: `from backend.app.core.graph import app`
-- Relativní importy POUZE v rámci stejného modulu
+The project is configured for **Vercel** deployment with `output: "standalone"` in `next.config.mjs`.
 
-## Roadmap Status
+**Backend deployment**: The Python backend can be deployed to any platform supporting FastAPI (e.g., Railway, Render, Docker container).
 
-- ✅ **Dokončeno:** Backend API, Chat UI, SÚKL Data Pipeline, LangGraph
-- 🚧 **Probíhá:** Guidelines import (PDF → Vectors)
-- 📅 **Plánováno:** Lékové interakce, Epikríza generator, E2E testy
+## Communication Language
 
-## Tech Stack Details
-
-- **Frontend:** Next.js 16, React 19, TypeScript 5.x, Tailwind CSS 4.x, Shadcn/UI
-- **Backend:** Python 3.11+, FastAPI, LangGraph 1.0, LangChain
-- **AI:** Anthropic Claude 3.5 Sonnet, OpenAI GPT-4o (fallback)
-- **Database:** Supabase (PostgreSQL 15 + pgvector)
-- **Embeddings:** OpenAI `text-embedding-3-small` nebo Anthropic
-- **Data Processing:** Pandas, PyPDF, pdfplumber, BeautifulSoup
+**Czech Language**: This project is for Czech medical professionals. User-facing content, error messages, and documentation should be in Czech. Code comments and technical documentation can be in English or Czech.
