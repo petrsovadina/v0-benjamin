@@ -1,15 +1,17 @@
 {
-  "sourceType": "roadmap",
-  "featureId": "feature-4",
-  "category": "feature",
+  "sourceType": "manual",
+  "category": "testing",
+  "priority": "urgent",
+  "complexity": "complex",
+  "impact": "high",
   "model": "opus",
   "thinkingLevel": "high",
   "isAutoProfile": true,
   "phaseModels": {
     "spec": "opus",
     "planning": "opus",
-    "coding": "opus",
-    "qa": "opus"
+    "coding": "sonnet",
+    "qa": "sonnet"
   },
   "phaseThinking": {
     "spec": "ultrathink",
@@ -17,6 +19,5 @@
     "coding": "low",
     "qa": "low"
   },
-  "requireReviewBeforeCoding": false,
-  "archivedAt": "2025-12-26T01:38:47.622Z"
+  "baseBranch": "auto-claude"
 }

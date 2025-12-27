@@ -1,0 +1,90 @@
+{
+  "task_description": "Comprehensive testing infrastructure setup for Czech MedAI application",
+  "scoped_services": ["main", "backend"],
+  "files_to_modify": {
+    "main": [
+      "package.json",
+      ".gitignore"
+    ],
+    "backend": []
+  },
+  "files_to_create": {
+    "main": [
+      "vitest.config.ts",
+      "vitest.setup.ts",
+      "components/__tests__/button.test.tsx",
+      "components/__tests__/input.test.tsx",
+      "components/__tests__/card.test.tsx",
+      "components/__tests__/chat-interface.test.tsx",
+      "components/__tests__/sidebar.test.tsx",
+      "lib/__tests__/utils.test.ts",
+      "lib/__tests__/auth-actions.test.ts"
+    ],
+    "backend": [
+      "backend/pyproject.toml",
+      "backend/tests/conftest.py"
+    ]
+  },
+  "files_to_reference": [
+    "backend/tests/test_api_integration.py",
+    "components/ui/button.tsx",
+    "components/ui/input.tsx",
+    "components/ui/card.tsx",
+    "components/dashboard/chat-interface.tsx",
+    "components/dashboard/sidebar.tsx",
+    "lib/utils.ts",
+    "lib/auth-actions.ts"
+  ],
+  "patterns": {
+    "backend_test_pattern": "Uses TestClient for sync API tests, MagicMock/AsyncMock for mocking, patch for dependency injection. Fixtures defined locally (moving to conftest.py). dependency_overrides must be cleared after each test.",
+    "frontend_component_pattern": "Components use Radix UI primitives with 'data-slot' attribute, cn() for class merging with cva variants, asChild prop for composition.",
+    "utility_pattern": "lib/utils.ts uses clsx + tailwind-merge for className merging",
+    "server_action_pattern": "lib/auth-actions.ts uses 'use server' directive, createClient() for Supabase, returns {error} or {success} objects"
+  },
+  "existing_implementations": {
+    "backend_tests": {
+      "count": 10,
+      "files": [
+        "test_api_integration.py",
+        "test_admin_endpoints.py",
+        "test_guidelines_loader.py",
+        "test_parsers.py",
+        "test_search_service.py",
+        "test_guideline_pipeline_e2e.py",
+        "test_rag_flow_verification.py",
+        "test_multiformat_pdf_support.py",
+        "test_sukl_retriever.py"
+      ],
+      "has_conftest": false,
+      "has_pyproject_toml": false
+    },
+    "frontend_tests": {
+      "count": 0,
+      "has_vitest_config": false,
+      "has_testing_library": false
+    }
+  },
+  "technology_stack": {
+    "frontend": {
+      "framework": "Next.js 16",
+      "react_version": "19.2.0",
+      "language": "TypeScript",
+      "package_manager": "pnpm",
+      "ui_library": "Radix UI",
+      "styling": "Tailwind CSS"
+    },
+    "backend": {
+      "framework": "FastAPI",
+      "language": "Python",
+      "testing": "pytest, pytest-asyncio"
+    }
+  },
+  "critical_constraints": [
+    "React 19 compatibility - verify @testing-library/react version",
+    "Server actions cannot be directly called in tests - must mock",
+    "All tests must mock Supabase - no real API calls",
+    "vitest.setup.ts is MANDATORY for jest-dom matchers",
+    "Clear dependency_overrides after each backend test"
+  ],
+  "created_at": "2025-12-26T03:00:00.000Z"
+}

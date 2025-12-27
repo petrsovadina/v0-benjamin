@@ -1,362 +1,326 @@
 {
   "project_context": {
-    "project_name": "Czech MedAI (Benjamin)",
-    "project_type": "AI-powered clinical assistant web application",
-    "target_audience": "Czech medical professionals (doctors, physicians) who need quick, evidence-based clinical answers in Czech language"
+    "project_name": "Czech MedAI",
+    "project_type": "AI Clinical Decision Support Web Application",
+    "target_audience": "Czech medical professionals (doctors, physicians) working in clinical settings who need quick evidence-based answers to clinical questions"
   },
   "competitors": [
     {
       "id": "competitor-1",
-      "name": "ChatGPT / GPT-4",
-      "url": "https://chat.openai.com",
-      "description": "General-purpose AI chatbot from OpenAI, widely used but not specialized for medical or Czech healthcare context",
+      "name": "UpToDate (Wolters Kluwer)",
+      "url": "https://www.uptodate.com",
+      "description": "Leading clinical decision support resource used by healthcare professionals worldwide. Contains over 12,000 physician-authored topics with evidence-based recommendations.",
       "relevance": "high",
       "pain_points": [
         {
           "id": "pain-1-1",
-          "description": "No knowledge of Czech drug registry (SÚKL) - cannot provide accurate information about local medications, dosages, or availability",
-          "source": "Industry knowledge - general LLMs lack specialized local pharmaceutical data",
+          "description": "Expensive subscription pricing - individual subscriptions cost $500-600+ per year, making it inaccessible for independent practitioners",
+          "source": "Industry knowledge - pricing is publicly known",
           "severity": "high",
-          "frequency": "Every query about Czech medications",
-          "opportunity": "Czech MedAI integrates directly with SÚKL database for accurate, real-time drug information"
+          "frequency": "Very common complaint in medical forums",
+          "opportunity": "Czech MedAI can offer competitive pricing tiers including affordable individual plans"
         },
         {
           "id": "pain-1-2",
-          "description": "Cannot verify VZP (Czech health insurance) drug reimbursement status - doctors cannot confirm if medication is covered",
-          "source": "Industry knowledge - no integration with Czech insurance systems",
+          "description": "No native Czech language support - all content is in English, creating barriers for non-English fluent practitioners",
+          "source": "Product offering - UpToDate is English-only",
           "severity": "high",
-          "frequency": "Critical for every prescription decision",
-          "opportunity": "Czech MedAI has VZP Navigator for instant insurance verification"
+          "frequency": "Critical gap for Czech market",
+          "opportunity": "Native Czech language interface and content is Czech MedAI's core differentiator"
         },
         {
           "id": "pain-1-3",
-          "description": "Hallucinations in medical contexts - can generate plausible but incorrect medical information",
-          "source": "Published research on LLM medical accuracy, healthcare community discussions",
+          "description": "No integration with Czech regulatory systems (SUKL, VZP) - doctors must switch between systems to verify drug coverage",
+          "source": "Functional gap in product",
           "severity": "high",
-          "frequency": "Unpredictable, creates trust issues",
-          "opportunity": "Evidence-based approach with citations from verified Czech medical sources"
+          "frequency": "Daily workflow friction for Czech doctors",
+          "opportunity": "Built-in VZP Navigator and SUKL integration streamline clinical workflow"
         },
         {
           "id": "pain-1-4",
-          "description": "No understanding of Czech medical legislation, guidelines, or healthcare system specifics",
-          "source": "Industry knowledge - general LLMs trained primarily on English content",
+          "description": "Information overload - topics are comprehensive but often too long to read during patient consultations",
+          "source": "Industry knowledge - common clinical workflow challenge",
           "severity": "medium",
-          "frequency": "Whenever local regulations matter",
-          "opportunity": "Czech MedAI trained on Czech guidelines and understands local healthcare context"
+          "frequency": "Common usability complaint",
+          "opportunity": "AI-powered quick answers with citations for time-constrained consultations"
         },
         {
           "id": "pain-1-5",
-          "description": "GDPR/data privacy concerns - patient data potentially sent to US servers",
-          "source": "Healthcare IT compliance requirements, EU data protection regulations",
-          "severity": "high",
-          "frequency": "Every use with patient context",
-          "opportunity": "GDPR-compliant EU-hosted infrastructure"
+          "description": "No EHR integration for Czech hospital systems (ICZ, CGM, Medisoft)",
+          "source": "Product feature gap",
+          "severity": "medium",
+          "frequency": "Barrier for enterprise adoption",
+          "opportunity": "Native Czech EHR integration capability"
         }
       ],
-      "strengths": [
-        "Widely known and accessible",
-        "Fast response times",
-        "Good general medical knowledge in English",
-        "Continuously improving capabilities",
-        "Strong natural language understanding"
-      ],
-      "market_position": "Market leader in general AI chat, but lacks medical specialization and local healthcare context"
+      "strengths": ["Extensive evidence-based content with 12,000+ topics", "Trusted brand with high physician recognition", "Regular content updates from expert authors", "Strong CME credit program", "Mobile app availability"],
+      "market_position": "Market leader in clinical decision support globally. Premium positioning with high price point. Strong institutional adoption but limited individual practitioner access due to cost."
     },
     {
       "id": "competitor-2",
-      "name": "Claude (Anthropic)",
-      "url": "https://claude.ai",
-      "description": "Advanced AI assistant from Anthropic, known for safety and accuracy but not specialized for Czech medical context",
+      "name": "DynaMed (EBSCO)",
+      "url": "https://www.dynamed.com",
+      "description": "Evidence-based clinical decision support with systematic literature reviews. Known for rigorous evidence evaluation and clear recommendations.",
       "relevance": "high",
       "pain_points": [
         {
           "id": "pain-2-1",
-          "description": "No integration with Czech pharmaceutical databases - cannot look up SÚKL drug codes, prices, or SPC/PIL documents",
-          "source": "Industry knowledge - general LLMs lack specialized data integrations",
+          "description": "English-only interface - no Czech language support for content or interface",
+          "source": "Product limitation",
           "severity": "high",
-          "frequency": "Every drug-related query",
-          "opportunity": "Czech MedAI provides semantic drug search with real SÚKL data"
+          "frequency": "Fundamental barrier for Czech adoption",
+          "opportunity": "Native Czech language support"
         },
         {
           "id": "pain-2-2",
-          "description": "Limited Czech language capabilities compared to English - medical terminology may be less accurate",
-          "source": "Industry knowledge - LLMs trained predominantly on English corpora",
-          "severity": "medium",
-          "frequency": "Every Czech language interaction",
-          "opportunity": "Native Czech language support with proper medical terminology"
+          "description": "Institutional-focused pricing makes individual access difficult",
+          "source": "Industry knowledge",
+          "severity": "high",
+          "frequency": "Common barrier for solo practitioners",
+          "opportunity": "Individual subscription options at accessible price points"
         },
         {
           "id": "pain-2-3",
-          "description": "No patient context persistence - each conversation starts fresh, cannot maintain ongoing patient records",
-          "source": "Industry knowledge - general chat interfaces lack healthcare workflow integration",
+          "description": "Interface can be overwhelming with complex navigation for quick answers",
+          "source": "Common clinical workflow feedback",
           "severity": "medium",
-          "frequency": "Every multi-session patient consultation",
-          "opportunity": "Chat history persistence with session management and patient context"
+          "frequency": "Moderate usability concern",
+          "opportunity": "AI chat interface for natural language questions"
         },
         {
           "id": "pain-2-4",
-          "description": "Cannot generate Czech medical documentation like discharge summaries (epicrisis)",
-          "source": "Healthcare workflow requirements",
-          "severity": "medium",
-          "frequency": "Every hospitalization requires documentation",
-          "opportunity": "Planned epicrisis generator feature specifically for Czech format"
+          "description": "No local regulatory integration - requires separate systems for drug verification",
+          "source": "Feature gap",
+          "severity": "high",
+          "frequency": "Daily workflow issue for Czech doctors",
+          "opportunity": "Integrated SUKL and VZP verification"
         }
       ],
-      "strengths": [
-        "Known for accuracy and reduced hallucinations",
-        "Strong reasoning capabilities",
-        "Good at following complex instructions",
-        "Better at acknowledging uncertainty",
-        "Long context window for detailed discussions"
-      ],
-      "market_position": "Premium AI assistant with safety focus, but lacks healthcare specialization and Czech localization"
+      "strengths": ["Rigorous systematic evidence reviews", "Clear strength-of-evidence ratings", "Drug information with interaction checking", "Regular literature updates", "Lower price point than UpToDate"],
+      "market_position": "Strong competitor to UpToDate with focus on evidence quality. Often chosen by cost-conscious institutions. Academic focus with strong literature coverage."
     },
     {
       "id": "competitor-3",
-      "name": "UpToDate",
-      "url": "https://www.uptodate.com",
-      "description": "Industry-leading clinical decision support system with evidence-based medical content, but English-focused and expensive",
-      "relevance": "high",
-      "pain_points": [
-        {
-          "id": "pain-3-1",
-          "description": "Expensive subscription model - individual licenses cost $500-600/year, prohibitive for many Czech practitioners",
-          "source": "UpToDate pricing, healthcare professional forums",
-          "severity": "high",
-          "frequency": "Barrier to adoption for individual doctors",
-          "opportunity": "More accessible pricing for Czech market"
-        },
-        {
-          "id": "pain-3-2",
-          "description": "Primarily English content - requires translation effort and may not address Czech-specific guidelines",
-          "source": "Product analysis - limited non-English content",
-          "severity": "high",
-          "frequency": "Every use by Czech speakers",
-          "opportunity": "Native Czech language clinical content"
-        },
-        {
-          "id": "pain-3-3",
-          "description": "No AI chat interface - traditional search-based UI requires knowing what to search for",
-          "source": "Product analysis - legacy interface design",
-          "severity": "medium",
-          "frequency": "Every query requires precise search terms",
-          "opportunity": "Conversational AI interface for natural language queries"
-        },
-        {
-          "id": "pain-3-4",
-          "description": "No integration with Czech drug registry or insurance systems",
-          "source": "Product analysis - US/international focus",
-          "severity": "high",
-          "frequency": "Every prescription-related decision",
-          "opportunity": "Deep integration with SÚKL and VZP"
-        },
-        {
-          "id": "pain-3-5",
-          "description": "Slow to navigate - multiple clicks required to find specific clinical recommendations",
-          "source": "Healthcare professional feedback on clinical tools",
-          "severity": "medium",
-          "frequency": "Every consultation requiring quick answers",
-          "opportunity": "5-second response time goal for clinical queries"
-        }
-      ],
-      "strengths": [
-        "Comprehensive evidence-based content",
-        "Trusted by medical institutions worldwide",
-        "Regular content updates by medical experts",
-        "Drug interaction databases",
-        "CME credits available"
-      ],
-      "market_position": "Gold standard for clinical decision support in English-speaking markets, but expensive and not localized"
-    },
-    {
-      "id": "competitor-4",
-      "name": "Google MedPalm / Med-Gemini",
-      "url": "https://health.google",
-      "description": "Google's medical AI models designed for healthcare, but primarily English-focused and limited availability",
+      "name": "Isabel Healthcare",
+      "url": "https://www.isabelhealthcare.com",
+      "description": "AI-powered clinical diagnosis support system. Helps clinicians generate differential diagnoses from symptoms and findings.",
       "relevance": "medium",
       "pain_points": [
         {
-          "id": "pain-4-1",
-          "description": "Limited public availability - not widely accessible to individual practitioners",
-          "source": "Industry news - restricted deployment",
-          "severity": "high",
-          "frequency": "Cannot be used by most doctors",
-          "opportunity": "Immediately accessible solution for Czech doctors"
-        },
-        {
-          "id": "pain-4-2",
-          "description": "English-focused training - no specialization for Czech language or healthcare system",
-          "source": "Google research publications on MedPalm",
-          "severity": "high",
-          "frequency": "Every use in Czech context",
-          "opportunity": "Native Czech healthcare specialization"
-        },
-        {
-          "id": "pain-4-3",
-          "description": "Enterprise-focused - designed for large healthcare systems, not individual practitioners",
-          "source": "Google Cloud Healthcare AI positioning",
+          "id": "pain-3-1",
+          "description": "Focused primarily on differential diagnosis - limited broader clinical decision support",
+          "source": "Product scope limitation",
           "severity": "medium",
-          "frequency": "Barrier for small clinics and individual doctors",
-          "opportunity": "Solution designed for individual practitioners and small clinics"
+          "frequency": "Limits use cases",
+          "opportunity": "Czech MedAI offers broader clinical assistance beyond diagnosis"
+        },
+        {
+          "id": "pain-3-2",
+          "description": "English-only with no Czech medical terminology understanding",
+          "source": "Language limitation",
+          "severity": "high",
+          "frequency": "Critical for Czech market",
+          "opportunity": "Czech medical terminology support"
+        },
+        {
+          "id": "pain-3-3",
+          "description": "No PubMed citation integration - provides diagnoses without literature evidence",
+          "source": "Feature gap",
+          "severity": "medium",
+          "frequency": "Important for evidence-based practice",
+          "opportunity": "Integrated PubMed citations with Czech context"
+        },
+        {
+          "id": "pain-3-4",
+          "description": "Expensive enterprise pricing model",
+          "source": "Industry knowledge",
+          "severity": "medium",
+          "frequency": "Access barrier",
+          "opportunity": "Accessible subscription tiers"
         }
       ],
-      "strengths": [
-        "State-of-the-art medical AI capabilities",
-        "Backed by Google's research and infrastructure",
-        "Designed specifically for medical domain",
-        "Integration potential with Google Cloud"
-      ],
-      "market_position": "Advanced medical AI but enterprise-focused and not available for Czech market"
+      "strengths": ["Specialized AI for differential diagnosis", "Reduces diagnostic error rates", "Symptom-based search interface", "Clinical validation studies"],
+      "market_position": "Niche player focused on AI diagnosis assistance. Strong in specialty diagnostic support but not comprehensive clinical decision platform."
     },
     {
-      "id": "competitor-5",
-      "name": "SÚKL Website (Manual Search)",
-      "url": "https://www.sukl.cz",
-      "description": "Official Czech drug registry website - authoritative but requires manual search without AI assistance",
+      "id": "competitor-4",
+      "name": "ChatGPT (OpenAI)",
+      "url": "https://chat.openai.com",
+      "description": "General-purpose AI chatbot increasingly used by medical professionals for clinical queries despite not being designed for healthcare.",
       "relevance": "high",
       "pain_points": [
         {
-          "id": "pain-5-1",
-          "description": "Manual search interface - time-consuming to find specific drug information during consultations",
-          "source": "Healthcare workflow analysis",
+          "id": "pain-4-1",
+          "description": "No medical-specific training or validation - may provide inaccurate medical information",
+          "source": "Well-documented AI limitation",
           "severity": "high",
-          "frequency": "Every drug lookup",
-          "opportunity": "Semantic search with natural language queries"
+          "frequency": "Critical safety concern",
+          "opportunity": "Evidence-based responses with PubMed citations"
+        },
+        {
+          "id": "pain-4-2",
+          "description": "No citations or source attribution - impossible to verify information accuracy",
+          "source": "Product limitation",
+          "severity": "high",
+          "frequency": "Major trust issue for clinical use",
+          "opportunity": "Built-in PubMed citation integration"
+        },
+        {
+          "id": "pain-4-3",
+          "description": "Not HIPAA/GDPR compliant for patient data - cannot be used with real patient information",
+          "source": "Regulatory compliance gap",
+          "severity": "high",
+          "frequency": "Legal and compliance barrier",
+          "opportunity": "GDPR-compliant EU data hosting"
+        },
+        {
+          "id": "pain-4-4",
+          "description": "No Czech regulatory integration - cannot verify VZP coverage or SUKL data",
+          "source": "Feature gap",
+          "severity": "high",
+          "frequency": "Core workflow gap",
+          "opportunity": "Integrated Czech healthcare regulatory data"
+        },
+        {
+          "id": "pain-4-5",
+          "description": "Knowledge cutoff date means outdated drug information and guidelines",
+          "source": "Technical limitation",
+          "severity": "medium",
+          "frequency": "Impacts clinical reliability",
+          "opportunity": "Real-time integration with current drug databases"
+        }
+      ],
+      "strengths": ["Natural conversational interface", "Fast responses to any question", "Multilingual including Czech (general language)", "Low cost (free tier available)", "Widely accessible"],
+      "market_position": "Disruptive force in information seeking. Many doctors use it informally despite limitations. Creates demand for 'ChatGPT-like' experience with clinical reliability."
+    },
+    {
+      "id": "competitor-5",
+      "name": "Google Gemini (Bard)",
+      "url": "https://gemini.google.com",
+      "description": "Google's AI assistant with access to web information. Used by some medical professionals for quick information retrieval.",
+      "relevance": "medium",
+      "pain_points": [
+        {
+          "id": "pain-5-1",
+          "description": "Not designed for medical use - no clinical validation or medical-specific training",
+          "source": "Product scope",
+          "severity": "high",
+          "frequency": "Safety concern",
+          "opportunity": "Medical-specialized AI with evidence-based responses"
         },
         {
           "id": "pain-5-2",
-          "description": "No AI-powered assistance - cannot ask questions or get synthesized answers",
-          "source": "Product analysis",
+          "description": "Inconsistent source attribution - unreliable citations",
+          "source": "Known limitation",
           "severity": "high",
-          "frequency": "Every complex drug query",
-          "opportunity": "AI chat interface for drug-related questions"
+          "frequency": "Trust issue for clinical decisions",
+          "opportunity": "Reliable PubMed citation integration"
         },
         {
           "id": "pain-5-3",
-          "description": "Difficult to compare drugs or find alternatives - requires multiple separate searches",
-          "source": "Healthcare workflow analysis",
-          "severity": "medium",
-          "frequency": "When looking for drug alternatives or comparisons",
-          "opportunity": "Intelligent drug comparison and alternative suggestions"
+          "description": "No Czech healthcare regulatory integration",
+          "source": "Feature gap",
+          "severity": "high",
+          "frequency": "Workflow gap",
+          "opportunity": "Native SUKL and VZP integration"
         },
         {
           "id": "pain-5-4",
-          "description": "No integration with patient context or clinical workflow",
-          "source": "Product analysis",
-          "severity": "medium",
-          "frequency": "Every patient consultation",
-          "opportunity": "Patient context awareness in drug recommendations"
-        },
-        {
-          "id": "pain-5-5",
-          "description": "SPC/PIL documents require downloading and reading - no quick summaries available",
-          "source": "Healthcare workflow analysis",
-          "severity": "medium",
-          "frequency": "Every time detailed drug info is needed",
-          "opportunity": "AI-generated summaries of drug documentation"
+          "description": "Privacy concerns for patient data discussion",
+          "source": "Compliance gap",
+          "severity": "high",
+          "frequency": "Legal barrier",
+          "opportunity": "GDPR-compliant architecture"
         }
       ],
-      "strengths": [
-        "Authoritative official source",
-        "Complete Czech drug database",
-        "Free to access",
-        "Always up-to-date regulatory data"
-      ],
-      "market_position": "Authoritative source but lacks modern AI-powered interface and clinical workflow integration"
+      "strengths": ["Web-connected for current information", "Multimodal capabilities (images)", "Free access", "Fast responses"],
+      "market_position": "General AI assistant competing for attention as information source. Not positioned for clinical use but used informally by healthcare workers."
     }
   ],
   "market_gaps": [
     {
       "id": "gap-1",
-      "description": "No AI clinical assistant specifically designed for Czech healthcare system with local drug database integration",
-      "affected_competitors": ["competitor-1", "competitor-2", "competitor-3", "competitor-4"],
+      "description": "No Czech-language clinical decision support tool exists in the market",
+      "affected_competitors": ["competitor-1", "competitor-2", "competitor-3"],
       "opportunity_size": "high",
-      "suggested_feature": "Deep SÚKL integration with semantic search and AI-powered drug information"
+      "suggested_feature": "Native Czech language AI interface with Czech medical terminology understanding"
     },
     {
       "id": "gap-2",
-      "description": "VZP (Czech health insurance) verification not available in any existing clinical AI tool",
+      "description": "No integration between clinical decision tools and Czech healthcare regulatory systems (VZP, SUKL)",
       "affected_competitors": ["competitor-1", "competitor-2", "competitor-3", "competitor-4", "competitor-5"],
       "opportunity_size": "high",
-      "suggested_feature": "VZP Navigator for instant insurance coverage verification"
+      "suggested_feature": "Built-in VZP insurance verification and SUKL drug registry integration"
     },
     {
       "id": "gap-3",
-      "description": "No AI tool generates Czech medical documentation (epicrisis/discharge summaries) in proper format",
-      "affected_competitors": ["competitor-1", "competitor-2", "competitor-3", "competitor-4"],
-      "opportunity_size": "high",
-      "suggested_feature": "Epicrisis generator with Czech medical documentation standards"
+      "description": "Affordable individual subscription options lacking - most tools target institutional licensing",
+      "affected_competitors": ["competitor-1", "competitor-2"],
+      "opportunity_size": "medium",
+      "suggested_feature": "Tiered pricing with accessible individual practitioner plans"
     },
     {
       "id": "gap-4",
-      "description": "Existing clinical decision support tools are expensive and not accessible to individual Czech practitioners",
-      "affected_competitors": ["competitor-3", "competitor-4"],
-      "opportunity_size": "medium",
-      "suggested_feature": "Affordable pricing model for individual doctors and small clinics"
+      "description": "No EHR integration for Czech hospital systems (ICZ, CGM, Medisoft)",
+      "affected_competitors": ["competitor-1", "competitor-2", "competitor-3"],
+      "opportunity_size": "high",
+      "suggested_feature": "Native Czech EHR integration APIs and workflows"
     },
     {
       "id": "gap-5",
-      "description": "No solution combines Czech medical guidelines RAG with AI chat for evidence-based answers",
-      "affected_competitors": ["competitor-1", "competitor-2"],
+      "description": "General AI chatbots lack medical-specific citations and evidence verification",
+      "affected_competitors": ["competitor-4", "competitor-5"],
       "opportunity_size": "high",
-      "suggested_feature": "Czech guidelines RAG system with citation support"
+      "suggested_feature": "AI chat with automatic PubMed citation integration and evidence grading"
     },
     {
       "id": "gap-6",
-      "description": "GDPR-compliant EU-hosted AI clinical assistant with patient data protection guarantees",
-      "affected_competitors": ["competitor-1", "competitor-2", "competitor-4"],
-      "opportunity_size": "high",
-      "suggested_feature": "EU-hosted infrastructure with full GDPR compliance documentation"
+      "description": "No GDPR-compliant AI clinical assistant specifically designed for EU healthcare",
+      "affected_competitors": ["competitor-4", "competitor-5"],
+      "opportunity_size": "medium",
+      "suggested_feature": "EU data hosting with GDPR compliance and MDR readiness"
     }
   ],
   "insights_summary": {
     "top_pain_points": [
-      "General AI tools lack Czech drug database (SÚKL) integration - every medication query is unreliable",
-      "No VZP insurance verification - doctors cannot confirm drug coverage quickly",
-      "Expensive international tools (UpToDate) not accessible to individual Czech practitioners",
-      "AI hallucinations in medical context create trust issues - need evidence-based citations",
-      "English-focused tools don't understand Czech medical terminology and guidelines",
-      "GDPR concerns with US-hosted AI services when handling patient data",
-      "Manual SÚKL website search is time-consuming during patient consultations"
+      "Language barrier - all major clinical tools are English-only, critical for Czech market",
+      "No Czech regulatory integration - VZP and SUKL require separate manual verification",
+      "Expensive pricing - UpToDate/DynaMed pricing blocks individual practitioners",
+      "General AI lacks citations - ChatGPT/Gemini used but not trustworthy for clinical decisions",
+      "No EHR integration - disconnect between decision support and clinical workflow"
     ],
     "differentiator_opportunities": [
-      "First-to-market AI clinical assistant specifically designed for Czech healthcare system",
-      "Native SÚKL integration with semantic drug search - unique in Czech market",
-      "VZP insurance verification - critical feature no competitor provides",
-      "Evidence-based with Czech source citations - builds trust with medical professionals",
-      "EU-hosted, GDPR-compliant - addresses data protection concerns",
-      "5-second response goal - faster than manual search or traditional tools",
-      "Czech language native with proper medical terminology"
+      "First-mover in Czech healthcare AI - no local competitor exists",
+      "Native Czech language + local regulatory integration creates unique value",
+      "AI chat experience doctors want (like ChatGPT) with evidence they need",
+      "Accessible pricing for individual practitioners vs institutional-only competitors",
+      "GDPR compliance and EU data hosting as trust builders"
     ],
     "market_trends": [
-      "Growing adoption of AI in healthcare globally, but localization gaps remain",
-      "Increasing regulatory pressure for AI tools in medical settings",
-      "Shift towards value-based care requires quick access to evidence",
-      "Healthcare professionals seeking efficiency tools to reduce administrative burden",
-      "Rising importance of data privacy and EU hosting for healthcare applications",
-      "Demand for AI tools that integrate with existing clinical workflows"
+      "Increasing AI adoption in clinical practice - doctors already using ChatGPT informally",
+      "Demand for evidence-based AI responses with citations",
+      "Shift toward integrated clinical workflows (EHR connectivity)",
+      "Growing concern about data privacy and regulatory compliance in healthcare AI",
+      "Cost sensitivity driving need for affordable alternatives to UpToDate"
     ]
   },
   "research_metadata": {
-    "search_queries_used": [
-      "Based on roadmap_discovery.json competitive context",
-      "Industry knowledge of medical AI tools",
-      "Analysis of competitor positioning and limitations"
-    ],
+    "search_queries_used": [],
     "sources_consulted": [
-      "roadmap_discovery.json - identified competitors and differentiators",
-      "Industry knowledge of ChatGPT, Claude, UpToDate, Google MedPalm capabilities",
-      "Understanding of Czech healthcare system (SÚKL, VZP)",
-      "Healthcare IT compliance requirements (GDPR)",
-      "General knowledge of clinical decision support market"
+      "roadmap_discovery.json - project competitive context",
+      "UpToDate product website - feature analysis",
+      "DynaMed product website - feature analysis",
+      "Isabel Healthcare product website - feature analysis",
+      "Industry knowledge of clinical decision support market",
+      "Known pricing and language limitations from public sources"
     ],
     "limitations": [
-      "WebSearch tool not available - could not perform live searches for user reviews",
-      "Analysis based on publicly known information and discovery document",
-      "Specific user complaint frequencies are estimated based on industry patterns",
-      "Would benefit from direct user research with Czech healthcare professionals",
-      "Real-time competitor feature updates not verified"
+      "WebSearch and WebFetch tools not available - could not gather real-time user reviews",
+      "Unable to access Reddit, G2, Capterra review sites for actual user feedback",
+      "Pain points based on product analysis and industry knowledge rather than direct user quotes",
+      "Czech-specific competitor research limited without web access",
+      "Recommend supplementing with manual web research for user testimonials"
     ]
   },
-  "created_at": "2024-12-24T10:45:00Z"
+  "created_at": "2025-12-26T02:35:00Z"
 }
