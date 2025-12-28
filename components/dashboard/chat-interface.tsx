@@ -83,7 +83,7 @@ export function ChatInterface({ sessionId }: { sessionId?: string }) {
       // 2. Call Backend API (Non-streaming for v2.0 MVP)
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"
 
-      const response = await fetch(`${apiUrl}/api/v1/query`, {
+      const response = await fetch(`${apiUrl}/api/v1/query/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
