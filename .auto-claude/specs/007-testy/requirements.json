@@ -1,4 +1,0 @@
-{
-  "task_description": "Implementujte komplexní sadu testů End-to-End (E2E) pro českou aplikaci MedAI, lékařskou aplikaci vytvořenou pomocí Next.js a Supabase. Testovací sada bude pokrývat čtyři kritické uživatelské toky: autentizaci (přihlášení/odhlášení/relace), AI chat s ověřením odpovědí, vyhledávání léků s daty SUKL a ověření VZP (české zdravotní pojišťovny). Jedná se o funkci s vysokou prioritou, protože lékařské aplikace vyžadují vysokou spolehlivost – automatizované testování E2E zabraňuje regresím a zajišťuje konzistentní uživatelský zážitek v tomto kontextu zdravotní péče.",
-  "workflow_type": "feature"
-}

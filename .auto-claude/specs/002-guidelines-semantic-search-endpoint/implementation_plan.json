@@ -1,8 +1,0 @@
-{
-  "feature": "Guidelines Semantic Search Endpoint",
-  "description": "# Pokyny pro sémantické vyhledávání\n\nDoplňte pokyny pro vyhledávání o správné vyhledávání podle vektorové podobnosti. Oddělte vyhledávání pokynů od vyhledávání obecných znalostí, aby byly výsledky z českých lékařských pokynů relevantnější a zaměřenější.\n\n## Odůvodnění\nSoučasná implementace se vrací k obecnému vyhledávání (TODO poznamenáno v kódu). Lékaři potřebují cílené vyhledávání pokynů, aby mohli rychle najít relevantní klinická doporučení.\n\n## Příběhy uživatelů\n- Jako lékař chci vyhledávat české klinické pokyny v přirozeném jazyce, abych mohl rychle najít relevantní doporučení.\n- Jako specialista chci filtrovat pokyny podle lékařské specializace, abych viděl pouze relevantní obsah.\n\n## Kritéria přijatelnosti\n- [ ] Je implementován vyhrazený koncový bod /guidelines/search.\n- [ ] Vektorové vyhledávání podobnosti dotazuje konkrétně tabulku pokynů.\n- [ ] Výsledky obsahují skóre relevance a citace zdrojů.\n- [ ] Doba odezvy je u dotazů týkajících se pokynů kratší než 2 sekundy.\n- [ ] Vyhledávání podporuje dotazy v přirozeném jazyce v češtině.",
-  "created_at": "2025-12-24T02:07:29.588Z",
-  "updated_at": "2025-12-25T01:34:59.040Z",
-  "status": "pending",
-  "phases": []
-}

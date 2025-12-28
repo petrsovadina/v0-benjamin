@@ -13,6 +13,48 @@ Jedná se o **full-stack projekt** s:
 - **Backendem**: služba Python FastAPI se zpracováním klinických dotazů na základě LangGraph
 - **Databází**: Supabase (PostgreSQL s Row Level Security)
 
+## Konfigurace prostředí
+
+### 🔒 Bezpečnost API klíčů
+
+**DŮLEŽITÉ**: Tento projekt používá citlivé API klíče, které **NESMÍ být commitovány do gitu**.
+
+#### Nastavení pro nové vývojáře:
+
+1. **Zkopírujte example soubory**:
+```bash
+# Frontend
+cp .env.example .env.local
+
+# Backend
+cp backend/.env.example backend/.env
+
+# Claude Code (pokud používáte)
+cp .auto-claude/.env.example .auto-claude/.env
+```
+
+2. **Vyplňte skutečné API klíče** v `.env` souborech:
+   - `ANTHROPIC_API_KEY` - z https://console.anthropic.com/settings/keys
+   - `NEXT_PUBLIC_SUPABASE_URL` - z Supabase Dashboard
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` - z Supabase Dashboard
+   - `SUPABASE_KEY` (service role) - z Supabase Dashboard
+   - Další klíče dle potřeby
+
+3. **Ověřte .gitignore**:
+```bash
+# Tyto soubory by NIKDY neměly být v gitu:
+.env
+.env.local
+backend/.env
+.auto-claude/.env
+```
+
+#### ⚠️ Co NIKDY nedělat:
+- ❌ Nepushujte soubory `.env` do gitu
+- ❌ Nepublikujte API klíče v issue/PR
+- ❌ Nesdílejte klíče přes veřejné kanály
+- ✅ Používejte pouze `.env.example` s placeholdery
+
 ## Vývojové příkazy
 
 ### Frontend (Next.js)
