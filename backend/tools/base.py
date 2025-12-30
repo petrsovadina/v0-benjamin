@@ -54,7 +54,19 @@ class ToolDefinition:
     handler: Callable[..., Any]
 
     def __post_init__(self) -> None:
-        """Validate fields after dataclass initialization."""
+        """
+        Validate fields after dataclass initialization.
+
+        Performs validation on all ToolDefinition fields to ensure:
+        - name is a non-empty string
+        - description is a non-empty string
+        - parameters is a Pydantic BaseModel subclass
+        - handler is a callable (function, method, or callable class)
+
+        Raises:
+            TypeError: If handler is not callable or parameters is not a BaseModel subclass.
+            ValueError: If name or description is empty or not a string.
+        """
         # Validate handler is callable
         if not callable(self.handler):
             raise TypeError(
@@ -80,7 +92,28 @@ class ToolDefinition:
 
     @property
     def is_async(self) -> bool:
-        """Check if the handler is an async function."""
+        """
+        Check if the handler is an async function.
+
+        This property is used by the ToolRegistry to determine whether to
+        await the handler or call it synchronously. It uses asyncio's
+        iscoroutinefunction() to detect async def functions.
+
+        Returns:
+            bool: True if the handler is an async function, False otherwise.
+
+        Example:
+            >>> async def async_handler(x: int) -> int:
+            ...     return x * 2
+            >>> def sync_handler(x: int) -> int:
+            ...     return x * 2
+            >>> tool_async = ToolDefinition(..., handler=async_handler)
+            >>> tool_async.is_async
+            True
+            >>> tool_sync = ToolDefinition(..., handler=sync_handler)
+            >>> tool_sync.is_async
+            False
+        """
         return asyncio.iscoroutinefunction(self.handler)
 
 

@@ -8,7 +8,7 @@ interface for invoking tools with type-safe validation and timing metrics.
 
 import asyncio
 import time
-from typing import Any, Dict, List, Set
+from typing import Any, Callable, Dict, List, Set
 
 from pydantic import ValidationError
 
@@ -28,6 +28,14 @@ SENSITIVE_KEYS: Set[str] = {
     "credential", "credentials",
     "private_key", "privatekey",
 }
+"""
+Set of key name patterns that indicate sensitive data.
+
+Keys matching any of these patterns (case-insensitive partial match)
+will have their values redacted in logs to prevent exposure of secrets.
+Patterns include common credential field names like api_key, password,
+token, secret, and authorization headers.
+"""
 
 
 def sanitize_inputs(inputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -349,19 +357,32 @@ class ToolRegistry:
                 duration_ms=duration_ms
             )
 
-    def _run_async_handler(self, handler: Any, params: Dict[str, Any]) -> Any:
+    def _run_async_handler(self, handler: Callable[..., Any], params: Dict[str, Any]) -> Any:
         """
         Run an async handler from a sync context.
 
-        Attempts to run the async handler in the current event loop
-        if one exists. Otherwise, creates a new event loop.
+        This method bridges the async/sync boundary when invoke() is called
+        for an async handler. It uses one of two strategies:
+
+        1. If already inside an event loop (e.g., Jupyter notebook, async web
+           framework), it runs the handler in a thread pool executor to avoid
+           blocking the existing loop.
+
+        2. If no event loop is running, it creates a temporary loop using
+           asyncio.run() which handles the full lifecycle.
 
         Args:
-            handler: The async handler function.
-            params: Parameters to pass to the handler.
+            handler: The async handler function to execute. Must be a
+                coroutine function (defined with async def).
+            params: Dictionary of parameters to pass to the handler as
+                keyword arguments.
 
         Returns:
-            The handler's return value.
+            Any: The return value from the async handler.
+
+        Note:
+            For async contexts, prefer using invoke_async() directly as it
+            avoids the overhead of thread pool execution.
         """
         try:
             # Try to get the current event loop
@@ -476,14 +497,50 @@ class ToolRegistry:
         self._tools.clear()
 
     def __len__(self) -> int:
-        """Return the number of registered tools."""
+        """
+        Return the number of registered tools.
+
+        Enables use of len() on the registry.
+
+        Returns:
+            int: Number of tools currently registered.
+
+        Example:
+            >>> len(registry)
+            3
+        """
         return len(self._tools)
 
     def __contains__(self, name: str) -> bool:
-        """Check if a tool name is registered."""
+        """
+        Check if a tool name is registered.
+
+        Enables use of 'in' operator for tool name lookup.
+
+        Args:
+            name: The tool name to check.
+
+        Returns:
+            bool: True if the tool is registered, False otherwise.
+
+        Example:
+            >>> "echo" in registry
+            True
+            >>> "nonexistent" in registry
+            False
+        """
         return name in self._tools
 
     def __repr__(self) -> str:
-        """Return a string representation of the registry."""
+        """
+        Return a string representation of the registry.
+
+        Returns:
+            str: A string showing the class name and tool count.
+
+        Example:
+            >>> repr(registry)
+            'ToolRegistry(tools=3)'
+        """
         tool_count = len(self._tools)
         return f"ToolRegistry(tools={tool_count})"
