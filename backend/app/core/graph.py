@@ -1,25 +1,57 @@
-from typing import TypedDict, Annotated, Literal, List, Dict, Any
+"""
+Clinical workflow graph with LangGraph state management and checkpointing.
+
+This module defines the main clinical query processing workflow using LangGraph's
+StateGraph. The workflow classifies queries, retrieves relevant information from
+various sources (SÚKL, PubMed, guidelines), and synthesizes responses.
+
+Key Features:
+    - ClinicalState: Extended state with agentic workflow capabilities
+    - Iteration Control: Maximum 5 iterations to prevent infinite loops
+    - Checkpointing: SqliteSaver persistence for session recovery
+    - Query Classification: LLM-based routing to appropriate retrieval nodes
+
+Workflow Flow:
+    START → check_iteration → (conditional: end→END, continue→classifier)
+    → (conditional routing) → retrieve_* → synthesizer → END
+
+Usage:
+    >>> from backend.app.core.graph import app
+    >>> config = {"configurable": {"thread_id": "session_123"}}
+    >>> result = await app.ainvoke({"messages": [HumanMessage(content="...")]}, config=config)
+"""
+
+from typing import List, Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
+from langgraph.checkpoint.sqlite import SqliteSaver
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from backend.app.core.llm import get_llm
+from backend.app.core.state import ClinicalState
 from backend.app.services.search_service import search_service
 from pydantic import BaseModel, Field
 
 # --- STATE DEFINITION ---
-class ClinicalState(TypedDict):
-    """
-    Represents the state of a clinical query processing flow.
-    """
-    messages: Annotated[list[BaseMessage], add_messages]
-    query_type: Literal["general", "drug_info", "guidelines", "clinical_trial", "reimbursement", "urgent"] | None
-    retrieved_context: List[Dict[str, Any]]
-    final_answer: str | None
-    next_step: str | None
+# ClinicalState is now imported from backend.app.core.state
+# It includes the original 5 fields plus 4 new agentic fields:
+# - tool_calls: Annotated[List[ToolCall], operator.add]
+# - reasoning_steps: Annotated[List[ReasoningStep], operator.add]
+# - patient_context: Optional[PatientContext]
+# - iteration_count: int
 
 # --- MODELS FOR CLASSIFICATION ---
 class QueryClassification(BaseModel):
+    """
+    Structured output model for LLM-based query classification.
+
+    Used by the classifier_node to determine the appropriate retrieval
+    strategy based on the query content and intent.
+
+    Attributes:
+        query_type: Category of the clinical query (drug_info, guidelines, etc.).
+        reasoning: Brief explanation of why this classification was chosen.
+    """
+
     query_type: Literal["drug_info", "guidelines", "clinical", "urgent", "reimbursement"] = Field(
         ..., description="Type of clinical query based on content and intent."
     )
@@ -129,6 +161,47 @@ async def retrieve_guidelines_node(state: ClinicalState):
 
     return {"retrieved_context": raw_data}
 
+# --- ITERATION CONTROL ---
+# Maximum number of workflow iterations to prevent infinite loops
+MAX_ITERATIONS = 5
+
+
+def check_iteration_limit(state: ClinicalState) -> Dict[str, Any]:
+    """
+    Checks and enforces the workflow iteration limit.
+
+    This function increments the iteration_count on each execution and enforces
+    a maximum of 5 iterations to prevent infinite loops in the workflow.
+
+    Args:
+        state: The current ClinicalState containing iteration_count.
+
+    Returns:
+        A dict with updated state fields:
+        - iteration_count: The incremented count.
+        - If limit exceeded: final_answer with error message, next_step set to "end".
+
+    Raises:
+        No exceptions raised - errors are returned as state updates.
+    """
+    current_count = state.get("iteration_count", 0)
+    new_count = current_count + 1
+
+    if new_count >= MAX_ITERATIONS:
+        error_message = (
+            f"Workflow iteration limit exceeded. Maximum {MAX_ITERATIONS} iterations allowed. "
+            f"The workflow has been terminated to prevent infinite loops. "
+            f"Please refine your query or contact support if this persists."
+        )
+        return {
+            "iteration_count": new_count,
+            "final_answer": error_message,
+            "next_step": "end"
+        }
+
+    return {"iteration_count": new_count}
+
+
 async def synthesizer_node(state: ClinicalState):
     """
     Synthesizes the final answer using the Retrieved Context and System Prompt.
@@ -190,19 +263,72 @@ async def synthesizer_node(state: ClinicalState):
     
     return {"final_answer": response.content}
 
+# --- CHECKPOINTER CONFIGURATION ---
+# SqliteSaver provides persistent state storage for session recovery.
+# The checkpoints.db file is created in the backend directory.
+# Thread IDs are required when invoking the graph for session isolation.
+CHECKPOINT_DB_PATH = "backend/checkpoints.db"
+checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
+
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
 
+# Add all nodes including iteration control
+workflow.add_node("check_iteration", check_iteration_limit)
 workflow.add_node("classifier", classifier_node)
 workflow.add_node("retrieve_drugs", retrieve_drugs_node)
 workflow.add_node("retrieve_general", retrieve_general_node)
 workflow.add_node("retrieve_guidelines", retrieve_guidelines_node)
 workflow.add_node("synthesizer", synthesizer_node)
 
-workflow.add_edge(START, "classifier")
+# Start with iteration check to prevent infinite loops
+workflow.add_edge(START, "check_iteration")
 
-def route_query(state: ClinicalState):
+
+def route_iteration_check(state: ClinicalState) -> str:
+    """
+    Route based on iteration check result.
+
+    If the iteration limit has been exceeded (next_step == "end"),
+    route directly to END to terminate the workflow.
+    Otherwise, continue with the classifier for normal processing.
+
+    Args:
+        state: The current ClinicalState after iteration check.
+
+    Returns:
+        "end" to terminate or "continue" to proceed with classification.
+    """
+    if state.get("next_step") == "end":
+        return "end"
+    return "continue"
+
+
+workflow.add_conditional_edges(
+    "check_iteration",
+    route_iteration_check,
+    {
+        "end": END,
+        "continue": "classifier"
+    }
+)
+
+
+def route_query(state: ClinicalState) -> str:
+    """
+    Route the query to the appropriate retrieval node based on classification.
+
+    Uses the next_step field set by classifier_node to determine which
+    retrieval strategy to use (drugs, guidelines, or general literature).
+
+    Args:
+        state: The current ClinicalState with next_step set by classifier.
+
+    Returns:
+        The name of the next retrieval node to execute.
+    """
     return state["next_step"]
+
 
 workflow.add_conditional_edges(
     "classifier",
@@ -219,4 +345,6 @@ workflow.add_edge("retrieve_general", "synthesizer")
 workflow.add_edge("retrieve_guidelines", "synthesizer")
 workflow.add_edge("synthesizer", END)
 
-app = workflow.compile()
+# Compile the graph with checkpointer for state persistence.
+# When invoking, use config={"configurable": {"thread_id": "session_123"}}
+app = workflow.compile(checkpointer=checkpointer)
