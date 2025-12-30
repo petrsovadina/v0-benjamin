@@ -239,17 +239,51 @@ checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
 
+# Add all nodes including iteration control
+workflow.add_node("check_iteration", check_iteration_limit)
 workflow.add_node("classifier", classifier_node)
 workflow.add_node("retrieve_drugs", retrieve_drugs_node)
 workflow.add_node("retrieve_general", retrieve_general_node)
 workflow.add_node("retrieve_guidelines", retrieve_guidelines_node)
 workflow.add_node("synthesizer", synthesizer_node)
 
-workflow.add_edge(START, "classifier")
+# Start with iteration check to prevent infinite loops
+workflow.add_edge(START, "check_iteration")
+
+
+def route_iteration_check(state: ClinicalState) -> str:
+    """
+    Route based on iteration check result.
+
+    If the iteration limit has been exceeded (next_step == "end"),
+    route directly to END to terminate the workflow.
+    Otherwise, continue with the classifier for normal processing.
+
+    Args:
+        state: The current ClinicalState after iteration check.
+
+    Returns:
+        "end" to terminate or "continue" to proceed with classification.
+    """
+    if state.get("next_step") == "end":
+        return "end"
+    return "continue"
+
+
+workflow.add_conditional_edges(
+    "check_iteration",
+    route_iteration_check,
+    {
+        "end": END,
+        "continue": "classifier"
+    }
+)
+
 
 def route_query(state: ClinicalState) -> str:
     """Route the query to the appropriate retrieval node based on classification."""
     return state["next_step"]
+
 
 workflow.add_conditional_edges(
     "classifier",
