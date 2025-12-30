@@ -71,7 +71,7 @@
           "id": "2.2",
           "title": "Add checkpoint support to graph compilation",
           "description": "Update workflow.compile() to support new checkpoint system. If compile() requires checkpointer, add MemorySaver() or explicit None.",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [
             "backend/app/core/graph.py"
           ],
@@ -80,19 +80,21 @@
             "No checkpoint-related errors during execution",
             "verify_graph_compilation.py passes"
           ],
-          "notes": "Import MemorySaver from langgraph.checkpoint.memory if needed"
+          "notes": "Updated workflow.compile() with explicit checkpointer=None for LangGraph 0.2.x/1.0.x compatibility. Verified compilation works with LangGraph 1.0.5 (installed version exceeds 0.2.x minimum). Added comments explaining the stateless design choice. Committed as 35a5f93.",
+          "updated_at": "2025-12-30T16:24:18.730559+00:00"
         },
         {
           "id": "2.3",
           "title": "Verify graph.py functionality with quick test",
           "description": "Run verify_graph_compilation.py to ensure graph compiles and can draw",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [],
           "acceptance_criteria": [
             "python backend/verify_graph_compilation.py succeeds",
             "Graph visualization works (get_graph().draw_mermaid())"
           ],
-          "notes": "Quick smoke test before running full test suite"
+          "notes": "Graph compilation verification passed with LangGraph 1.0.5. Fixed verify_graph_compilation.py path setup to correctly import from 'backend.app.core.graph'. Graph compiles successfully and Mermaid diagram generation works. Flow verified: START \u2192 classifier \u2192 retrieve_drugs/retrieve_general/retrieve_guidelines (conditional) \u2192 synthesizer \u2192 END. Committed as 0bd2347.",
+          "updated_at": "2025-12-30T16:27:48.895909+00:00"
         }
       ]
     },
@@ -106,7 +108,7 @@
           "id": "3.1",
           "title": "Verify and update imports in agent_graph.py",
           "description": "Check if ToolNode, tools_condition are still accessible from langgraph.prebuilt. Update MessageGraph import if deprecated.",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [
             "backend/agent_graph.py"
           ],
@@ -115,7 +117,8 @@
             "ToolNode and tools_condition accessible",
             "@tool decorator works correctly"
           ],
-          "notes": "Current imports: langgraph.prebuilt (ToolNode, tools_condition), langchain_core.tools (tool). MessageGraph imported but unused."
+          "notes": "Verified with LangGraph 1.0.5:\n- ToolNode imported successfully from langgraph.prebuilt \u2713\n- tools_condition imported successfully from langgraph.prebuilt \u2713\n- @tool decorator works from langchain_core.tools \u2713\n- StateGraph and END available from langgraph.graph \u2713\n- Full agent_graph.py module loads and compiles correctly \u2713\n- No MessageGraph import exists in the file (contrary to notes) - no update needed\n- All imports are compatible with installed langgraph 1.0.5 version\n\nNo code changes required - current imports work correctly.",
+          "updated_at": "2025-12-30T16:53:46.815089+00:00"
         },
         {
           "id": "3.2",
@@ -272,5 +275,5 @@
   "rollback_available": true,
   "estimated_complexity": "MEDIUM",
   "risk_level": "MEDIUM",
-  "last_updated": "2025-12-30T16:18:24.275060+00:00"
+  "last_updated": "2025-12-30T16:53:46.815098+00:00"
 }
