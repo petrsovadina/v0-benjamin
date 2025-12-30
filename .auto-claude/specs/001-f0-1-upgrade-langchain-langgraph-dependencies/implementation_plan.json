@@ -124,7 +124,7 @@
           "id": "3.2",
           "title": "Add checkpoint support to agent_graph compilation",
           "description": "Update workflow.compile() in agent_graph.py to support new checkpoint system if required.",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [
             "backend/agent_graph.py"
           ],
@@ -133,19 +133,21 @@
             "Tool execution flows correctly",
             "tools_condition routing works"
           ],
-          "notes": "May need to add checkpointer parameter or explicit None"
+          "notes": "Updated workflow.compile() with explicit checkpointer=None for LangGraph 0.2.x/1.0.x compatibility. Added comment explaining stateless design choice. Verified:\n- Graph imports successfully \u2713\n- Graph compiles successfully with checkpointer=None \u2713\n- Tools registered correctly (search_pubmed, search_sukl_drugs) \u2713\n- Graph structure correct: agent \u2192 tools (conditional) \u2192 agent \u2192 END \u2713\n- Mermaid diagram generation works \u2713\nCommitted as 5d2aa14.",
+          "updated_at": "2025-12-30T16:57:27.623238+00:00"
         },
         {
           "id": "3.3",
           "title": "Verify agent_graph.py functionality",
           "description": "Run verify_agent.py to ensure agent graph compiles and operates correctly",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [],
           "acceptance_criteria": [
             "python backend/verify_agent.py succeeds",
             "No import errors or compilation failures"
           ],
-          "notes": "Quick smoke test before running full test suite"
+          "notes": "Agent graph verification PASSED. Successfully verified:\n- Import of agent_graph module works correctly\n- Graph nodes: ['agent', 'tools']\n- State fields: ['messages']\n- Tools: search_pubmed, search_sukl_drugs\n- LLM with tools binding: RunnableBinding\n- Compiled app type: CompiledStateGraph\n- No LangChain/LangGraph deprecation warnings (only third-party pyiceberg/pydantic warnings)\n\nInstalled versions verified: langchain 1.2.0, langchain-core 1.2.5, langgraph 1.0.5",
+          "updated_at": "2025-12-30T17:01:31.519138+00:00"
         }
       ]
     },
@@ -159,14 +161,15 @@
           "id": "4.1",
           "title": "Run full test suite",
           "description": "Execute pytest backend/tests/ and verify all tests pass without modification",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [],
           "acceptance_criteria": [
             "pytest backend/tests/ returns 0 failures",
             "All RAG workflow tests pass",
             "No test code modifications required"
           ],
-          "notes": "Tests should pass WITHOUT modifying test expectations"
+          "notes": "All 84 tests pass (pytest backend/tests/). No test modifications required. Warnings present are unrelated to LangChain/LangGraph upgrade - they come from Pydantic deprecated validators and datetime.utcnow() usage in project code, plus third-party pyiceberg library.",
+          "updated_at": "2025-12-30T17:48:21.348911+00:00"
         },
         {
           "id": "4.2",
@@ -275,5 +278,5 @@
   "rollback_available": true,
   "estimated_complexity": "MEDIUM",
   "risk_level": "MEDIUM",
-  "last_updated": "2025-12-30T16:53:46.815098+00:00"
+  "last_updated": "2025-12-30T17:48:21.348919+00:00"
 }
