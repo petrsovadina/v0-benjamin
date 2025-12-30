@@ -1,20 +1,50 @@
 {
   "discovered_files": {
     "backend/app/core/graph.py": {
-      "description": "Uses StateGraph with START/END from langgraph.graph, add_messages from langgraph.graph.message, workflow.compile() without checkpointer",
-      "category": "langgraph_patterns",
-      "discovered_at": "2025-12-30T16:10:19.938455+00:00"
+      "description": "Import paths verified for LangGraph 1.0.5: 'from langgraph.graph import StateGraph, START, END' and 'from langgraph.graph.message import add_messages' are still valid. No changes required. Alternative location 'langgraph.constants' also has START/END.",
+      "category": "import-paths",
+      "discovered_at": "2025-12-30T16:18:10.037474+00:00"
     },
     "backend/agent_graph.py": {
-      "description": "Uses ToolNode and tools_condition from langgraph.prebuilt, @tool decorator from langchain_core.tools, MessageGraph imported but unused",
-      "category": "langgraph_patterns",
-      "discovered_at": "2025-12-30T16:10:19.960068+00:00"
+      "description": "Agent graph verification passed with LangGraph 1.0.5. Graph structure: nodes=['agent', 'tools'], state=['messages'], tools=[search_pubmed, search_sukl_drugs]. Compiles to CompiledStateGraph successfully without LangChain/LangGraph deprecation warnings.",
+      "category": "verification",
+      "discovered_at": "2025-12-30T17:01:31.553776+00:00"
     },
     "backend/requirements.txt": {
       "description": "Dependency installation verified: langchain 1.2.0, langchain-core 1.2.5, langgraph 1.0.5, langgraph-checkpoint 3.0.1. No version conflicts. Virtual environment created in /venv.",
       "category": "dependencies",
       "discovered_at": "2025-12-30T16:14:08.897074+00:00"
+    },
+    "backend/verify_graph_compilation.py": {
+      "description": "Verification script requires project root in PYTHONPATH (not just backend/) because code uses 'backend.app.core...' imports. Also needs env vars: SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL (can use dummy values for compilation tests).",
+      "category": "testing",
+      "discovered_at": "2025-12-30T16:27:57.098947+00:00"
+    },
+    "backend/tests/": {
+      "description": "All 84 tests pass after LangChain/LangGraph upgrade. Tests require environment variables (SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL) to be set. Warnings are from Pydantic deprecated validators and datetime.utcnow() - not LangChain/LangGraph related.",
+      "category": "testing",
+      "discovered_at": "2025-12-30T17:48:12.322934+00:00"
+    },
+    "backend/app/schemas/query.py": {
+      "description": "Fixed Pydantic V1 @validator deprecation: Migrated to @field_validator with mode='before' and @classmethod decorator. Changed Config class to model_config dict.",
+      "category": "deprecation-fix",
+      "discovered_at": "2025-12-30T17:54:44.112647+00:00"
+    },
+    "backend/data_processing/config/settings.py": {
+      "description": "Fixed Pydantic V2 class Config deprecation: Migrated to model_config = SettingsConfigDict(...) for pydantic-settings BaseSettings class.",
+      "category": "deprecation-fix",
+      "discovered_at": "2025-12-30T17:54:44.131204+00:00"
+    },
+    "backend/pytest.ini": {
+      "description": "Created pytest configuration with filterwarnings to catch deprecation warnings from application code while filtering third-party library warnings (pyparsing/pyiceberg from supabase dependency chain).",
+      "category": "test-configuration",
+      "discovered_at": "2025-12-30T17:54:44.148253+00:00"
+    },
+    "backend/app/core/graph.py, backend/agent_graph.py": {
+      "description": "LangGraph 1.0.5 is fully backward compatible with existing graph implementations. No breaking changes in: StateGraph API, START/END imports, add_messages annotation, ToolNode, tools_condition, workflow.compile(). All 84 tests pass after dependency upgrade.",
+      "category": "api_compatibility",
+      "discovered_at": "2025-12-30T17:57:48.440522+00:00"
     }
   },
-  "last_updated": "2025-12-30T16:14:08.897084+00:00"
+  "last_updated": "2025-12-30T17:57:48.440531+00:00"
 }

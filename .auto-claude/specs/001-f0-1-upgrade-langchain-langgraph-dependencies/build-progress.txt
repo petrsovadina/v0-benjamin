@@ -1,68 +1,96 @@
 # Build Progress: Upgrade LangChain Dependencies to 0.3.x
 
-## Status: IN PROGRESS
+## Status: COMPLETED
 
 ## Summary
-Upgrade LangChain-related dependencies from 0.1.x to 0.3.x+ versions to enable Deep Agents support.
+Successfully upgraded LangChain-related dependencies from 0.1.x to latest versions (1.x) to enable Deep Agents support. All 84 tests pass. No breaking changes encountered.
 
-## Target Versions
-- langchain: 0.1.x → 0.3.x
-- langchain-core: 0.1.x → 0.3.x
-- langgraph: 0.1.x → 0.2.x
-- langgraph-checkpoint: (NEW) 2.0.x
+## Target vs Installed Versions
+| Package | Target | Installed | Status |
+|---------|--------|-----------|--------|
+| langchain | >=0.3.0 | 1.2.0 | Exceeded |
+| langchain-core | >=0.3.0 | 1.2.5 | Exceeded |
+| langgraph | >=0.2.0 | 1.0.5 | Exceeded |
+| langgraph-checkpoint | >=2.0.0 (NEW) | 3.0.1 | Exceeded |
 
-## Installed Versions (2025-12-30)
-- langchain: 1.2.0 ✅
-- langchain-core: 1.2.5 ✅
-- langgraph: 1.0.5 ✅
-- langgraph-checkpoint: 3.0.1 ✅
+## Files Modified
+- `backend/requirements.txt` - Updated dependency versions
+- `backend/app/core/graph.py` - Added explicit checkpointer=None for LangGraph 0.2.x+ compatibility
+- `backend/agent_graph.py` - Added explicit checkpointer=None for LangGraph 0.2.x+ compatibility
+- `backend/app/schemas/query.py` - Fixed Pydantic V1 @validator deprecation
+- `backend/data_processing/config/settings.py` - Fixed Pydantic V2 class Config deprecation
+- `backend/app/services/logger.py` - Fixed datetime.utcnow() deprecation
+- `backend/app/endpoints/admin.py` - Fixed datetime.utcnow() deprecation
+- `backend/pytest.ini` - Added strict deprecation warning configuration
 
-## Files to Modify
-- backend/requirements.txt
-- backend/app/core/graph.py
-- backend/agent_graph.py
-
-## Phase Progress
-- [x] Phase 1: Update Dependencies
+## Phase Progress (All Complete)
+- [x] Phase 1: Update Dependencies (2/2 subtasks)
   - [x] 1.1: Update requirements.txt
   - [x] 1.2: Verify installation (pip check: No broken requirements)
-- [ ] Phase 2: Update graph.py
-  - [x] 2.1: Verify/update imports ✅ (No changes needed - imports still valid)
-  - [ ] 2.2: Add checkpoint support
-  - [ ] 2.3: Verify functionality
-- [ ] Phase 3: Update agent_graph.py
-  - [ ] 3.1: Verify/update imports
-  - [ ] 3.2: Add checkpoint support
-  - [ ] 3.3: Verify functionality
-- [ ] Phase 4: Testing
-  - [x] 4.1: Run full test suite ✅ (84 tests pass, no LangChain/LangGraph warnings)
-  - [ ] 4.2: Eliminate deprecation warnings
-  - [ ] 4.3: Fix any failing tests
-- [ ] Phase 5: QA Validation
-  - [ ] 5.1: Verify dependency versions
-  - [ ] 5.2: RAG workflow E2E test
-  - [ ] 5.3: Tool-based agent test
-  - [ ] 5.4: Final documentation
+- [x] Phase 2: Update graph.py (3/3 subtasks)
+  - [x] 2.1: Verify/update imports (No changes needed)
+  - [x] 2.2: Add explicit checkpointer=None
+  - [x] 2.3: Verify compilation and graph structure
+- [x] Phase 3: Update agent_graph.py (3/3 subtasks)
+  - [x] 3.1: Verify/update imports (No changes needed)
+  - [x] 3.2: Add explicit checkpointer=None
+  - [x] 3.3: Verify agent graph functionality
+- [x] Phase 4: Testing (3/3 subtasks)
+  - [x] 4.1: Run full test suite (84 tests pass)
+  - [x] 4.2: Eliminate deprecation warnings
+  - [x] 4.3: Fix any failing tests (None needed)
+- [x] Phase 5: QA Validation (4/4 subtasks)
+  - [x] 5.1: Verify dependency versions
+  - [x] 5.2: RAG workflow E2E test
+  - [x] 5.3: Tool-based agent test
+  - [x] 5.4: Final documentation
 
 ## Breaking Changes Encountered
-(None yet)
+**None.** The upgrade was fully backward compatible:
+- All existing import paths remain valid
+- StateGraph, START, END from `langgraph.graph`
+- add_messages from `langgraph.graph.message`
+- ToolNode, tools_condition from `langgraph.prebuilt`
+- workflow.compile() API unchanged (added optional checkpointer=None for explicitness)
 
-## Notes
+## Key Findings
 
-### 2.1 Import Path Verification (2025-12-30)
-Verified that all LangGraph import paths in graph.py are still valid with LangGraph 1.0.5:
-- `from langgraph.graph import StateGraph, START, END` ✓
-- `from langgraph.graph.message import add_messages` ✓
+### Import Path Stability
+All LangGraph import paths in both graph.py and agent_graph.py are still valid with LangGraph 1.0.5:
+- `from langgraph.graph import StateGraph, START, END`
+- `from langgraph.graph.message import add_messages`
+- `from langgraph.prebuilt import ToolNode, tools_condition`
 - Alternative path `langgraph.constants` also has START/END (not needed)
-- Graph with START/END compiles successfully
-- No code changes required for imports
 
-### 4.1 Test Suite Execution (2025-12-30)
-Ran `pytest backend/tests/` - All 84 tests passed in 4.74s.
-- No test modifications required after dependency upgrade
-- No LangChain or LangGraph deprecation warnings
-- Existing warnings are unrelated to this upgrade:
-  - Pydantic V1 style validators (project code in schemas/query.py, data_processing/config/settings.py)
-  - datetime.utcnow() deprecation (services/logger.py, endpoints/admin.py)
-  - Third-party pyiceberg library warnings
-- Tests require environment variables: SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL
+### Graph Compilation
+Both graphs compile successfully without modification:
+- RAG workflow: START -> classifier -> retrieve_* (conditional) -> synthesizer -> END
+- Agent graph: START -> agent -> tools (conditional loop) -> agent -> END
+
+### Test Suite
+All 84 tests pass without modification. Tests require environment variables:
+- SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL
+
+## Lessons Learned / Gotchas
+
+1. **Version Constraints**: Using `>=` constraints in requirements.txt means installed versions may exceed targets significantly (e.g., langgraph 1.0.5 vs 0.2.x target). This is expected and beneficial.
+
+2. **PYTHONPATH for Verification Scripts**: Verification scripts require project root in PYTHONPATH (not just backend/) because code uses `backend.app.core...` imports.
+
+3. **Checkpointer Parameter**: While not strictly required, adding explicit `checkpointer=None` to `workflow.compile()` is good practice for LangGraph 0.2.x+ to document stateless design intent.
+
+4. **Deprecation Cleanup**: The upgrade surfaced unrelated deprecations in project code:
+   - Pydantic V1 `@validator` -> `@field_validator` with `mode='before'`
+   - Pydantic V2 `class Config` -> `model_config = SettingsConfigDict(...)`
+   - `datetime.utcnow()` -> `datetime.now(timezone.utc)`
+
+5. **Third-Party Warnings**: Some warnings come from third-party dependencies (pyparsing/pyiceberg from supabase chain) - filtered via pytest.ini.
+
+## Verification Scripts Created
+- `backend/verify_graph_compilation.py` - Verifies graph.py compilation
+- `backend/verify_agent.py` - Verifies agent_graph.py compilation
+- `backend/verify_complete_rag_flow.py` - End-to-end RAG workflow tests
+- `backend/verify_agent_tool_loop.py` - Agent -> ToolNode -> Agent loop tests
+
+## Completion Date
+2025-12-30
