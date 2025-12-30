@@ -88,14 +88,41 @@ class ToolResult(BaseModel):
     """
     Standardized response structure for tool invocations.
 
+    ToolResult provides a consistent format for all tool execution outcomes,
+    whether successful or failed. It includes timing information for performance
+    monitoring and debugging.
+
     Attributes:
-        success: Whether the tool executed successfully
-        data: Result data if successful
-        error: Error message if failed
-        duration_ms: Execution time in milliseconds
+        success: Whether the tool executed successfully. True if the handler
+            completed without errors, False otherwise.
+        data: Result data from the tool handler if successful. Can be any
+            JSON-serializable value. None if the execution failed.
+        error: Human-readable error message if the execution failed. None if
+            successful. Should provide enough context for debugging.
+        duration_ms: Execution time in milliseconds. Measured from before
+            input validation to after handler completion. Useful for
+            performance monitoring and identifying slow tools.
+
+    Example:
+        >>> # Creating results directly
+        >>> result = ToolResult(success=True, data={"items": [1, 2, 3]}, duration_ms=42.5)
+        >>> result.success
+        True
+
+        >>> # Using factory methods (recommended)
+        >>> success_result = ToolResult.create_success(data={"user": "john"}, duration_ms=10.0)
+        >>> failure_result = ToolResult.create_failure(error="Connection timeout", duration_ms=5000.0)
+
+        >>> # Checking result status
+        >>> if result.success:
+        ...     process_data(result.data)
+        ... else:
+        ...     log_error(result.error)
 
     Note:
-        Full implementation with factory methods in subtask 1.3.
+        Factory methods are named `create_success()` and `create_failure()` to avoid
+        naming conflicts with the `success` field in Pydantic v2. Aliases `ok()` and
+        `fail()` are also provided for convenience.
     """
 
     success: bool
@@ -103,12 +130,82 @@ class ToolResult(BaseModel):
     error: Optional[str] = None
     duration_ms: Optional[float] = None
 
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "success": True,
+                    "data": {"result": "example data"},
+                    "error": None,
+                    "duration_ms": 42.5
+                },
+                {
+                    "success": False,
+                    "data": None,
+                    "error": "Tool execution failed: connection timeout",
+                    "duration_ms": 5000.0
+                }
+            ]
+        }
+    }
+
     @classmethod
-    def ok(cls, data: Any, duration_ms: Optional[float] = None) -> "ToolResult":
-        """Create a successful result."""
+    def create_success(cls, data: Any, duration_ms: Optional[float] = None) -> "ToolResult":
+        """
+        Create a successful ToolResult.
+
+        Factory method for creating a result that indicates successful
+        tool execution with returned data.
+
+        Args:
+            data: The result data from the tool handler. Can be any
+                JSON-serializable value (dict, list, str, int, etc.).
+            duration_ms: Optional execution time in milliseconds.
+
+        Returns:
+            ToolResult: A result instance with success=True and the provided data.
+
+        Example:
+            >>> result = ToolResult.create_success(
+            ...     data={"drugs": ["Aspirin", "Ibuprofen"]},
+            ...     duration_ms=150.5
+            ... )
+            >>> result.success
+            True
+            >>> result.data
+            {'drugs': ['Aspirin', 'Ibuprofen']}
+        """
         return cls(success=True, data=data, duration_ms=duration_ms)
 
     @classmethod
-    def fail(cls, error: str, duration_ms: Optional[float] = None) -> "ToolResult":
-        """Create a failure result."""
+    def create_failure(cls, error: str, duration_ms: Optional[float] = None) -> "ToolResult":
+        """
+        Create a failed ToolResult.
+
+        Factory method for creating a result that indicates tool execution
+        failure with an error message.
+
+        Args:
+            error: Human-readable error message describing what went wrong.
+                Should provide enough context for debugging.
+            duration_ms: Optional execution time in milliseconds (time until
+                the failure occurred).
+
+        Returns:
+            ToolResult: A result instance with success=False and the error message.
+
+        Example:
+            >>> result = ToolResult.create_failure(
+            ...     error="Database connection failed: timeout after 30s",
+            ...     duration_ms=30000.0
+            ... )
+            >>> result.success
+            False
+            >>> result.error
+            'Database connection failed: timeout after 30s'
+        """
         return cls(success=False, error=error, duration_ms=duration_ms)
+
+    # Convenience aliases for common Result pattern naming
+    ok = create_success
+    fail = create_failure
