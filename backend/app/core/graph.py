@@ -219,4 +219,7 @@ workflow.add_edge("retrieve_general", "synthesizer")
 workflow.add_edge("retrieve_guidelines", "synthesizer")
 workflow.add_edge("synthesizer", END)
 
-app = workflow.compile()
+# Compile graph without checkpointer - this is a stateless query/response workflow
+# that doesn't require state persistence between invocations.
+# For stateful conversations, use: checkpointer=MemorySaver() from langgraph.checkpoint.memory
+app = workflow.compile(checkpointer=None)
