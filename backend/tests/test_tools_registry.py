@@ -39,7 +39,7 @@ class SearchInput(BaseModel):
 
 class ComplexInput(BaseModel):
     """Pydantic model with multiple fields for testing."""
-    name: str
+    item_name: str
     count: int = Field(default=1, ge=0)
     tags: list[str] = []
 
@@ -54,9 +54,9 @@ def search_handler(query: str, limit: int = 10) -> dict:
     return {"query": query, "limit": limit, "results": []}
 
 
-def complex_handler(name: str, count: int = 1, tags: list = None) -> dict:
+def complex_handler(item_name: str, count: int = 1, tags: list = None) -> dict:
     """Handler with complex parameters."""
-    return {"name": name, "count": count, "tags": tags or []}
+    return {"item_name": item_name, "count": count, "tags": tags or []}
 
 
 def failing_handler(message: str) -> dict:
@@ -264,10 +264,10 @@ class TestToolInvocation:
         )
         registry.register(complex_tool)
 
-        result = registry.invoke("complex_tool", name="test", count=5, tags=["a", "b"])
+        result = registry.invoke("complex_tool", item_name="test", count=5, tags=["a", "b"])
 
         assert result.success is True
-        assert result.data["name"] == "test"
+        assert result.data["item_name"] == "test"
         assert result.data["count"] == 5
         assert result.data["tags"] == ["a", "b"]
 
