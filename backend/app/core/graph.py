@@ -1,3 +1,26 @@
+"""
+Clinical workflow graph with LangGraph state management and checkpointing.
+
+This module defines the main clinical query processing workflow using LangGraph's
+StateGraph. The workflow classifies queries, retrieves relevant information from
+various sources (SÚKL, PubMed, guidelines), and synthesizes responses.
+
+Key Features:
+    - ClinicalState: Extended state with agentic workflow capabilities
+    - Iteration Control: Maximum 5 iterations to prevent infinite loops
+    - Checkpointing: SqliteSaver persistence for session recovery
+    - Query Classification: LLM-based routing to appropriate retrieval nodes
+
+Workflow Flow:
+    START → check_iteration → (conditional: end→END, continue→classifier)
+    → (conditional routing) → retrieve_* → synthesizer → END
+
+Usage:
+    >>> from backend.app.core.graph import app
+    >>> config = {"configurable": {"thread_id": "session_123"}}
+    >>> result = await app.ainvoke({"messages": [HumanMessage(content="...")]}, config=config)
+"""
+
 from typing import List, Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.sqlite import SqliteSaver
@@ -18,6 +41,17 @@ from pydantic import BaseModel, Field
 
 # --- MODELS FOR CLASSIFICATION ---
 class QueryClassification(BaseModel):
+    """
+    Structured output model for LLM-based query classification.
+
+    Used by the classifier_node to determine the appropriate retrieval
+    strategy based on the query content and intent.
+
+    Attributes:
+        query_type: Category of the clinical query (drug_info, guidelines, etc.).
+        reasoning: Brief explanation of why this classification was chosen.
+    """
+
     query_type: Literal["drug_info", "guidelines", "clinical", "urgent", "reimbursement"] = Field(
         ..., description="Type of clinical query based on content and intent."
     )
@@ -281,7 +315,18 @@ workflow.add_conditional_edges(
 
 
 def route_query(state: ClinicalState) -> str:
-    """Route the query to the appropriate retrieval node based on classification."""
+    """
+    Route the query to the appropriate retrieval node based on classification.
+
+    Uses the next_step field set by classifier_node to determine which
+    retrieval strategy to use (drugs, guidelines, or general literature).
+
+    Args:
+        state: The current ClinicalState with next_step set by classifier.
+
+    Returns:
+        The name of the next retrieval node to execute.
+    """
     return state["next_step"]
 
 
