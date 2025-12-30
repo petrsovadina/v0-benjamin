@@ -8,11 +8,57 @@ interface for invoking tools with type-safe validation and timing metrics.
 
 import asyncio
 import time
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Set
 
 from pydantic import ValidationError
 
+from backend.services.logger import get_logger
 from backend.tools.base import ToolDefinition, ToolResult
+
+# Initialize structured logger for tool registry
+logger = get_logger("backend.tools.registry")
+
+# Keys that should be sanitized in log outputs
+SENSITIVE_KEYS: Set[str] = {
+    "api_key", "apikey", "api-key",
+    "password", "passwd", "pwd",
+    "token", "access_token", "refresh_token", "auth_token",
+    "secret", "secret_key",
+    "authorization", "auth",
+    "credential", "credentials",
+    "private_key", "privatekey",
+}
+
+
+def sanitize_inputs(inputs: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Sanitize sensitive data from input dictionary for safe logging.
+
+    Replaces values of sensitive keys with "[REDACTED]" to prevent
+    accidental exposure of secrets in logs.
+
+    Args:
+        inputs: Dictionary of input parameters.
+
+    Returns:
+        Dict[str, Any]: A new dictionary with sensitive values redacted.
+
+    Example:
+        >>> sanitize_inputs({"query": "test", "api_key": "secret123"})
+        {'query': 'test', 'api_key': '[REDACTED]'}
+    """
+    sanitized = {}
+    for key, value in inputs.items():
+        # Check if key matches any sensitive pattern (case-insensitive)
+        key_lower = key.lower()
+        if any(sensitive in key_lower for sensitive in SENSITIVE_KEYS):
+            sanitized[key] = "[REDACTED]"
+        elif isinstance(value, dict):
+            # Recursively sanitize nested dictionaries
+            sanitized[key] = sanitize_inputs(value)
+        else:
+            sanitized[key] = value
+    return sanitized
 
 
 class ToolRegistry:
@@ -140,11 +186,23 @@ class ToolRegistry:
         tool = self._tools[name]
         start_time = time.perf_counter()
 
+        # Sanitize inputs for logging (before validation to capture all inputs)
+        sanitized_inputs = sanitize_inputs(kwargs)
+
         # Validate inputs against the tool's parameter schema
         try:
             validated_params = tool.parameters(**kwargs)
         except ValidationError as e:
             duration_ms = (time.perf_counter() - start_time) * 1000
+            logger.error(
+                "Tool invocation failed: validation error",
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=False,
+                duration_ms=round(duration_ms, 2),
+                error_type="ValidationError",
+                error_message=str(e),
+            )
             return ToolResult.create_failure(
                 error=f"Validation error: {e}",
                 duration_ms=duration_ms
@@ -163,10 +221,33 @@ class ToolRegistry:
                 result = tool.handler(**params_dict)
 
             duration_ms = (time.perf_counter() - start_time) * 1000
+
+            # Log successful invocation
+            logger.info(
+                "Tool invoked successfully",
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=True,
+                duration_ms=round(duration_ms, 2),
+            )
+
             return ToolResult.create_success(data=result, duration_ms=duration_ms)
 
         except Exception as e:
             duration_ms = (time.perf_counter() - start_time) * 1000
+
+            # Log failed invocation with exception details
+            logger.error(
+                "Tool invocation failed: handler error",
+                error=e,
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=False,
+                duration_ms=round(duration_ms, 2),
+                error_type=type(e).__name__,
+                error_message=str(e),
+            )
+
             return ToolResult.create_failure(
                 error=f"Handler error: {str(e)}",
                 duration_ms=duration_ms
@@ -201,11 +282,23 @@ class ToolRegistry:
         tool = self._tools[name]
         start_time = time.perf_counter()
 
+        # Sanitize inputs for logging (before validation to capture all inputs)
+        sanitized_inputs = sanitize_inputs(kwargs)
+
         # Validate inputs against the tool's parameter schema
         try:
             validated_params = tool.parameters(**kwargs)
         except ValidationError as e:
             duration_ms = (time.perf_counter() - start_time) * 1000
+            logger.error(
+                "Tool invocation failed: validation error",
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=False,
+                duration_ms=round(duration_ms, 2),
+                error_type="ValidationError",
+                error_message=str(e),
+            )
             return ToolResult.create_failure(
                 error=f"Validation error: {e}",
                 duration_ms=duration_ms
@@ -224,10 +317,33 @@ class ToolRegistry:
                 result = tool.handler(**params_dict)
 
             duration_ms = (time.perf_counter() - start_time) * 1000
+
+            # Log successful invocation
+            logger.info(
+                "Tool invoked successfully",
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=True,
+                duration_ms=round(duration_ms, 2),
+            )
+
             return ToolResult.create_success(data=result, duration_ms=duration_ms)
 
         except Exception as e:
             duration_ms = (time.perf_counter() - start_time) * 1000
+
+            # Log failed invocation with exception details
+            logger.error(
+                "Tool invocation failed: handler error",
+                error=e,
+                tool_name=name,
+                inputs=sanitized_inputs,
+                success=False,
+                duration_ms=round(duration_ms, 2),
+                error_type=type(e).__name__,
+                error_message=str(e),
+            )
+
             return ToolResult.create_failure(
                 error=f"Handler error: {str(e)}",
                 duration_ms=duration_ms
