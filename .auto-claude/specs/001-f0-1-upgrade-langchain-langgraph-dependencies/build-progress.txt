@@ -1,0 +1,51 @@
+# Build Progress: Upgrade LangChain Dependencies to 0.3.x
+
+## Status: IN PROGRESS
+
+## Summary
+Upgrade LangChain-related dependencies from 0.1.x to 0.3.x+ versions to enable Deep Agents support.
+
+## Target Versions
+- langchain: 0.1.x → 0.3.x
+- langchain-core: 0.1.x → 0.3.x
+- langgraph: 0.1.x → 0.2.x
+- langgraph-checkpoint: (NEW) 2.0.x
+
+## Installed Versions (2025-12-30)
+- langchain: 1.2.0 ✅
+- langchain-core: 1.2.5 ✅
+- langgraph: 1.0.5 ✅
+- langgraph-checkpoint: 3.0.1 ✅
+
+## Files to Modify
+- backend/requirements.txt
+- backend/app/core/graph.py
+- backend/agent_graph.py
+
+## Phase Progress
+- [x] Phase 1: Update Dependencies
+  - [x] 1.1: Update requirements.txt
+  - [x] 1.2: Verify installation (pip check: No broken requirements)
+- [ ] Phase 2: Update graph.py
+  - [ ] 2.1: Verify/update imports
+  - [ ] 2.2: Add checkpoint support
+  - [ ] 2.3: Verify functionality
+- [ ] Phase 3: Update agent_graph.py
+  - [ ] 3.1: Verify/update imports
+  - [ ] 3.2: Add checkpoint support
+  - [ ] 3.3: Verify functionality
+- [ ] Phase 4: Testing
+  - [ ] 4.1: Run full test suite
+  - [ ] 4.2: Eliminate deprecation warnings
+  - [ ] 4.3: Fix any failing tests
+- [ ] Phase 5: QA Validation
+  - [ ] 5.1: Verify dependency versions
+  - [ ] 5.2: RAG workflow E2E test
+  - [ ] 5.3: Tool-based agent test
+  - [ ] 5.4: Final documentation
+
+## Breaking Changes Encountered
+(None yet)
+
+## Notes
+(None yet)

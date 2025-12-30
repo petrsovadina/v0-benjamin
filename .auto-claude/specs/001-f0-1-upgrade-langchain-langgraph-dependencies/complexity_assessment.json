@@ -1,0 +1,71 @@
+{
+  "complexity": "standard",
+  "workflow_type": "feature",
+  "confidence": 0.85,
+  "reasoning": "Major version upgrades (0.2.x → 0.3.x) for LangChain dependencies require research for breaking changes and will likely affect multiple files (requirements.txt, graph.py, agent_graph.py). Single service with no infrastructure changes keeps it at standard complexity rather than complex.",
+
+  "analysis": {
+    "scope": {
+      "estimated_files": 5,
+      "estimated_services": 1,
+      "is_cross_cutting": false,
+      "notes": "Will modify requirements.txt and likely need compatibility fixes in graph.py, agent_graph.py. May need test updates if API changes affect test assertions."
+    },
+    "integrations": {
+      "external_services": [],
+      "new_dependencies": [],
+      "research_needed": true,
+      "notes": "Not adding new integrations, but major version upgrades (langchain 0.2→0.3, langgraph 0.1→0.2, langgraph-checkpoint 1.x→2.x) require researching migration guides and breaking changes."
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": false,
+      "config_changes": true,
+      "notes": "Only requirements.txt changes. No Docker, database, or environment variable modifications needed."
+    },
+    "knowledge": {
+      "patterns_exist": true,
+      "research_required": true,
+      "unfamiliar_tech": [],
+      "notes": "Codebase already uses LangChain/LangGraph, so patterns exist. However, research needed for API changes in major version upgrades (0.2.x → 0.3.x migration guides)."
+    },
+    "risk": {
+      "level": "medium",
+      "concerns": [
+        "Major version bumps typically introduce breaking changes",
+        "RAG workflow must continue functioning (acceptance criteria)",
+        "All tests must pass (gate requirement)",
+        "Zero deprecation warnings allowed (strict requirement)"
+      ],
+      "notes": "Medium risk due to major version changes and strict acceptance criteria. Backward compatibility issues likely but scope is contained to single service."
+    }
+  },
+
+  "recommended_phases": [
+    "discovery",
+    "requirements",
+    "research",
+    "context",
+    "spec_writing",
+    "planning",
+    "validation"
+  ],
+
+  "flags": {
+    "needs_research": true,
+    "needs_self_critique": false,
+    "needs_infrastructure_setup": false
+  },
+
+  "validation_recommendations": {
+    "risk_level": "medium",
+    "skip_validation": false,
+    "minimal_mode": false,
+    "test_types_required": ["unit", "integration"],
+    "security_scan_required": false,
+    "staging_deployment_required": false,
+    "reasoning": "Major dependency upgrades require thorough testing. Unit tests (pytest backend/tests/) must pass per acceptance criteria. Integration testing needed to verify RAG workflow functionality. No security-sensitive changes, so security scan not required."
+  },
+
+  "created_at": "2025-12-30T16:45:00.000000Z"
+}

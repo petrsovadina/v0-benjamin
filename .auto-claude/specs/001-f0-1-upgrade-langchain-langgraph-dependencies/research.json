@@ -1,0 +1,405 @@
+{
+  "integrations_researched": [
+    {
+      "name": "langchain",
+      "type": "library",
+      "verified_package": {
+        "name": "langchain",
+        "install_command": "pip install langchain>=0.3.0",
+        "version": ">=0.3.0",
+        "current_version": ">=0.1.0",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage",
+          "from langchain_core.prompts import ChatPromptTemplate",
+          "from langchain_core.tools import tool"
+        ],
+        "initialization": "# No direct initialization - provides base framework classes",
+        "key_functions": [
+          "ChatPromptTemplate.from_messages()",
+          "@tool decorator for custom tools"
+        ],
+        "verified_against": "Context7: /websites/langchain_oss_python (15530 code snippets, score 88.4)"
+      },
+      "configuration": {
+        "env_vars": [],
+        "config_files": [],
+        "dependencies": ["langchain-core>=0.3.0"]
+      },
+      "current_usage_in_project": {
+        "files": ["backend/app/core/graph.py", "backend/agent_graph.py"],
+        "patterns_used": [
+          "ChatPromptTemplate for prompt construction",
+          "@tool decorator for custom tools",
+          "Message types (HumanMessage, AIMessage, SystemMessage)"
+        ]
+      },
+      "breaking_changes_expected": [
+        "Major version bump from 0.1.x to 0.3.x indicates breaking changes",
+        "Message handling patterns may have changed",
+        "Prompt template construction may have new required parameters",
+        "Tool decorator signature may have changed"
+      ],
+      "gotchas": [
+        "Requires langchain-core to be upgraded simultaneously",
+        "Core functionality moved to langchain-core package",
+        "Deprecation warnings likely present in 0.2.x versions"
+      ],
+      "research_sources": [
+        "Context7: /websites/langchain_oss_python",
+        "Project files: backend/app/core/graph.py, backend/agent_graph.py",
+        "Current requirements.txt: langchain>=0.1.0"
+      ]
+    },
+    {
+      "name": "langchain-core",
+      "type": "library",
+      "verified_package": {
+        "name": "langchain-core",
+        "install_command": "pip install langchain-core>=0.3.0",
+        "version": ">=0.3.0",
+        "current_version": ">=0.1.0",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage",
+          "from langchain_core.prompts import ChatPromptTemplate",
+          "from langchain_core.tools import tool"
+        ],
+        "initialization": "# Core package - used via imports",
+        "key_functions": [
+          "BaseMessage base class for message types",
+          "ChatPromptTemplate.from_messages()",
+          "ainvoke() for async invocation",
+          "with_structured_output() for structured responses"
+        ],
+        "verified_against": "Context7: /langchain-ai/langchain (includes langchain-core v1.0.5)"
+      },
+      "configuration": {
+        "env_vars": [],
+        "config_files": [],
+        "dependencies": []
+      },
+      "current_usage_in_project": {
+        "files": ["backend/app/core/graph.py", "backend/agent_graph.py"],
+        "patterns_used": [
+          "Message types throughout both graph files",
+          "ChatPromptTemplate in classifier_node",
+          "with_structured_output() for structured classification",
+          "ainvoke() for async LLM calls"
+        ]
+      },
+      "breaking_changes_expected": [
+        "Major version bump 0.1.x to 0.3.x indicates significant API changes",
+        "Structured output interface may have changed",
+        "Message class constructors may have new required fields",
+        "Async invocation patterns may have changed"
+      ],
+      "gotchas": [
+        "Core dependency for langchain and langgraph",
+        "Must be upgraded before or with langchain",
+        "All LangChain integrations depend on compatible core version"
+      ],
+      "research_sources": [
+        "Context7: /langchain-ai/langchain (version langchain-core__1.0.5)",
+        "Context7: /websites/langchain_oss_python",
+        "Project files analysis"
+      ]
+    },
+    {
+      "name": "langgraph",
+      "type": "library",
+      "verified_package": {
+        "name": "langgraph",
+        "install_command": "pip install langgraph>=0.2.0",
+        "version": ">=0.2.0",
+        "current_version": ">=0.1.0",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from langgraph.graph import StateGraph, START, END, MessageGraph",
+          "from langgraph.graph.message import add_messages",
+          "from langgraph.prebuilt import ToolNode, tools_condition"
+        ],
+        "initialization": "workflow = StateGraph(StateClass)\napp = workflow.compile()",
+        "key_functions": [
+          "StateGraph(state_schema) - create graph with state",
+          "add_node(name, function) - add processing node",
+          "add_edge(source, target) - add transition",
+          "add_conditional_edges(source, condition, mapping) - add conditional routing",
+          "compile() - compile graph to runnable app",
+          "ToolNode(tools) - prebuilt tool execution node",
+          "tools_condition - prebuilt routing condition for tools"
+        ],
+        "verified_against": "Context7: /langchain-ai/langgraph (2379 code snippets, score 89.1, versions: 0.2.74, 0.4.8, 0.5.3, 0.6.0)"
+      },
+      "configuration": {
+        "env_vars": [],
+        "config_files": [],
+        "dependencies": ["langchain-core>=0.3.0"]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "checkpoint_support": "Requires langgraph-checkpoint for persistence"
+      },
+      "current_usage_in_project": {
+        "files": ["backend/app/core/graph.py", "backend/agent_graph.py"],
+        "patterns_used": [
+          "StateGraph with TypedDict state schema (both files)",
+          "add_messages annotation for message accumulation (graph.py)",
+          "START and END constants for graph boundaries (graph.py)",
+          "add_node() for adding processing nodes",
+          "add_edge() for sequential transitions",
+          "add_conditional_edges() for routing logic",
+          "ToolNode and tools_condition for tool execution (agent_graph.py)",
+          "compile() to create executable app"
+        ]
+      },
+      "breaking_changes_expected": [
+        "StateGraph constructor may have new required parameters",
+        "compile() method may have new configuration options",
+        "Checkpoint integration may require explicit configuration",
+        "ToolNode and tools_condition APIs may have changed",
+        "Message state handling may have new patterns",
+        "START/END constants may be replaced or relocated"
+      ],
+      "gotchas": [
+        "Version 0.2.x is specified, but Context7 shows versions up to 1.0.3",
+        "Checkpoint functionality now requires separate langgraph-checkpoint package",
+        "Graph compilation may need checkpointer parameter for persistence",
+        "Prebuilt components (ToolNode, tools_condition) may have breaking changes"
+      ],
+      "research_sources": [
+        "Context7: /langchain-ai/langgraph (official repo)",
+        "Context7: /websites/langchain_oss_python_langgraph (814 snippets, score 86.8)",
+        "Context7: /llmstxt/langchain-ai_github_io_langgraph_llms-full_txt (3115 snippets, score 91.9)",
+        "Project files: backend/app/core/graph.py, backend/agent_graph.py"
+      ]
+    },
+    {
+      "name": "langgraph-checkpoint",
+      "type": "library",
+      "verified_package": {
+        "name": "langgraph-checkpoint",
+        "install_command": "pip install langgraph-checkpoint>=2.0.0",
+        "version": ">=2.0.0",
+        "current_version": "not installed",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from langgraph.checkpoint.memory import MemorySaver",
+          "from langgraph.checkpoint.sqlite import SqliteSaver"
+        ],
+        "initialization": "checkpointer = MemorySaver()\napp = workflow.compile(checkpointer=checkpointer)",
+        "key_functions": [
+          "MemorySaver() - in-memory checkpoint storage",
+          "SqliteSaver(path) - SQLite-based checkpoint storage",
+          "compile(checkpointer=...) - attach checkpointer to graph"
+        ],
+        "verified_against": "Context7 search results and LangGraph documentation pattern"
+      },
+      "configuration": {
+        "env_vars": [],
+        "config_files": [],
+        "dependencies": ["langgraph>=0.2.0"]
+      },
+      "infrastructure": {
+        "requires_docker": false,
+        "storage_options": [
+          "MemorySaver - in-memory (not persistent across restarts)",
+          "SqliteSaver - file-based persistence",
+          "PostgresSaver - database persistence (requires langgraph-checkpoint-postgres)",
+          "RedisSaver - Redis persistence (requires langgraph-redis)"
+        ]
+      },
+      "current_usage_in_project": {
+        "files": [],
+        "patterns_used": [],
+        "note": "Not currently used - this is a NEW dependency being added"
+      },
+      "breaking_changes_expected": [
+        "Version 2.0.0 is a major version - may have breaking changes from 1.x",
+        "Integration pattern with StateGraph may have changed",
+        "Checkpoint serialization format may be incompatible with older versions"
+      ],
+      "gotchas": [
+        "Separated from main langgraph package in recent versions",
+        "Previously checkpoint functionality was in langgraph core",
+        "Version 2.0.0 indicates major architectural changes",
+        "May require explicit configuration in graph compilation",
+        "Different storage backends require different packages"
+      ],
+      "research_sources": [
+        "Context7 searches (found references in LangGraph documentation)",
+        "Package separation pattern observed in LangGraph ecosystem",
+        "Requirements indicate this is a new addition"
+      ]
+    },
+    {
+      "name": "langchain-anthropic",
+      "type": "library",
+      "verified_package": {
+        "name": "langchain-anthropic",
+        "install_command": "pip install langchain-anthropic>=0.1.4",
+        "version": ">=0.1.4",
+        "current_version": ">=0.1.4",
+        "verified": true
+      },
+      "api_patterns": {
+        "imports": [
+          "from langchain_anthropic import ChatAnthropic"
+        ],
+        "initialization": "llm = ChatAnthropic(model='claude-3-haiku-20240307', temperature=0, api_key=api_key)",
+        "key_functions": [
+          "ChatAnthropic() - initialize Anthropic LLM",
+          "bind_tools(tools) - bind tools to LLM",
+          "invoke(messages) - synchronous invocation",
+          "ainvoke(messages) - async invocation",
+          "with_structured_output(schema) - structured response"
+        ],
+        "verified_against": "Current project usage in agent_graph.py"
+      },
+      "configuration": {
+        "env_vars": ["ANTHROPIC_API_KEY"],
+        "config_files": [],
+        "dependencies": ["langchain-core>=0.3.0"]
+      },
+      "current_usage_in_project": {
+        "files": ["backend/agent_graph.py"],
+        "patterns_used": [
+          "ChatAnthropic initialization with model and API key",
+          "bind_tools() for tool binding"
+        ]
+      },
+      "breaking_changes_expected": [
+        "May require update to work with langchain-core 0.3.0",
+        "Tool binding interface may have changed",
+        "Structured output interface may have changed"
+      ],
+      "gotchas": [
+        "Requires compatible langchain-core version",
+        "API key must be provided via env var or constructor",
+        "Model names may have changed for newer Claude versions"
+      ],
+      "research_sources": [
+        "Project file: backend/agent_graph.py",
+        "Current requirements.txt"
+      ]
+    }
+  ],
+  "unverified_claims": [
+    {
+      "claim": "langgraph-checkpoint version 2.0.0 exists and is the correct target version",
+      "reason": "Could not access PyPI or full documentation to verify exact version number. Context7 search found checkpoint references but not explicit versioning for the separate package.",
+      "risk_level": "medium",
+      "mitigation": "Check PyPI for langgraph-checkpoint package and latest version. May need to use langgraph-checkpoint>=1.0.0 or follow langgraph version compatibility matrix."
+    },
+    {
+      "claim": "All breaking changes are limited to the identified patterns",
+      "reason": "Major version bumps (0.1.x -> 0.3.x, 0.1.x -> 0.2.x) typically include multiple breaking changes. Full migration guide needed.",
+      "risk_level": "high",
+      "mitigation": "Run pytest immediately after upgrade to identify all breaking changes. Review official migration guides for langchain 0.3.0 and langgraph 0.2.0."
+    },
+    {
+      "claim": "Deep Agents support requires exactly these versions",
+      "reason": "Deep Agents is mentioned as the driver for upgrade but specific version requirements were not verified in documentation.",
+      "risk_level": "low",
+      "mitigation": "Verify Deep Agents documentation for minimum version requirements."
+    }
+  ],
+  "recommendations": [
+    {
+      "priority": "critical",
+      "recommendation": "Upgrade dependencies in order: langchain-core first, then langchain, then langgraph, then add langgraph-checkpoint",
+      "reasoning": "Avoid dependency conflicts by upgrading core dependencies first"
+    },
+    {
+      "priority": "critical",
+      "recommendation": "Run pytest after EACH package upgrade to isolate breaking changes",
+      "reasoning": "Upgrading all at once makes it hard to identify which package caused which break"
+    },
+    {
+      "priority": "high",
+      "recommendation": "Check official LangChain migration guide for 0.3.0",
+      "reasoning": "Major version bumps typically have official migration documentation"
+    },
+    {
+      "priority": "high",
+      "recommendation": "Verify langgraph-checkpoint package version on PyPI before adding",
+      "reasoning": "Version 2.0.0 was not confirmed - may need different version"
+    },
+    {
+      "priority": "medium",
+      "recommendation": "Review StateGraph.compile() signature for checkpoint parameter changes",
+      "reasoning": "Both graph files use compile() - checkpoint integration may require new parameters"
+    },
+    {
+      "priority": "medium",
+      "recommendation": "Check if ToolNode and tools_condition are still in langgraph.prebuilt",
+      "reasoning": "Prebuilt components may have moved in 0.2.x version"
+    },
+    {
+      "priority": "medium",
+      "recommendation": "Verify START/END constants still exist in langgraph.graph",
+      "reasoning": "Constants may have been moved or renamed in new version"
+    },
+    {
+      "priority": "low",
+      "recommendation": "Consider updating langchain-anthropic to ensure compatibility",
+      "reasoning": "Provider packages often need updates for new core versions"
+    }
+  ],
+  "migration_checklist": [
+    "1. Backup current working state (git commit)",
+    "2. Update langchain-core>=0.3.0 in requirements.txt",
+    "3. Update langchain>=0.3.0 in requirements.txt",
+    "4. Update langgraph>=0.2.0 in requirements.txt",
+    "5. Add langgraph-checkpoint>=2.0.0 (verify version on PyPI first)",
+    "6. Run pip install -r backend/requirements.txt",
+    "7. Run pytest backend/tests/ to identify breaking changes",
+    "8. Fix import statements if modules moved",
+    "9. Fix StateGraph initialization if constructor changed",
+    "10. Fix compile() calls if signature changed",
+    "11. Fix ToolNode/tools_condition usage if APIs changed",
+    "12. Fix message handling if patterns changed",
+    "13. Re-run pytest until all tests pass",
+    "14. Run full RAG workflow functional test",
+    "15. Check for deprecation warnings in output",
+    "16. Fix any deprecation warnings found"
+  ],
+  "key_files_requiring_changes": [
+    {
+      "file": "backend/requirements.txt",
+      "changes_needed": "Update version constraints for langchain, langchain-core, langgraph; add langgraph-checkpoint",
+      "risk": "low"
+    },
+    {
+      "file": "backend/app/core/graph.py",
+      "changes_needed": "Potential import changes, StateGraph API changes, add_messages annotation changes, compile() signature",
+      "risk": "high"
+    },
+    {
+      "file": "backend/agent_graph.py",
+      "changes_needed": "Potential import changes, StateGraph API changes, ToolNode/tools_condition API changes, compile() signature",
+      "risk": "high"
+    },
+    {
+      "file": "backend/tests/*",
+      "changes_needed": "Test fixtures may need updates for new API patterns",
+      "risk": "medium"
+    }
+  ],
+  "context7_libraries_used": [
+    "/websites/langchain_oss_python",
+    "/langchain-ai/langchain",
+    "/langchain-ai/langgraph",
+    "/websites/langchain_oss_python_langgraph",
+    "/llmstxt/langchain-ai_github_io_langgraph_llms-full_txt"
+  ],
+  "created_at": "2025-12-30T16:50:00Z"
+}

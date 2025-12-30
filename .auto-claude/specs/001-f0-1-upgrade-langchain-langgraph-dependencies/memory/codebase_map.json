@@ -1,0 +1,20 @@
+{
+  "discovered_files": {
+    "backend/app/core/graph.py": {
+      "description": "Uses StateGraph with START/END from langgraph.graph, add_messages from langgraph.graph.message, workflow.compile() without checkpointer",
+      "category": "langgraph_patterns",
+      "discovered_at": "2025-12-30T16:10:19.938455+00:00"
+    },
+    "backend/agent_graph.py": {
+      "description": "Uses ToolNode and tools_condition from langgraph.prebuilt, @tool decorator from langchain_core.tools, MessageGraph imported but unused",
+      "category": "langgraph_patterns",
+      "discovered_at": "2025-12-30T16:10:19.960068+00:00"
+    },
+    "backend/requirements.txt": {
+      "description": "Dependency installation verified: langchain 1.2.0, langchain-core 1.2.5, langgraph 1.0.5, langgraph-checkpoint 3.0.1. No version conflicts. Virtual environment created in /venv.",
+      "category": "dependencies",
+      "discovered_at": "2025-12-30T16:14:08.897074+00:00"
+    }
+  },
+  "last_updated": "2025-12-30T16:14:08.897084+00:00"
+}

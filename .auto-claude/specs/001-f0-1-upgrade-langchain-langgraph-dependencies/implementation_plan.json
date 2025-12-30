@@ -1,0 +1,275 @@
+{
+  "id": "001-f0-1-upgrade-langchain-langgraph-dependencies",
+  "title": "Upgrade LangChain Dependencies to 0.3.x with Deep Agents Support",
+  "description": "Upgrade langchain, langchain-core, langgraph, and add langgraph-checkpoint to enable Deep Agents support while maintaining backward compatibility with existing RAG workflow.",
+  "created_at": "2025-12-30T01:40:46.234Z",
+  "updated_at": "2025-12-30T17:10:00.000Z",
+  "status": "pending",
+  "workflow_type": "feature",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Update Dependencies",
+      "description": "Update requirements.txt with new dependency versions and verify installation succeeds",
+      "order": 1,
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Update requirements.txt with new LangChain versions",
+          "description": "Update langchain>=0.3.0, langchain-core>=0.3.0, langgraph>=0.2.0, and add langgraph-checkpoint>=2.0.0",
+          "status": "completed",
+          "files_to_modify": [
+            "backend/requirements.txt"
+          ],
+          "acceptance_criteria": [
+            "langchain>=0.3.0 in requirements.txt",
+            "langchain-core>=0.3.0 in requirements.txt",
+            "langgraph>=0.2.0 in requirements.txt",
+            "langgraph-checkpoint>=2.0.0 in requirements.txt (NEW)"
+          ],
+          "notes": "Updated backend/requirements.txt: langchain>=0.3.0, langchain-core>=0.3.0, langgraph>=0.2.0, langgraph-checkpoint>=2.0.0 (new). Committed as 1c7787a.",
+          "updated_at": "2025-12-30T16:11:40.227335+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Verify dependency installation succeeds",
+          "description": "Run pip install and verify no version conflicts or installation errors",
+          "status": "completed",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "pip install -r backend/requirements.txt succeeds without errors",
+            "pip check shows no broken requirements"
+          ],
+          "notes": "pip install -r backend/requirements.txt succeeded. pip check: No broken requirements. Installed versions: langchain 1.2.0, langchain-core 1.2.5, langgraph 1.0.5, langgraph-checkpoint 3.0.1. All exceed minimum requirements.",
+          "updated_at": "2025-12-30T16:14:50.338352+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Update graph.py for LangGraph 0.2.x Compatibility",
+      "description": "Update backend/app/core/graph.py to work with new LangGraph APIs",
+      "order": 2,
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Verify and update imports in graph.py",
+          "description": "Check if START/END constants and add_messages are still accessible from current import paths. Update if relocated.",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/app/core/graph.py"
+          ],
+          "acceptance_criteria": [
+            "All imports resolve successfully",
+            "No ImportError when loading module",
+            "START/END constants accessible"
+          ],
+          "notes": "Current imports: langgraph.graph (START, END, StateGraph), langgraph.graph.message (add_messages)"
+        },
+        {
+          "id": "2.2",
+          "title": "Add checkpoint support to graph compilation",
+          "description": "Update workflow.compile() to support new checkpoint system. If compile() requires checkpointer, add MemorySaver() or explicit None.",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/app/core/graph.py"
+          ],
+          "acceptance_criteria": [
+            "Graph compiles without errors",
+            "No checkpoint-related errors during execution",
+            "verify_graph_compilation.py passes"
+          ],
+          "notes": "Import MemorySaver from langgraph.checkpoint.memory if needed"
+        },
+        {
+          "id": "2.3",
+          "title": "Verify graph.py functionality with quick test",
+          "description": "Run verify_graph_compilation.py to ensure graph compiles and can draw",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "python backend/verify_graph_compilation.py succeeds",
+            "Graph visualization works (get_graph().draw_mermaid())"
+          ],
+          "notes": "Quick smoke test before running full test suite"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Update agent_graph.py for LangGraph 0.2.x Compatibility",
+      "description": "Update backend/agent_graph.py to work with new LangGraph APIs",
+      "order": 3,
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Verify and update imports in agent_graph.py",
+          "description": "Check if ToolNode, tools_condition are still accessible from langgraph.prebuilt. Update MessageGraph import if deprecated.",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/agent_graph.py"
+          ],
+          "acceptance_criteria": [
+            "All imports resolve successfully",
+            "ToolNode and tools_condition accessible",
+            "@tool decorator works correctly"
+          ],
+          "notes": "Current imports: langgraph.prebuilt (ToolNode, tools_condition), langchain_core.tools (tool). MessageGraph imported but unused."
+        },
+        {
+          "id": "3.2",
+          "title": "Add checkpoint support to agent_graph compilation",
+          "description": "Update workflow.compile() in agent_graph.py to support new checkpoint system if required.",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/agent_graph.py"
+          ],
+          "acceptance_criteria": [
+            "Graph compiles without errors",
+            "Tool execution flows correctly",
+            "tools_condition routing works"
+          ],
+          "notes": "May need to add checkpointer parameter or explicit None"
+        },
+        {
+          "id": "3.3",
+          "title": "Verify agent_graph.py functionality",
+          "description": "Run verify_agent.py to ensure agent graph compiles and operates correctly",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "python backend/verify_agent.py succeeds",
+            "No import errors or compilation failures"
+          ],
+          "notes": "Quick smoke test before running full test suite"
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Testing and Deprecation Warning Elimination",
+      "description": "Run test suite and eliminate any deprecation warnings",
+      "order": 4,
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Run full test suite",
+          "description": "Execute pytest backend/tests/ and verify all tests pass without modification",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "pytest backend/tests/ returns 0 failures",
+            "All RAG workflow tests pass",
+            "No test code modifications required"
+          ],
+          "notes": "Tests should pass WITHOUT modifying test expectations"
+        },
+        {
+          "id": "4.2",
+          "title": "Eliminate deprecation warnings",
+          "description": "Run pytest with strict warning handling and fix any deprecation warnings in application code",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/app/core/graph.py",
+            "backend/agent_graph.py"
+          ],
+          "acceptance_criteria": [
+            "pytest backend/tests/ -W error::DeprecationWarning passes",
+            "No FutureWarning messages",
+            "Clean logs during execution"
+          ],
+          "notes": "Address warnings by updating deprecated API usage, not by suppressing warnings"
+        },
+        {
+          "id": "4.3",
+          "title": "Fix any failing tests due to API changes",
+          "description": "If tests fail due to breaking changes in LangGraph APIs, update application code (NOT tests) to fix",
+          "status": "pending",
+          "files_to_modify": [
+            "backend/app/core/graph.py",
+            "backend/agent_graph.py"
+          ],
+          "acceptance_criteria": [
+            "All tests pass after API compatibility fixes",
+            "No test code modifications",
+            "Behavior remains unchanged"
+          ],
+          "notes": "Only modify application code to maintain backward compatibility, never modify test expectations"
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "QA Validation and Final Verification",
+      "description": "Comprehensive QA validation as specified in spec",
+      "order": 5,
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Verify dependency versions are correct",
+          "description": "Use pip show to verify all four packages are at correct versions",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "pip show langchain shows Version: 0.3.x",
+            "pip show langchain-core shows Version: 0.3.x",
+            "pip show langgraph shows Version: 0.2.x",
+            "pip show langgraph-checkpoint shows Version: 2.0.x"
+          ],
+          "notes": "Version check per QA acceptance criteria in spec"
+        },
+        {
+          "id": "5.2",
+          "title": "Run integration test: RAG workflow E2E",
+          "description": "Verify complete query \u2192 classification \u2192 retrieval \u2192 synthesis flow works",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "Drug query flow works (classification \u2192 SUKL retrieval \u2192 synthesis)",
+            "Guideline query flow works (classification \u2192 guideline retrieval \u2192 synthesis with page citations)",
+            "General query flow works"
+          ],
+          "notes": "Use test_rag_flow_verification.py tests"
+        },
+        {
+          "id": "5.3",
+          "title": "Run integration test: Tool-based agent",
+          "description": "Verify agent \u2192 ToolNode \u2192 agent \u2192 response loop works correctly",
+          "status": "pending",
+          "files_to_modify": [],
+          "acceptance_criteria": [
+            "Agent correctly routes to tool when needed",
+            "ToolNode executes tools",
+            "Response synthesized after tool execution"
+          ],
+          "notes": "Verify tools_condition conditional routing functions correctly"
+        },
+        {
+          "id": "5.4",
+          "title": "Final documentation update",
+          "description": "Update build-progress.txt with completion status and any notes for future reference",
+          "status": "pending",
+          "files_to_modify": [
+            ".auto-claude/specs/001-f0-1-upgrade-langchain-langgraph-dependencies/build-progress.txt"
+          ],
+          "acceptance_criteria": [
+            "Build progress documented",
+            "Any gotchas or lessons learned recorded",
+            "Final status marked as complete"
+          ],
+          "notes": "Document any breaking changes encountered and their fixes"
+        }
+      ]
+    }
+  ],
+  "qa_signoff": {
+    "status": "pending",
+    "issues": "",
+    "tests_passed": ""
+  },
+  "breaking_changes_encountered": [],
+  "rollback_available": true,
+  "estimated_complexity": "MEDIUM",
+  "risk_level": "MEDIUM",
+  "last_updated": "2025-12-30T16:14:50.338363+00:00"
+}
