@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "backend/tools/__init__.py": {
+      "description": "Tool Registry public API module created with exports: ToolRegistry, ToolDefinition, ToolResult. Uses dataclass for ToolDefinition and Pydantic BaseModel for ToolResult. Imports require PYTHONPATH=. when running from project root.",
+      "category": "architecture",
+      "discovered_at": "2025-12-30T17:01:23.952320+00:00"
+    }
+  },
+  "last_updated": "2025-12-30T17:01:23.952337+00:00"
+}

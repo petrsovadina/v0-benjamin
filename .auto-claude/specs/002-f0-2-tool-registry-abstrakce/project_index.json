@@ -1,0 +1,1011 @@
+{
+  "project_root": "/Users/petrsovadina/Desktop/Develope/personal/v0-benjamin",
+  "project_type": "single",
+  "services": {
+    "main": {
+      "name": "main",
+      "path": "/Users/petrsovadina/Desktop/Develope/personal/v0-benjamin",
+      "language": "TypeScript",
+      "framework": "Next.js",
+      "type": "frontend",
+      "package_manager": "pnpm",
+      "default_port": 3000,
+      "styling": "Tailwind CSS",
+      "dev_command": "npm run dev",
+      "key_directories": {
+        "lib": {
+          "path": "lib",
+          "purpose": "Library code"
+        },
+        "app": {
+          "path": "app",
+          "purpose": "Application code"
+        },
+        "components": {
+          "path": "components",
+          "purpose": "UI components"
+        }
+      },
+      "dependencies": [
+        "@hookform/resolvers",
+        "@radix-ui/react-accordion",
+        "@radix-ui/react-alert-dialog",
+        "@radix-ui/react-aspect-ratio",
+        "@radix-ui/react-avatar",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-collapsible",
+        "@radix-ui/react-context-menu",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-dropdown-menu",
+        "@radix-ui/react-hover-card",
+        "@radix-ui/react-label",
+        "@radix-ui/react-menubar",
+        "@radix-ui/react-navigation-menu",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-progress",
+        "@radix-ui/react-radio-group",
+        "@radix-ui/react-scroll-area",
+        "@radix-ui/react-select",
+        "@radix-ui/react-separator"
+      ],
+      "dev_dependencies": [
+        "@tailwindcss/postcss",
+        "@types/node",
+        "@types/react",
+        "@types/react-dom",
+        "eslint",
+        "eslint-config-next",
+        "postcss",
+        "supabase",
+        "tailwindcss",
+        "tw-animate-css"
+      ],
+      "dockerfile": "Dockerfile",
+      "environment": {
+        "variables": {
+          "NEXT_PUBLIC_API_URL": {
+            "value": "http://localhost:8000",
+            "source": ".env",
+            "type": "url",
+            "sensitive": false,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_URL": {
+            "value": "https://higziqzcjmtmkzxbbzik.supabase.co",
+            "source": ".env.local",
+            "type": "url",
+            "sensitive": false,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_ANON_KEY": {
+            "value": "<REDACTED>",
+            "source": ".env",
+            "type": "string",
+            "sensitive": true,
+            "required": true
+          },
+          "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY": {
+            "value": "<REDACTED>",
+            "source": ".env.local",
+            "type": "string",
+            "sensitive": true,
+            "required": false
+          }
+        },
+        "required_count": 3,
+        "optional_count": 0,
+        "detected_count": 4
+      },
+      "api": {
+        "routes": [
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": "backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": "backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          }
+        ],
+        "total_routes": 26,
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "protected_routes": []
+      },
+      "database": {
+        "models": {
+          "InMemoryCache": {
+            "table": "full_llm_cache",
+            "fields": {
+              "prompt": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "llm": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "idx": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "response": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/cache.py",
+            "orm": "SQLAlchemy"
+          },
+          "FullLLMCache": {
+            "table": "full_llm_cache",
+            "fields": {
+              "prompt": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "llm": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "idx": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "response": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/cache.py",
+            "orm": "SQLAlchemy"
+          },
+          "FullMd5LLMCache": {
+            "table": "full_llm_cache",
+            "fields": {
+              "id": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "prompt_md5": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "llm": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "idx": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "prompt": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "response": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/cache.py",
+            "orm": "SQLAlchemy"
+          },
+          "Temporary": {
+            "table": "temp_test",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "spam": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/pandas/tests/io/test_sql.py",
+            "orm": "SQLAlchemy"
+          },
+          "Test": {
+            "table": "temp_test",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "string_column": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/pandas/tests/io/test_sql.py",
+            "orm": "SQLAlchemy"
+          },
+          "UpsertionRecord": {
+            "table": "upsertion_record",
+            "fields": {
+              "key": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "namespace": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": false
+              },
+              "group_id": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "updated_at": {
+                "type": "Float",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/indexes/_sql_record_manager.py",
+            "orm": "SQLAlchemy"
+          },
+          "User": {
+            "table": "users",
+            "fields": {
+              "attrname": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/mypy/apply.py",
+            "orm": "SQLAlchemy"
+          },
+          "Slide": {
+            "table": "slide",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/orderinglist.py",
+            "orm": "SQLAlchemy"
+          },
+          "Bullet": {
+            "table": "slide",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "slide_id": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "position": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "text": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/orderinglist.py",
+            "orm": "SQLAlchemy"
+          },
+          "Person": {
+            "table": "person",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "data": {
+                "type": "JSON",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/indexable.py",
+            "orm": "SQLAlchemy"
+          },
+          "Employee": {
+            "table": "employee",
+            "fields": {
+              "employee_id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "manager_data": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/declarative/extensions.py",
+            "orm": "SQLAlchemy"
+          },
+          "TableB": {
+            "table": "user",
+            "fields": {
+              "_table_a": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "email": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "user_id": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/automap.py",
+            "orm": "SQLAlchemy"
+          },
+          "Address": {
+            "table": "user",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "email": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "user_id": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/automap.py",
+            "orm": "SQLAlchemy"
+          },
+          "Part": {
+            "table": "part",
+            "fields": {
+              "part": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "sub_part": {
+                "type": "String",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "quantity": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/orm/query.py",
+            "orm": "SQLAlchemy"
+          },
+          "File": {
+            "table": "files",
+            "fields": {
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "extension": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/orm/properties.py",
+            "orm": "SQLAlchemy"
+          },
+          "MyClass": {
+            "table": "mytable",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "data": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/dialects/mysql/base.py",
+            "orm": "SQLAlchemy"
+          },
+          "UnitPrice": {
+            "table": "my_table",
+            "fields": {
+              "unit_id": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "price": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/orm/_orm_constructors.py",
+            "orm": "SQLAlchemy"
+          },
+          "MyModel": {
+            "table": "my_table",
+            "fields": {
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/orm/decl_api.py",
+            "orm": "SQLAlchemy"
+          },
+          "MyMappedClass": {
+            "table": "my_table",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/orm/decl_api.py",
+            "orm": "SQLAlchemy"
+          },
+          "Venue": {
+            "table": "venue",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/sql/functions.py",
+            "orm": "SQLAlchemy"
+          },
+          "SomeOrmClass": {
+            "table": "someormclasss",
+            "fields": {
+              "data": {
+                "type": "Integer",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/dialects/postgresql/array.py",
+            "orm": "SQLAlchemy"
+          },
+          "TestTable": {
+            "table": "test",
+            "fields": {
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/dialects/mssql/base.py",
+            "orm": "SQLAlchemy"
+          },
+          "Base": {
+            "table": "employee",
+            "fields": {
+              "employee_id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "manager_data": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/declarative/extensions.py",
+            "orm": "SQLAlchemy"
+          },
+          "Company": {
+            "table": "employee",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "employee_id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "name": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "manager_data": {
+                "type": "String",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/sqlalchemy/ext/declarative/extensions.py",
+            "orm": "SQLAlchemy"
+          },
+          "LangchainKeyValueStores": {
+            "table": "langchain_key_value_stores",
+            "fields": {
+              "namespace": {
+                "type": "Text",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "key": {
+                "type": "Text",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "value": {
+                "type": "Unknown",
+                "primary_key": false,
+                "unique": false,
+                "nullable": false
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/storage/sql.py",
+            "orm": "SQLAlchemy"
+          },
+          "Message": {
+            "table": "messages",
+            "fields": {
+              "id": {
+                "type": "Integer",
+                "primary_key": true,
+                "unique": false,
+                "nullable": true
+              },
+              "session_id": {
+                "type": "Text",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              },
+              "message": {
+                "type": "Text",
+                "primary_key": false,
+                "unique": false,
+                "nullable": true
+              }
+            },
+            "file": "backend/venv/lib/python3.13/site-packages/langchain_community/chat_message_histories/sql.py",
+            "orm": "SQLAlchemy"
+          }
+        },
+        "total_models": 26,
+        "model_names": [
+          "InMemoryCache",
+          "FullLLMCache",
+          "FullMd5LLMCache",
+          "Temporary",
+          "Test",
+          "UpsertionRecord",
+          "User",
+          "Slide",
+          "Bullet",
+          "Person",
+          "Employee",
+          "TableB",
+          "Address",
+          "Part",
+          "File",
+          "MyClass",
+          "UnitPrice",
+          "MyModel",
+          "MyMappedClass",
+          "Venue",
+          "SomeOrmClass",
+          "TestTable",
+          "Base",
+          "Company",
+          "LangchainKeyValueStores",
+          "Message"
+        ]
+      },
+      "monitoring": {
+        "health_checks": [
+          "/health",
+          "/health",
+          "/health",
+          "/health"
+        ]
+      }
+    }
+  },
+  "infrastructure": {
+    "dockerfile": "Dockerfile",
+    "ci": "GitHub Actions",
+    "ci_workflows": [
+      "issue-solver.yml",
+      "ci.yml"
+    ]
+  },
+  "conventions": {
+    "typescript": true
+  }
+}

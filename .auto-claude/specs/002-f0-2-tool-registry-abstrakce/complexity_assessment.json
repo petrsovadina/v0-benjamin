@@ -1,0 +1,70 @@
+{
+  "complexity": "standard",
+  "workflow_type": "feature",
+  "confidence": 0.88,
+  "reasoning": "Creating a Tool Registry abstraction layer involves 3-5 files in a single service with no new external integrations. Wrapping existing MCP servers (SÚKL, PubMed) using standard registry pattern. Requires architectural design but uses familiar technologies (Pydantic, Python).",
+
+  "analysis": {
+    "scope": {
+      "estimated_files": 5,
+      "estimated_services": 1,
+      "is_cross_cutting": false,
+      "notes": "3 new files in backend/tools/ plus potential touch points in existing MCP server integration code. Contained to tools module."
+    },
+    "integrations": {
+      "external_services": ["SÚKL MCP", "PubMed MCP"],
+      "new_dependencies": [],
+      "research_needed": false,
+      "notes": "MCP servers are EXISTING integrations being wrapped with abstraction layer. Pydantic likely already present in FastAPI project. No new external APIs to learn."
+    },
+    "infrastructure": {
+      "docker_changes": false,
+      "database_changes": false,
+      "config_changes": false,
+      "notes": "Minimal changes - possibly logging configuration. No Docker, database, or environment variable changes required."
+    },
+    "knowledge": {
+      "patterns_exist": true,
+      "research_required": false,
+      "unfamiliar_tech": [],
+      "notes": "Registry pattern is well-established. Pydantic validation is standard. No unfamiliar technologies involved."
+    },
+    "risk": {
+      "level": "medium",
+      "concerns": [
+        "Backward compatibility with existing MCP server calls",
+        "Proper abstraction design to avoid tight coupling",
+        "Ensuring wrappers maintain original MCP functionality",
+        "Type safety enforcement without breaking existing code"
+      ],
+      "notes": "Main risk is ensuring abstraction layer doesn't break existing MCP integrations. Need comprehensive testing of wrappers."
+    }
+  },
+
+  "recommended_phases": [
+    "discovery",
+    "requirements",
+    "context",
+    "spec_writing",
+    "planning",
+    "validation"
+  ],
+
+  "flags": {
+    "needs_research": false,
+    "needs_self_critique": false,
+    "needs_infrastructure_setup": false
+  },
+
+  "validation_recommendations": {
+    "risk_level": "medium",
+    "skip_validation": false,
+    "minimal_mode": false,
+    "test_types_required": ["unit", "integration"],
+    "security_scan_required": false,
+    "staging_deployment_required": false,
+    "reasoning": "Tool registry affects core tool invocation mechanism. Requires unit tests for registry logic and integration tests to verify MCP wrappers maintain original functionality. No auth/payment/security-critical code involved."
+  },
+
+  "created_at": "2025-12-30T17:30:00.000000Z"
+}

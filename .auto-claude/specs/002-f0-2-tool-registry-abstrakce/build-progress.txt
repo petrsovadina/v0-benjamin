@@ -1,0 +1,83 @@
+# Tool Registry System - Build Progress
+
+## Feature: F0-2: Tool Registry Abstrakce
+**Spec ID:** 002-f0-2-tool-registry-abstrakce
+**Created:** 2025-12-30
+**Estimated Hours:** 8
+
+---
+
+## Overview
+
+| # | Name | Subtasks | Status |
+|---|------|----------|--------|
+| 1 | Core Infrastructure | 5 | Pending |
+| 2 | MCP Server Wrappers | 4 | Pending |
+| 3 | Unit Tests | 2 | Pending |
+| 4 | Integration Tests | 1 | Pending |
+| 5 | Verification and Quality | 3 | Pending |
+
+---
+
+## Subtask Progress
+
+### 1. Core Infrastructure
+- [ ] 1.1 Create tools package structure (backend/tools/__init__.py)
+- [ ] 1.2 Create ToolDefinition interface (backend/tools/base.py)
+- [ ] 1.3 Create ToolResult class (backend/tools/base.py)
+- [ ] 1.4 Implement ToolRegistry class (backend/tools/registry.py)
+- [ ] 1.5 Add logging infrastructure (backend/tools/registry.py)
+
+### 2. MCP Server Wrappers
+- [ ] 2.1 Create MCP wrapper base utilities (backend/tools/mcp/base.py)
+- [ ] 2.2 Create SUKL MCP wrapper (backend/tools/mcp/sukl.py)
+- [ ] 2.3 Create PubMed MCP wrapper (backend/tools/mcp/pubmed.py)
+- [ ] 2.4 Create global registry singleton (backend/tools/__init__.py)
+
+### 3. Unit Tests
+- [ ] 3.1 Create base classes tests (backend/tests/test_tools_base.py)
+- [ ] 3.2 Create registry tests (backend/tests/test_tools_registry.py)
+
+### 4. Integration Tests
+- [ ] 4.1 Create MCP wrapper integration tests (backend/tests/test_tools_mcp_integration.py)
+
+### 5. Verification and Quality
+- [ ] 5.1 Add type annotations and docstrings
+- [ ] 5.2 Run all tests and verify
+- [ ] 5.3 Python REPL verification
+
+---
+
+## Files to Create
+
+```
+backend/tools/__init__.py         - Package init with exports
+backend/tools/base.py             - ToolDefinition, ToolResult
+backend/tools/registry.py         - ToolRegistry class
+backend/tools/mcp/__init__.py     - MCP subpackage init
+backend/tools/mcp/base.py         - MCP wrapper utilities
+backend/tools/mcp/sukl.py         - SUKL MCP wrapper
+backend/tools/mcp/pubmed.py       - PubMed MCP wrapper
+backend/tests/test_tools_base.py  - Base class tests
+backend/tests/test_tools_registry.py - Registry tests
+backend/tests/test_tools_mcp_integration.py - Integration tests
+```
+
+---
+
+## Session Log
+
+### [2025-12-30 18:00] Plan Created
+- Read spec.md and analyzed requirements
+- Examined existing MCP servers (sukl_server.py, pubmed_server.py)
+- Reviewed existing patterns (logger.py, Pydantic usage)
+- Created comprehensive implementation_plan.json with 5 groups, 15 subtasks
+- Estimated total implementation time: 8 hours
+
+---
+
+## Notes
+- Follow existing StructuredLogger pattern from backend/services/logger.py
+- MCP servers use FastMCP with async handlers
+- Use Pydantic BaseModel for all input/output validation
+- Support both sync and async handler functions in registry

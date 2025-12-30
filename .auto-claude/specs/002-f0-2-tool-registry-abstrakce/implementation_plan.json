@@ -1,0 +1,397 @@
+{
+  "feature": "F0-2: Tool Registry Abstrakce",
+  "spec_id": "002-f0-2-tool-registry-abstrakce",
+  "title": "Tool Registry System",
+  "description": "Centralized Tool Registry providing unified interface for invoking all tools across the application with type-safe validation and comprehensive logging",
+  "created_at": "2025-12-30T01:49:41.015Z",
+  "updated_at": "2025-12-30T18:00:00.000Z",
+  "status": "approved",
+  "workflow_type": "feature",
+  "planStatus": "approved",
+  "estimated_hours": 8,
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Core Infrastructure",
+      "description": "Create the foundational classes and interfaces for the tool registry system",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Create tools package structure",
+          "description": "Create backend/tools/__init__.py with public API exports (ToolRegistry, ToolDefinition, ToolResult)",
+          "file_path": "backend/tools/__init__.py",
+          "status": "completed",
+          "estimated_minutes": 15,
+          "acceptance_criteria": [
+            "File exists at backend/tools/__init__.py",
+            "Exports ToolRegistry, ToolDefinition, ToolResult",
+            "Clean imports: from backend.tools import ToolRegistry works"
+          ],
+          "notes": "Created backend/tools/__init__.py with public API exports (ToolRegistry, ToolDefinition, ToolResult). Also created base.py and registry.py with working placeholder implementations to ensure clean imports work. All acceptance criteria met: file exists, exports work, clean imports verified.",
+          "updated_at": "2025-12-30T17:01:15.808645+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Create ToolDefinition interface",
+          "description": "Create backend/tools/base.py with ToolDefinition dataclass/Pydantic model containing name, description, parameters (Pydantic schema), and handler function. Support both sync and async handlers.",
+          "file_path": "backend/tools/base.py",
+          "status": "pending",
+          "estimated_minutes": 30,
+          "acceptance_criteria": [
+            "ToolDefinition has name: str field",
+            "ToolDefinition has description: str field",
+            "ToolDefinition has parameters: Type[BaseModel] field",
+            "ToolDefinition has handler: Callable field",
+            "Validates handler is callable on creation"
+          ]
+        },
+        {
+          "id": "1.3",
+          "title": "Create ToolResult class",
+          "description": "Add ToolResult Pydantic model to backend/tools/base.py with success, data, error, and duration_ms fields for standardized responses",
+          "file_path": "backend/tools/base.py",
+          "status": "pending",
+          "estimated_minutes": 20,
+          "acceptance_criteria": [
+            "ToolResult has success: bool field",
+            "ToolResult has data: Optional[Any] field",
+            "ToolResult has error: Optional[str] field",
+            "ToolResult has duration_ms: Optional[float] field",
+            "Provides factory methods: success() and failure()"
+          ]
+        },
+        {
+          "id": "1.4",
+          "title": "Implement ToolRegistry class",
+          "description": "Create backend/tools/registry.py with ToolRegistry class implementing register(), invoke(), list_tools(), get_tool() methods. Support async handlers.",
+          "file_path": "backend/tools/registry.py",
+          "status": "pending",
+          "estimated_minutes": 45,
+          "acceptance_criteria": [
+            "register() adds tool by name, raises ValueError on duplicate",
+            "invoke() calls tool handler with validated inputs",
+            "invoke() returns ToolResult with timing information",
+            "list_tools() returns list of registered tool names",
+            "get_tool() returns ToolDefinition or raises KeyError",
+            "Supports both sync and async handler functions"
+          ]
+        },
+        {
+          "id": "1.5",
+          "title": "Add logging infrastructure",
+          "description": "Integrate structured logging for all tool invocations using existing StructuredLogger pattern. Log tool_name, inputs (sanitized), success status, and duration",
+          "file_path": "backend/tools/registry.py",
+          "status": "pending",
+          "estimated_minutes": 25,
+          "acceptance_criteria": [
+            "Uses StructuredLogger from backend/services/logger.py",
+            "Logs INFO on successful invocation",
+            "Logs ERROR on failed invocation with exception details",
+            "Includes tool_name, inputs, success, duration_ms in logs",
+            "Sensitive data (api_key, password, token) is sanitized in logs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "MCP Server Wrappers",
+      "description": "Create wrapper classes that adapt existing MCP servers to the ToolDefinition interface",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Create MCP wrapper base utilities",
+          "description": "Create backend/tools/mcp/__init__.py and backend/tools/mcp/base.py with helper functions for wrapping MCP server functions as ToolDefinition instances",
+          "file_path": "backend/tools/mcp/base.py",
+          "status": "pending",
+          "estimated_minutes": 30,
+          "acceptance_criteria": [
+            "Provides create_mcp_tool() factory function",
+            "Handles async MCP server functions",
+            "Creates appropriate Pydantic input schemas",
+            "Preserves original function docstrings as tool description"
+          ]
+        },
+        {
+          "id": "2.2",
+          "title": "Create SUKL MCP wrapper",
+          "description": "Create backend/tools/mcp/sukl.py wrapping search_drugs and get_drug_details MCP tools with Pydantic input schemas",
+          "file_path": "backend/tools/mcp/sukl.py",
+          "status": "pending",
+          "estimated_minutes": 35,
+          "acceptance_criteria": [
+            "SuklSearchInput Pydantic model with query: str",
+            "SuklDrugDetailInput Pydantic model with sukl_code: str",
+            "sukl_search_drugs ToolDefinition wrapping search_drugs",
+            "sukl_get_drug_details ToolDefinition wrapping get_drug_details",
+            "register_sukl_tools() function to add all SUKL tools to registry"
+          ]
+        },
+        {
+          "id": "2.3",
+          "title": "Create PubMed MCP wrapper",
+          "description": "Create backend/tools/mcp/pubmed.py wrapping search_literature MCP tool with Pydantic input schema",
+          "file_path": "backend/tools/mcp/pubmed.py",
+          "status": "pending",
+          "estimated_minutes": 30,
+          "acceptance_criteria": [
+            "PubMedSearchInput Pydantic model with query: str and max_results: int",
+            "pubmed_search_literature ToolDefinition wrapping search_literature",
+            "register_pubmed_tools() function to add all PubMed tools to registry"
+          ]
+        },
+        {
+          "id": "2.4",
+          "title": "Create global registry singleton",
+          "description": "Add module-level singleton registry instance in backend/tools/__init__.py with pre-registered MCP tools",
+          "file_path": "backend/tools/__init__.py",
+          "status": "pending",
+          "estimated_minutes": 20,
+          "acceptance_criteria": [
+            "default_registry singleton instance exported",
+            "Lazy initialization pattern to avoid import-time side effects",
+            "get_registry() function returns singleton",
+            "init_default_registry() registers all MCP tools"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Unit Tests",
+      "description": "Create comprehensive unit tests for core tool registry functionality",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Create base classes tests",
+          "description": "Create backend/tests/test_tools_base.py with tests for ToolDefinition and ToolResult classes",
+          "file_path": "backend/tests/test_tools_base.py",
+          "status": "pending",
+          "estimated_minutes": 35,
+          "acceptance_criteria": [
+            "test_tool_definition_validation - ToolDefinition requires all fields",
+            "test_tool_definition_handler_callable - handler must be callable",
+            "test_tool_result_structure - ToolResult has all expected fields",
+            "test_tool_result_success_factory - success() creates success result",
+            "test_tool_result_failure_factory - failure() creates error result"
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "Create registry tests",
+          "description": "Create backend/tests/test_tools_registry.py with comprehensive tests for ToolRegistry functionality",
+          "file_path": "backend/tests/test_tools_registry.py",
+          "status": "pending",
+          "estimated_minutes": 60,
+          "acceptance_criteria": [
+            "test_registry_registration - tools can be registered",
+            "test_duplicate_registration_error - duplicate names raise ValueError",
+            "test_tool_invocation - registered tools can be invoked",
+            "test_tool_not_found_error - non-existent tool raises KeyError",
+            "test_input_validation - invalid inputs raise ValidationError",
+            "test_handler_exception_handling - exceptions returned as ToolResult",
+            "test_logging_tool_calls - invocations generate log entries",
+            "test_async_handler_support - async handlers work correctly",
+            "test_list_tools - list_tools() returns all names",
+            "test_get_tool - get_tool() returns ToolDefinition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Integration Tests",
+      "description": "Create integration tests for MCP server wrappers",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Create MCP wrapper integration tests",
+          "description": "Create backend/tests/test_tools_mcp_integration.py with tests verifying MCP wrappers work correctly through the registry",
+          "file_path": "backend/tests/test_tools_mcp_integration.py",
+          "status": "pending",
+          "estimated_minutes": 45,
+          "acceptance_criteria": [
+            "test_mcp_sukl_wrapper - SUKL wrapper callable through registry",
+            "test_mcp_pubmed_wrapper - PubMed wrapper callable through registry",
+            "test_registry_list_tools - lists all registered MCP tools",
+            "test_tool_metadata_retrieval - can get tool description and schema",
+            "Mocks external dependencies (Supabase, PubMed API)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Verification & Quality",
+      "description": "Final verification, code quality checks, and documentation",
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Add type annotations and docstrings",
+          "description": "Ensure all classes and methods have complete type hints and docstrings",
+          "file_path": "backend/tools/",
+          "status": "pending",
+          "estimated_minutes": 20,
+          "acceptance_criteria": [
+            "All public classes have docstrings",
+            "All public methods have docstrings",
+            "Full type coverage for IDE support",
+            "Examples in docstrings where appropriate"
+          ]
+        },
+        {
+          "id": "5.2",
+          "title": "Run all tests and verify",
+          "description": "Execute pytest for all tool tests and verify passing. Run type checks if mypy available.",
+          "file_path": "backend/tests/",
+          "status": "pending",
+          "estimated_minutes": 20,
+          "acceptance_criteria": [
+            "All unit tests pass (10/10 minimum)",
+            "All integration tests pass (4/4)",
+            "No import errors",
+            "Clean execution without warnings"
+          ]
+        },
+        {
+          "id": "5.3",
+          "title": "Python REPL verification",
+          "description": "Verify registry works as expected through manual Python REPL testing per spec",
+          "file_path": null,
+          "status": "pending",
+          "estimated_minutes": 15,
+          "acceptance_criteria": [
+            "from backend.tools import ToolRegistry - works",
+            "from backend.tools import ToolDefinition, ToolResult - works",
+            "registry = ToolRegistry() - creates instance",
+            "registry.register(sample_tool) - registers without error",
+            "registry.list_tools() - returns tool names",
+            "registry.invoke('tool_name', **kwargs) - returns ToolResult"
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "1.2",
+      "to": "1.1",
+      "reason": "Package init imports from base.py"
+    },
+    {
+      "from": "1.3",
+      "to": "1.2",
+      "reason": "ToolResult is in same file as ToolDefinition"
+    },
+    {
+      "from": "1.4",
+      "to": "1.3",
+      "reason": "Registry uses ToolDefinition and ToolResult"
+    },
+    {
+      "from": "1.5",
+      "to": "1.4",
+      "reason": "Logging is integrated into registry"
+    },
+    {
+      "from": "2.1",
+      "to": "1.5",
+      "reason": "MCP wrappers depend on core infrastructure"
+    },
+    {
+      "from": "2.2",
+      "to": "2.1",
+      "reason": "SUKL wrapper uses base utilities"
+    },
+    {
+      "from": "2.3",
+      "to": "2.1",
+      "reason": "PubMed wrapper uses base utilities"
+    },
+    {
+      "from": "2.4",
+      "to": "2.3",
+      "reason": "Singleton registers all MCP tools"
+    },
+    {
+      "from": "3.1",
+      "to": "1.3",
+      "reason": "Tests require base classes to exist"
+    },
+    {
+      "from": "3.2",
+      "to": "1.5",
+      "reason": "Registry tests require complete registry"
+    },
+    {
+      "from": "4.1",
+      "to": "2.4",
+      "reason": "Integration tests require MCP wrappers"
+    },
+    {
+      "from": "5.1",
+      "to": "2.4",
+      "reason": "Documentation after implementation"
+    },
+    {
+      "from": "5.2",
+      "to": "4.1",
+      "reason": "Run tests after all code complete"
+    },
+    {
+      "from": "5.3",
+      "to": "5.2",
+      "reason": "REPL verification after tests pass"
+    }
+  ],
+  "qa_criteria": {
+    "unit_tests": [
+      "test_tool_definition_validation",
+      "test_tool_result_structure",
+      "test_registry_registration",
+      "test_duplicate_registration_error",
+      "test_tool_invocation",
+      "test_tool_not_found_error",
+      "test_input_validation",
+      "test_handler_exception_handling",
+      "test_logging_tool_calls",
+      "test_async_handler_support"
+    ],
+    "integration_tests": [
+      "test_mcp_sukl_wrapper",
+      "test_mcp_pubmed_wrapper",
+      "test_registry_list_tools",
+      "test_tool_metadata_retrieval"
+    ],
+    "e2e_tests": [
+      "Register and Invoke Tool flow",
+      "Invalid Input Handling flow",
+      "MCP Server Compatibility flow",
+      "Audit Trail Verification flow"
+    ],
+    "code_quality": [
+      "Type checking passes (mypy)",
+      "No import errors",
+      "All docstrings present"
+    ]
+  },
+  "files_to_create": [
+    "backend/tools/__init__.py",
+    "backend/tools/base.py",
+    "backend/tools/registry.py",
+    "backend/tools/mcp/__init__.py",
+    "backend/tools/mcp/base.py",
+    "backend/tools/mcp/sukl.py",
+    "backend/tools/mcp/pubmed.py",
+    "backend/tests/test_tools_base.py",
+    "backend/tests/test_tools_registry.py",
+    "backend/tests/test_tools_mcp_integration.py"
+  ],
+  "files_to_reference": [
+    "backend/mcp_servers/sukl_server.py",
+    "backend/mcp_servers/pubmed_server.py",
+    "backend/services/logger.py",
+    "backend/app/api/v1/endpoints/drugs.py"
+  ],
+  "last_updated": "2025-12-30T17:01:15.808657+00:00"
+}

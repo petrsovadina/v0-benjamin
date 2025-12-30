@@ -1,0 +1,6 @@
+{
+  "task_description": "Vytvo\u0159it centr\u00e1ln\u00ed registr n\u00e1stroj\u016f (Tool Registry) pro unifikovan\u00e9 vol\u00e1n\u00ed v\u0161ech tools:\n\n1. Vytvo\u0159it backend/tools/__init__.py s ToolRegistry t\u0159\u00eddou\n2. Definovat interface ToolDefinition (name, description, parameters, handler)\n3. Wrapper pro MCP servery (S\u00daKL, PubMed) jako standardn\u00ed tools\n4. Validace vstup\u016f/v\u00fdstup\u016f pomoc\u00ed Pydantic\n5. Logging v\u0161ech tool calls\n\nSoubory:\n- backend/tools/__init__.py\n- backend/tools/base.py (ToolDefinition, ToolResult)\n- backend/tools/registry.py (ToolRegistry)\n\nAcceptance Criteria:\n- Existuj\u00edc\u00ed MCP servery lze volat p\u0159es registry\n- Jednotn\u00e9 API pro v\u0161echny tools\n- Type-safe vstupy/v\u00fdstupy",
+  "workflow_type": "feature",
+  "services_involved": [],
+  "created_at": "2025-12-30T17:25:42.675648"
+}
