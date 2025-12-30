@@ -127,6 +127,47 @@ async def retrieve_guidelines_node(state: ClinicalState):
 
     return {"retrieved_context": raw_data}
 
+# --- ITERATION CONTROL ---
+# Maximum number of workflow iterations to prevent infinite loops
+MAX_ITERATIONS = 5
+
+
+def check_iteration_limit(state: ClinicalState) -> Dict[str, Any]:
+    """
+    Checks and enforces the workflow iteration limit.
+
+    This function increments the iteration_count on each execution and enforces
+    a maximum of 5 iterations to prevent infinite loops in the workflow.
+
+    Args:
+        state: The current ClinicalState containing iteration_count.
+
+    Returns:
+        A dict with updated state fields:
+        - iteration_count: The incremented count.
+        - If limit exceeded: final_answer with error message, next_step set to "end".
+
+    Raises:
+        No exceptions raised - errors are returned as state updates.
+    """
+    current_count = state.get("iteration_count", 0)
+    new_count = current_count + 1
+
+    if new_count >= MAX_ITERATIONS:
+        error_message = (
+            f"Workflow iteration limit exceeded. Maximum {MAX_ITERATIONS} iterations allowed. "
+            f"The workflow has been terminated to prevent infinite loops. "
+            f"Please refine your query or contact support if this persists."
+        )
+        return {
+            "iteration_count": new_count,
+            "final_answer": error_message,
+            "next_step": "end"
+        }
+
+    return {"iteration_count": new_count}
+
+
 async def synthesizer_node(state: ClinicalState):
     """
     Synthesizes the final answer using the Retrieved Context and System Prompt.
