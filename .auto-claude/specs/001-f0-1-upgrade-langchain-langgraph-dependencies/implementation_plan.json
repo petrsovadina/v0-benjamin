@@ -175,7 +175,7 @@
           "id": "4.2",
           "title": "Eliminate deprecation warnings",
           "description": "Run pytest with strict warning handling and fix any deprecation warnings in application code",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [
             "backend/app/core/graph.py",
             "backend/agent_graph.py"
@@ -185,13 +185,14 @@
             "No FutureWarning messages",
             "Clean logs during execution"
           ],
-          "notes": "Address warnings by updating deprecated API usage, not by suppressing warnings"
+          "notes": "Fixed all deprecation warnings in application code: (1) Migrated Pydantic V1 @validator to @field_validator in query.py, (2) Migrated Pydantic V2 class Config to model_config in settings.py, (3) Replaced deprecated datetime.utcnow() with datetime.now(timezone.utc) in logger.py and admin.py, (4) Created backend/pytest.ini with filterwarnings to enforce strict deprecation checking while filtering third-party library warnings (pyparsing/pyiceberg). All 84 tests pass.",
+          "updated_at": "2025-12-30T17:55:25.442395+00:00"
         },
         {
           "id": "4.3",
           "title": "Fix any failing tests due to API changes",
           "description": "If tests fail due to breaking changes in LangGraph APIs, update application code (NOT tests) to fix",
-          "status": "pending",
+          "status": "completed",
           "files_to_modify": [
             "backend/app/core/graph.py",
             "backend/agent_graph.py"
@@ -201,7 +202,8 @@
             "No test code modifications",
             "Behavior remains unchanged"
           ],
-          "notes": "Only modify application code to maintain backward compatibility, never modify test expectations"
+          "notes": "Verified: All 84 tests pass without any failures. No breaking changes detected in LangGraph APIs after upgrade to LangGraph 1.0.5 (from 0.2.x target). Both graph.py and agent_graph.py compile correctly with current imports and APIs:\\n- StateGraph, START, END from langgraph.graph \u2713\\n- add_messages from langgraph.graph.message \u2713\\n- ToolNode, tools_condition from langgraph.prebuilt \u2713\\n- workflow.compile(checkpointer=None) \u2713\\n\\nNo application code modifications required - the upgrade is fully backward compatible.",
+          "updated_at": "2025-12-30T17:57:48.409830+00:00"
         }
       ]
     },
@@ -278,5 +280,5 @@
   "rollback_available": true,
   "estimated_complexity": "MEDIUM",
   "risk_level": "MEDIUM",
-  "last_updated": "2025-12-30T17:48:21.348919+00:00"
+  "last_updated": "2025-12-30T17:57:48.409848+00:00"
 }
