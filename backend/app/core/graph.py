@@ -1,22 +1,20 @@
-from typing import TypedDict, Annotated, Literal, List, Dict, Any
+from typing import List, Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
+from langgraph.checkpoint.sqlite import SqliteSaver
+from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from backend.app.core.llm import get_llm
+from backend.app.core.state import ClinicalState
 from backend.app.services.search_service import search_service
 from pydantic import BaseModel, Field
 
 # --- STATE DEFINITION ---
-class ClinicalState(TypedDict):
-    """
-    Represents the state of a clinical query processing flow.
-    """
-    messages: Annotated[list[BaseMessage], add_messages]
-    query_type: Literal["general", "drug_info", "guidelines", "clinical_trial", "reimbursement", "urgent"] | None
-    retrieved_context: List[Dict[str, Any]]
-    final_answer: str | None
-    next_step: str | None
+# ClinicalState is now imported from backend.app.core.state
+# It includes the original 5 fields plus 4 new agentic fields:
+# - tool_calls: Annotated[List[ToolCall], operator.add]
+# - reasoning_steps: Annotated[List[ReasoningStep], operator.add]
+# - patient_context: Optional[PatientContext]
+# - iteration_count: int
 
 # --- MODELS FOR CLASSIFICATION ---
 class QueryClassification(BaseModel):
@@ -190,6 +188,13 @@ async def synthesizer_node(state: ClinicalState):
     
     return {"final_answer": response.content}
 
+# --- CHECKPOINTER CONFIGURATION ---
+# SqliteSaver provides persistent state storage for session recovery.
+# The checkpoints.db file is created in the backend directory.
+# Thread IDs are required when invoking the graph for session isolation.
+CHECKPOINT_DB_PATH = "backend/checkpoints.db"
+checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
+
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
 
@@ -201,7 +206,8 @@ workflow.add_node("synthesizer", synthesizer_node)
 
 workflow.add_edge(START, "classifier")
 
-def route_query(state: ClinicalState):
+def route_query(state: ClinicalState) -> str:
+    """Route the query to the appropriate retrieval node based on classification."""
     return state["next_step"]
 
 workflow.add_conditional_edges(
@@ -219,4 +225,6 @@ workflow.add_edge("retrieve_general", "synthesizer")
 workflow.add_edge("retrieve_guidelines", "synthesizer")
 workflow.add_edge("synthesizer", END)
 
-app = workflow.compile()
+# Compile the graph with checkpointer for state persistence.
+# When invoking, use config={"configurable": {"thread_id": "session_123"}}
+app = workflow.compile(checkpointer=checkpointer)
