@@ -35,7 +35,7 @@
           "title": "Create ToolDefinition interface",
           "description": "Create backend/tools/base.py with ToolDefinition dataclass/Pydantic model containing name, description, parameters (Pydantic schema), and handler function. Support both sync and async handlers.",
           "file_path": "backend/tools/base.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 30,
           "acceptance_criteria": [
             "ToolDefinition has name: str field",
@@ -43,14 +43,16 @@
             "ToolDefinition has parameters: Type[BaseModel] field",
             "ToolDefinition has handler: Callable field",
             "Validates handler is callable on creation"
-          ]
+          ],
+          "notes": "Enhanced ToolDefinition dataclass with full validation support:\n- Added __post_init__ validation for handler (must be callable)\n- Added validation for parameters (must be Pydantic BaseModel subclass)\n- Added validation for name and description (must be non-empty strings)\n- Added is_async property to detect async handler functions\n- Added comprehensive docstrings with examples\n\nAll acceptance criteria met:\n- ToolDefinition has name: str field \u2713\n- ToolDefinition has description: str field \u2713\n- ToolDefinition has parameters: Type[BaseModel] field \u2713\n- ToolDefinition has handler: Callable field \u2713\n- Validates handler is callable on creation \u2713\n\nCommitted as: 8860894",
+          "updated_at": "2025-12-30T17:47:33.605664+00:00"
         },
         {
           "id": "1.3",
           "title": "Create ToolResult class",
           "description": "Add ToolResult Pydantic model to backend/tools/base.py with success, data, error, and duration_ms fields for standardized responses",
           "file_path": "backend/tools/base.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 20,
           "acceptance_criteria": [
             "ToolResult has success: bool field",
@@ -58,14 +60,16 @@
             "ToolResult has error: Optional[str] field",
             "ToolResult has duration_ms: Optional[float] field",
             "Provides factory methods: success() and failure()"
-          ]
+          ],
+          "notes": "ToolResult Pydantic model fully implemented with all required fields:\n- success: bool \u2713\n- data: Optional[Any] \u2713\n- error: Optional[str] \u2713\n- duration_ms: Optional[float] \u2713\n\nFactory methods provided:\n- create_success(data, duration_ms) - creates success result\n- create_failure(error, duration_ms) - creates failure result\n- ok/fail aliases for convenience\n\nNote: Factory methods named create_success/create_failure instead of success/failure to avoid Pydantic v2 naming conflict with 'success' field.\n\nCommitted as: d999360",
+          "updated_at": "2025-12-30T17:51:33.517484+00:00"
         },
         {
           "id": "1.4",
           "title": "Implement ToolRegistry class",
           "description": "Create backend/tools/registry.py with ToolRegistry class implementing register(), invoke(), list_tools(), get_tool() methods. Support async handlers.",
           "file_path": "backend/tools/registry.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 45,
           "acceptance_criteria": [
             "register() adds tool by name, raises ValueError on duplicate",
@@ -74,14 +78,16 @@
             "list_tools() returns list of registered tool names",
             "get_tool() returns ToolDefinition or raises KeyError",
             "Supports both sync and async handler functions"
-          ]
+          ],
+          "notes": "Implemented full ToolRegistry class with all required methods:\n\n- register(): Adds tool by name, raises ValueError on duplicate \u2713\n- invoke(): Calls tool handler with Pydantic input validation, returns ToolResult with timing info \u2713\n- invoke_async(): Async version for use in async contexts \u2713\n- list_tools(): Returns sorted list of registered tool names \u2713\n- get_tool(): Returns ToolDefinition or raises KeyError \u2713\n- has_tool(): Check if tool is registered \u2713\n- unregister(): Remove tool from registry \u2713\n- clear(): Remove all tools \u2713\n\nAdditional features:\n- Full Pydantic-based input validation before handler execution\n- Support for both sync and async handler functions\n- Timing measurement (duration_ms) on all invocations\n- Handler exception handling with proper error messages in ToolResult\n- Pythonic __len__, __contains__, __repr__ methods\n\nAll acceptance criteria met:\n- register() adds tool by name, raises ValueError on duplicate \u2713\n- invoke() calls tool handler with validated inputs \u2713\n- invoke() returns ToolResult with timing information \u2713\n- list_tools() returns list of registered tool names \u2713\n- get_tool() returns ToolDefinition or raises KeyError \u2713\n- Supports both sync and async handler functions \u2713\n\nCommitted as: 5045158",
+          "updated_at": "2025-12-30T17:54:24.835902+00:00"
         },
         {
           "id": "1.5",
           "title": "Add logging infrastructure",
           "description": "Integrate structured logging for all tool invocations using existing StructuredLogger pattern. Log tool_name, inputs (sanitized), success status, and duration",
           "file_path": "backend/tools/registry.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 25,
           "acceptance_criteria": [
             "Uses StructuredLogger from backend/services/logger.py",
@@ -89,7 +95,9 @@
             "Logs ERROR on failed invocation with exception details",
             "Includes tool_name, inputs, success, duration_ms in logs",
             "Sensitive data (api_key, password, token) is sanitized in logs"
-          ]
+          ],
+          "notes": "Integrated structured logging for all tool invocations:\n\n- Added StructuredLogger from backend/services/logger.py\n- Implemented sanitize_inputs() function with SENSITIVE_KEYS set for redacting sensitive data (api_key, password, token, secret, credentials, etc.)\n- Added INFO-level logging for successful invocations\n- Added ERROR-level logging for failed invocations (validation errors and handler errors) with exception details\n- Both invoke() and invoke_async() methods now emit structured logs\n- Recursive sanitization for nested dictionaries\n\nAll acceptance criteria met:\n- Uses StructuredLogger from backend/services/logger.py \u2713\n- Logs INFO on successful invocation \u2713\n- Logs ERROR on failed invocation with exception details \u2713\n- Includes tool_name, inputs, success, duration_ms in logs \u2713\n- Sensitive data (api_key, password, token) is sanitized in logs \u2713\n\nCommitted as: 7147b66",
+          "updated_at": "2025-12-30T17:57:36.535640+00:00"
         }
       ]
     },
@@ -103,21 +111,23 @@
           "title": "Create MCP wrapper base utilities",
           "description": "Create backend/tools/mcp/__init__.py and backend/tools/mcp/base.py with helper functions for wrapping MCP server functions as ToolDefinition instances",
           "file_path": "backend/tools/mcp/base.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 30,
           "acceptance_criteria": [
             "Provides create_mcp_tool() factory function",
             "Handles async MCP server functions",
             "Creates appropriate Pydantic input schemas",
             "Preserves original function docstrings as tool description"
-          ]
+          ],
+          "notes": "Created backend/tools/mcp/__init__.py and backend/tools/mcp/base.py with helper functions for wrapping MCP server functions as ToolDefinition instances.\n\nImplemented:\n- create_mcp_tool(): Factory function that creates ToolDefinition from any callable\n- create_mcp_tools_batch(): Batch creation with optional name prefix\n- extract_function_metadata(): Extracts name, docstring, and parameters from functions\n- create_pydantic_model_from_params(): Dynamically creates Pydantic models from parameter definitions\n\nAll acceptance criteria met:\n- Provides create_mcp_tool() factory function \u2713\n- Handles async MCP server functions \u2713\n- Creates appropriate Pydantic input schemas \u2713\n- Preserves original function docstrings as tool description \u2713\n\nCommitted as: 4db78a0",
+          "updated_at": "2025-12-30T18:01:34.030534+00:00"
         },
         {
           "id": "2.2",
           "title": "Create SUKL MCP wrapper",
           "description": "Create backend/tools/mcp/sukl.py wrapping search_drugs and get_drug_details MCP tools with Pydantic input schemas",
           "file_path": "backend/tools/mcp/sukl.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 35,
           "acceptance_criteria": [
             "SuklSearchInput Pydantic model with query: str",
@@ -125,20 +135,24 @@
             "sukl_search_drugs ToolDefinition wrapping search_drugs",
             "sukl_get_drug_details ToolDefinition wrapping get_drug_details",
             "register_sukl_tools() function to add all SUKL tools to registry"
-          ]
+          ],
+          "notes": "Created backend/tools/mcp/sukl.py with all required components:\n\n- SuklSearchInput Pydantic model with query: str field \u2713\n- SuklDrugDetailInput Pydantic model with sukl_code: str field \u2713\n- sukl_search_drugs ToolDefinition wrapping search_drugs MCP function \u2713\n- sukl_get_drug_details ToolDefinition wrapping get_drug_details MCP function \u2713\n- register_sukl_tools() function to add all SUKL tools to registry \u2713\n\nKey fix: Corrected handler reference from get_drug_details (undefined) to _get_drug_details_handler (the lazy import wrapper function).\n\nVerified all imports work and Pydantic models validate correctly.\n\nCommitted as: ca59eb7",
+          "updated_at": "2025-12-30T20:17:08.683560+00:00"
         },
         {
           "id": "2.3",
           "title": "Create PubMed MCP wrapper",
           "description": "Create backend/tools/mcp/pubmed.py wrapping search_literature MCP tool with Pydantic input schema",
           "file_path": "backend/tools/mcp/pubmed.py",
-          "status": "pending",
+          "status": "completed",
           "estimated_minutes": 30,
           "acceptance_criteria": [
             "PubMedSearchInput Pydantic model with query: str and max_results: int",
             "pubmed_search_literature ToolDefinition wrapping search_literature",
             "register_pubmed_tools() function to add all PubMed tools to registry"
-          ]
+          ],
+          "notes": "Created backend/tools/mcp/pubmed.py with all required components:\n\n- PubMedSearchInput Pydantic model with query: str and max_results: int (default=5, ge=1, le=100) \u2713\n- Lazy import handler _search_literature_handler wrapping MCP function \u2713\n- pubmed_search_literature ToolDefinition wrapping search_literature \u2713\n- register_pubmed_tools() function to add all PubMed tools to registry \u2713\n- PUBMED_TOOLS list for batch operations \u2713\n\nAlso updated backend/tools/mcp/__init__.py to export:\n- PubMedSearchInput, pubmed_search_literature, register_pubmed_tools, PUBMED_TOOLS\n\nAll acceptance criteria met:\n- PubMedSearchInput Pydantic model with query: str and max_results: int \u2713\n- pubmed_search_literature ToolDefinition wrapping search_literature \u2713\n- register_pubmed_tools() function to add all PubMed tools to registry \u2713\n\nVerified:\n- Direct imports work\n- Package imports work\n- Pydantic validation constraints work (empty query, max_results bounds)\n- Registry integration works\n\nCommitted as: 8c390a0",
+          "updated_at": "2025-12-30T20:20:36.291407+00:00"
         },
         {
           "id": "2.4",
@@ -393,5 +407,5 @@
     "backend/services/logger.py",
     "backend/app/api/v1/endpoints/drugs.py"
   ],
-  "last_updated": "2025-12-30T17:01:15.808657+00:00"
+  "last_updated": "2025-12-30T20:20:36.291418+00:00"
 }

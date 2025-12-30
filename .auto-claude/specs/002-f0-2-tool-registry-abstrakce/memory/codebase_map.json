@@ -4,7 +4,27 @@
       "description": "Tool Registry public API module created with exports: ToolRegistry, ToolDefinition, ToolResult. Uses dataclass for ToolDefinition and Pydantic BaseModel for ToolResult. Imports require PYTHONPATH=. when running from project root.",
       "category": "architecture",
       "discovered_at": "2025-12-30T17:01:23.952320+00:00"
+    },
+    "backend/tools/base.py": {
+      "description": "ToolResult Pydantic model fully implemented with: success (bool), data (Optional[Any]), error (Optional[str]), duration_ms (Optional[float]) fields. Factory methods: create_success(), create_failure(). Convenience aliases: ok(), fail(). Includes model_config with JSON schema examples.",
+      "category": "implementation",
+      "discovered_at": "2025-12-30T17:51:04.180266+00:00"
+    },
+    "backend/tools/registry.py": {
+      "description": "ToolRegistry now includes structured logging integration. Uses StructuredLogger from backend/services/logger.py. All tool invocations (both sync and async) are logged with: tool_name, inputs (sanitized), success status, duration_ms. Sensitive keys (api_key, password, token, secret, credentials, auth, etc.) are automatically redacted via sanitize_inputs() function. INFO level for success, ERROR level for failures with exception details.",
+      "category": "logging",
+      "discovered_at": "2025-12-30T17:57:45.860055+00:00"
+    },
+    "backend/tools/mcp/base.py": {
+      "description": "MCP wrapper utilities created with create_mcp_tool() factory function. Uses extract_function_metadata() to get function signature info and create_pydantic_model_from_params() to dynamically generate Pydantic input models. Supports async handlers and preserves docstrings as tool descriptions. Can customize tool name/description with optional parameters.",
+      "category": "architecture",
+      "discovered_at": "2025-12-30T18:01:34.058194+00:00"
+    },
+    "backend/tools/mcp/pubmed.py": {
+      "description": "PubMed MCP wrapper created with PubMedSearchInput Pydantic model (query: str, max_results: int with default=5), pubmed_search_literature ToolDefinition, register_pubmed_tools() function, and PUBMED_TOOLS list. Uses lazy import pattern to defer MCP server import until handler invocation.",
+      "category": "implementation",
+      "discovered_at": "2025-12-30T20:20:36.324183+00:00"
     }
   },
-  "last_updated": "2025-12-30T17:01:23.952337+00:00"
+  "last_updated": "2025-12-30T20:20:36.324194+00:00"
 }
