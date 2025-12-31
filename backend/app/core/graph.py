@@ -345,6 +345,10 @@ workflow.add_edge("retrieve_general", "synthesizer")
 workflow.add_edge("retrieve_guidelines", "synthesizer")
 workflow.add_edge("synthesizer", END)
 
+# --- CHECKPOINTER CONFIGURATION ---
+# SqliteSaver provides persistent state storage for session recovery.
+# The checkpoints.db file is created in the backend directory.
+# Thread IDs are required when invoking the graph for session isolation.
 # Compile the graph with checkpointer for state persistence.
 # When invoking, use config={"configurable": {"thread_id": "session_123"}}
 app = workflow.compile(checkpointer=checkpointer)

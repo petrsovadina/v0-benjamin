@@ -1,6 +1,6 @@
 import shutil
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, File, UploadFile, HTTPException, BackgroundTasks, Depends
 from backend.services.logger import get_logger
@@ -30,7 +30,7 @@ def create_error_detail(
     error_detail = {
         "error_code": code,
         "message": message,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     }
 
     if context:

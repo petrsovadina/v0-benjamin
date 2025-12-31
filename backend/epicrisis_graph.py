@@ -1,6 +1,6 @@
 from typing import TypedDict, List
 from langchain_core.messages import BaseMessage, HumanMessage
-from langgraph.graph import StateGraph, END
+from langgraph.graph import StateGraph, START, END
 from langchain_anthropic import ChatAnthropic
 import os
 from dotenv import load_dotenv
@@ -63,7 +63,7 @@ def generate_report_node(state: EpicrisisState):
 # Build Graph
 builder = StateGraph(EpicrisisState)
 builder.add_node("generate", generate_report_node)
-builder.set_entry_point("generate")
+builder.add_edge(START, "generate")
 builder.add_edge("generate", END)
 
 app = builder.compile()

@@ -1,6 +1,6 @@
 from typing import TypedDict, List
 from langchain_core.messages import BaseMessage, HumanMessage
-from langgraph.graph import StateGraph, END
+from langgraph.graph import StateGraph, START, END
 from langchain_anthropic import ChatAnthropic
 import os
 from dotenv import load_dotenv
@@ -44,7 +44,7 @@ def translate_node(state: TranslatorState):
 # Build Graph
 builder = StateGraph(TranslatorState)
 builder.add_node("translate", translate_node)
-builder.set_entry_point("translate")
+builder.add_edge(START, "translate")
 builder.add_edge("translate", END)
 
 app = builder.compile()

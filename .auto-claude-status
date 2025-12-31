@@ -1,15 +1,15 @@
 {
   "active": true,
-  "spec": "002-f0-2-tool-registry-abstrakce",
+  "spec": "001-f0-1-upgrade-langchain-langgraph-dependencies",
   "state": "building",
   "subtasks": {
-    "completed": 8,
-    "total": 15,
+    "completed": 15,
+    "total": 18,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "MCP Server Wrappers",
+    "current": "Integration Tests & E2E Verification",
     "id": null,
     "total": 4
   },
@@ -18,8 +18,8 @@
     "max": 1
   },
   "session": {
-    "number": 868,
-    "started_at": "2025-12-30T17:53:17.976699"
+    "number": 2871,
+    "started_at": "2025-12-31T02:49:42.846647"
   },
-  "last_update": "2025-12-30T22:15:26.221219"
+  "last_update": "2025-12-31T11:47:23.216566"
 }

@@ -47,3 +47,9 @@ docs_backup/
 *.sqlite
 *.sqlite3
 backend/checkpoints.db
+
+# python virtual environments
+venv/
+.venv/
+__pycache__/
+*.pyc
