@@ -19,7 +19,7 @@ from unittest.mock import patch, MagicMock
 from pydantic import BaseModel, Field, ValidationError
 
 from backend.tools.base import ToolDefinition, ToolResult
-from backend.tools.registry import ToolRegistry, sanitize_inputs, SENSITIVE_KEYS
+from backend.tools.registry import ToolRegistry, sanitize_inputs
 
 
 # ============================================================================
