@@ -16,7 +16,7 @@ import asyncio
 import logging
 import pytest
 from unittest.mock import patch, MagicMock
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 
 from backend.tools.base import ToolDefinition, ToolResult
 from backend.tools.registry import ToolRegistry, sanitize_inputs
