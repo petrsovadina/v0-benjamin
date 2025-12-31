@@ -117,6 +117,357 @@
             "requires_auth": false
           },
           {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/003-f0-3-state-management-refaktor/backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/002-f0-2-tool-registry-abstrakce/backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/health",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/main.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/search",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/vzp-search",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/{sukl_code}",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/drugs.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/stream",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/history",
+            "methods": [
+              "GET"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/query.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/epicrisis",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/translate",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/transcribe",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/ai.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
+            "path": "/upload/guideline",
+            "methods": [
+              "POST"
+            ],
+            "file": ".worktrees/001-f0-1-upgrade-langchain-langgraph-dependencies/backend/app/api/v1/endpoints/admin.py",
+            "framework": "FastAPI",
+            "requires_auth": false
+          },
+          {
             "path": "/health",
             "methods": [
               "GET"
@@ -216,7 +567,7 @@
             "requires_auth": false
           }
         ],
-        "total_routes": 13,
+        "total_routes": 52,
         "methods": [
           "POST",
           "GET"
@@ -872,6 +1223,12 @@
       },
       "monitoring": {
         "health_checks": [
+          "/health",
+          "/health",
+          "/health",
+          "/health",
+          "/health",
+          "/health",
           "/health",
           "/health"
         ]
