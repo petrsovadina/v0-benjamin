@@ -1,6 +1,7 @@
 from typing import TypedDict, Annotated, Sequence, Literal
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
 from langgraph.graph import StateGraph, START, END
+from langgraph.checkpoint.sqlite import SqliteSaver
 from langchain_anthropic import ChatAnthropic
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -85,7 +86,13 @@ workflow.add_conditional_edges(
 
 workflow.add_edge("tools", "agent") # Loop back after tool usage
 
-# Compile graph without checkpointer - this is a stateless agent workflow
-# that doesn't require state persistence between invocations.
-# For stateful conversations, use: checkpointer=MemorySaver() from langgraph.checkpoint.memory
-app = workflow.compile(checkpointer=None)
+# --- CHECKPOINTER CONFIGURATION ---
+# SqliteSaver provides persistent state storage for session recovery.
+# Uses the same checkpoint database as the clinical workflow graph.
+# Thread IDs are required when invoking the graph for session isolation.
+CHECKPOINT_DB_PATH = "backend/checkpoints.db"
+checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
+
+# Compile the graph with checkpointer for state persistence.
+# When invoking, use config={"configurable": {"thread_id": "session_123"}}
+app = workflow.compile(checkpointer=checkpointer)

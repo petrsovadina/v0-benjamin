@@ -39,6 +39,15 @@ node_modules
 # backup folders
 docs_backup/
 
+# Auto Claude data directory
+.auto-claude/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+backend/checkpoints.db
+
 # python virtual environments
 venv/
 .venv/
