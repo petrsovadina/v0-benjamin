@@ -1,0 +1,60 @@
+{
+  "discovered_files": {
+    "backend/venv": {
+      "description": "Virtual environment contains langgraph v1.0.5, langgraph-checkpoint v3.0.1, langgraph-checkpoint-sqlite v3.0.1. Use backend/venv/bin/python to run Python with these packages.",
+      "category": "environment",
+      "discovered_at": "2025-12-31T10:16:49.236253+00:00"
+    },
+    "backend/agent_graph.py": {
+      "description": "Agent graph compiles successfully with LangGraph 1.x. Uses StateGraph, START, END from langgraph.graph, ToolNode and tools_condition from langgraph.prebuilt. Compiles with checkpointer=None for stateless operation.",
+      "category": "compilation",
+      "discovered_at": "2025-12-31T10:22:24.107959+00:00"
+    },
+    "app/core/llm.py": {
+      "description": "LangChain-Anthropic 1.3.0 is fully compatible with the existing llm.py implementation. ChatAnthropic supports both 'model' and 'model_name' parameters. bind_tools(), with_structured_output(), ainvoke(), and astream() all work correctly.",
+      "category": "compatibility",
+      "discovered_at": "2025-12-31T01:58:47.420928+00:00"
+    },
+    "backend/requirements.txt": {
+      "description": "LangGraph 1.x requires separate langgraph-checkpoint-sqlite package for SqliteSaver. Import path: from langgraph.checkpoint.sqlite import SqliteSaver. Also available: MemorySaver from langgraph.checkpoint.memory",
+      "category": "import_pattern",
+      "discovered_at": "2025-12-31T02:01:30.582406+00:00"
+    },
+    "backend/translator_graph.py": {
+      "description": "translator_graph.py compiles successfully with LangChain 0.3.x - uses StateGraph, START, END from langgraph.graph, HumanMessage from langchain_core.messages, ChatAnthropic from langchain_anthropic. Simple single-node graph pattern for medical translation.",
+      "category": "graph_pattern",
+      "discovered_at": "2025-12-31T10:26:56.051872+00:00"
+    },
+    "backend/app/core/graph.py": {
+      "description": "Main clinical workflow graph compiles successfully with LangGraph 1.x. Uses StateGraph, START, END from langgraph.graph, add_messages from langgraph.graph.message. Conditional routing via add_conditional_edges works correctly. Compiled with checkpointer=None for stateless operation.",
+      "category": "graph_compilation",
+      "discovered_at": "2025-12-31T10:29:34.214748+00:00"
+    },
+    "backend/tests/test_graph.py": {
+      "description": "Graph unit tests created with 14 tests covering StateGraph imports, basic graph compilation, conditional edges, @tool decorator, ToolNode integration, checkpointer options (None for stateless, MemorySaver for stateful), and project graph patterns (agent, translator, clinical).",
+      "category": "testing",
+      "discovered_at": "2025-12-31T10:34:41.569164+00:00"
+    },
+    "backend/tests/test_state.py": {
+      "description": "State unit tests created with 18 tests covering message class instantiation (HumanMessage, AIMessage, SystemMessage, ToolMessage), serialization with model_dump/model_validate, add_messages reducer from langgraph.graph.message, state definition patterns (TypedDict, Annotated with operator.add and add_messages), and message type checking.",
+      "category": "testing",
+      "discovered_at": "2025-12-31T10:34:41.584969+00:00"
+    },
+    "backend/tests/test_tools_base.py": {
+      "description": "Tool-related tests created with 49 tests covering: @tool decorator (sync/async, custom names, docstrings, multiple params), BaseTool subclassing, ToolException handling, ToolNode creation and integration, tools_condition routing, and project-specific patterns from agent_graph.py.",
+      "category": "testing",
+      "discovered_at": "2025-12-31T10:39:09.142283+00:00"
+    },
+    "backend/tests/test_multiformat_pdf_support.py": {
+      "description": "RAG pipeline tests require environment variables: SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL, OPENAI_API_KEY. Use dummy values for testing since services are mocked. Run with: PYTHONPATH=.. SUPABASE_URL=\"https://test.supabase.co\" SUPABASE_KEY=\"test-key\" ANTHROPIC_API_KEY=\"test-key\" PUBMED_EMAIL=\"test@example.com\" OPENAI_API_KEY=\"test-key\" pytest tests/*.py -v",
+      "category": "testing",
+      "discovered_at": "2025-12-31T10:42:23.220541+00:00"
+    },
+    "backend/tests/test_api_integration.py": {
+      "description": "Integration tests verify FastAPI endpoints with mocked LangGraph graph_app.ainvoke(). Tests use TestClient for in-memory testing, dependency_overrides for auth, and AsyncMock for graph responses. All 25 integration tests pass with upgraded LangChain/LangGraph dependencies.",
+      "category": "testing",
+      "discovered_at": "2025-12-31T10:47:10.021312+00:00"
+    }
+  },
+  "last_updated": "2025-12-31T10:47:10.021322+00:00"
+}

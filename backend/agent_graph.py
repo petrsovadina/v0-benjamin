@@ -1,6 +1,6 @@
 from typing import TypedDict, Annotated, Sequence, Literal
 from langchain_core.messages import BaseMessage, HumanMessage, AIMessage, SystemMessage
-from langgraph.graph import StateGraph, END, MessageGraph
+from langgraph.graph import StateGraph, START, END
 from langchain_anthropic import ChatAnthropic
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode, tools_condition
@@ -75,7 +75,7 @@ workflow = StateGraph(AgentState)
 workflow.add_node("agent", reasoner)
 workflow.add_node("tools", ToolNode(tools))
 
-workflow.set_entry_point("agent")
+workflow.add_edge(START, "agent")
 
 # Conditional edge: If agent wants to call a tool -> "tools", else -> END
 workflow.add_conditional_edges(
@@ -85,4 +85,7 @@ workflow.add_conditional_edges(
 
 workflow.add_edge("tools", "agent") # Loop back after tool usage
 
-app = workflow.compile()
+# Compile graph without checkpointer - this is a stateless agent workflow
+# that doesn't require state persistence between invocations.
+# For stateful conversations, use: checkpointer=MemorySaver() from langgraph.checkpoint.memory
+app = workflow.compile(checkpointer=None)
