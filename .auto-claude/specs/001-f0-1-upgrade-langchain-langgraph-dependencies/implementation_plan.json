@@ -1,15 +1,15 @@
 {
-  "feature": "Upgrade LangChain Dependencies to 0.3.x+",
+  "feature": "Upgrade LangChain Dependencies to 0.3.x for Deep Agents",
   "workflow_type": "feature",
-  "workflow_rationale": "Enables new Deep Agents functionality while maintaining existing RAG workflow. Although a dependency upgrade, it unlocks new capabilities rather than fixing bugs or refactoring existing code.",
+  "workflow_rationale": "This is a dependency upgrade that enables new capabilities (Deep Agents support) while preserving existing RAG workflow functionality. Classified as feature enhancement rather than bugfix or refactor.",
   "phases": [
     {
-      "id": "phase-1-dependency-upgrade",
+      "id": "phase-1-upgrade",
       "name": "Dependency Upgrade",
-      "type": "implementation",
-      "description": "Upgrade LangChain package versions in requirements.txt from 0.1.x to 0.3.x+",
+      "type": "setup",
+      "description": "Upgrade all 7 LangChain packages to version 0.3.x+ in requirements.txt",
       "depends_on": [],
-      "parallel_safe": true,
+      "parallel_safe": false,
       "subtasks": [
         {
           "id": "subtask-1-1",
@@ -19,106 +19,191 @@
             "backend/requirements.txt"
           ],
           "files_to_create": [],
-          "patterns_from": [],
+          "patterns_from": [
+            "backend/requirements.txt"
+          ],
           "verification": {
             "type": "command",
-            "command": "cd backend && grep -E 'langchain|langgraph' requirements.txt | grep -E '>=0\\.3\\.'",
-            "expected": "All langchain packages show >=0.3.x constraints"
+            "command": "cd backend && pip list | grep -E 'langchain|langgraph'",
+            "expected": "All packages show version 0.3.x or higher"
           },
           "status": "completed",
-          "notes": "Updated all LangChain package versions to >=0.3.x: langchain-community (0.0.10\u21920.3.0), langchain-anthropic (0.1.4\u21920.3.0), langchain-openai (0.0.5\u21920.3.0), langgraph (0.2.0\u21920.3.0). Verification passed: all 6 langchain/langgraph packages now show >=0.3.x constraints. Committed as 821dee5.",
-          "updated_at": "2025-12-30T23:07:53.358928+00:00"
+          "notes": "Added langchain-text-splitters>=0.3.0 to requirements.txt to complete the 7 LangChain packages required for Deep Agents support. All packages now specified at >=0.3.0: langchain, langchain-core, langchain-community, langchain-anthropic, langchain-openai, langchain-text-splitters, langgraph. Committed as efba3b9.",
+          "updated_at": "2025-12-31T01:51:35.005791+00:00"
         },
         {
           "id": "subtask-1-2",
-          "description": "Install updated dependencies and verify no conflicts",
+          "description": "Install upgraded dependencies and verify installation",
           "service": "backend",
           "files_to_modify": [],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
             "type": "command",
-            "command": "cd backend && python -m pip install -r requirements.txt && python -m pip check",
-            "expected": "No broken requirements detected"
+            "command": "cd backend && pip check",
+            "expected": "No broken dependencies"
           },
           "status": "completed",
-          "notes": "Verified dependency installation and conflict check. All LangChain packages installed successfully at versions well above 0.3.x: langchain (1.2.0), langchain-core (1.2.5), langchain-community (0.4.1), langchain-anthropic (1.3.0), langchain-openai (1.1.6), langgraph (1.0.5), langgraph-checkpoint (3.0.1). pip check returned 'No broken requirements found' confirming zero dependency conflicts.",
-          "updated_at": "2025-12-30T23:10:03.001413+00:00"
-        },
-        {
-          "id": "subtask-1-3",
-          "description": "Verify installed LangChain versions are 0.3.x+",
-          "service": "backend",
-          "files_to_modify": [],
-          "files_to_create": [],
-          "patterns_from": [],
-          "verification": {
-            "type": "command",
-            "command": "cd backend && python -m pip list | grep -E 'langchain|langgraph'",
-            "expected": "All packages show 0.3.x or higher versions"
-          },
-          "status": "completed",
-          "notes": "Verification passed. All LangChain and LangGraph packages are at 0.3.x+ versions: langchain (1.2.0), langchain-anthropic (1.3.0), langchain-classic (1.0.1), langchain-community (0.4.1), langchain-core (1.2.5), langchain-openai (1.1.6), langchain-text-splitters (1.1.0), langgraph (1.0.5), langgraph-checkpoint (3.0.1), langgraph-prebuilt (1.0.5), langgraph-sdk (0.3.1). All packages exceed the 0.3.x minimum requirement.",
-          "updated_at": "2025-12-30T23:11:13.930389+00:00"
+          "notes": "Successfully installed all upgraded LangChain dependencies in backend/venv. Verified with `pip check` (no broken dependencies). All packages at version \u22650.3.0: langchain 1.2.0, langchain-core 1.2.5, langchain-community 0.4.1, langchain-anthropic 1.3.0, langchain-openai 1.1.6, langchain-text-splitters 1.1.0, langgraph 1.0.5, langgraph-checkpoint 3.0.1, langgraph-prebuilt 1.0.5, langgraph-sdk 0.3.1",
+          "updated_at": "2025-12-31T01:54:11.360903+00:00"
         }
       ]
     },
     {
-      "id": "phase-2-graph-migration",
-      "name": "Graph Entry Point Migration",
+      "id": "phase-2-verify-imports",
+      "name": "Import Verification",
       "type": "implementation",
-      "description": "Migrate deprecated set_entry_point() to modern add_edge(START, ...) pattern in all graph files",
+      "description": "Verify all LangChain imports succeed and check for API compatibility",
       "depends_on": [
-        "phase-1-dependency-upgrade"
+        "phase-1-upgrade"
       ],
       "parallel_safe": false,
       "subtasks": [
         {
           "id": "subtask-2-1",
-          "description": "Migrate agent_graph.py to START/END pattern",
+          "description": "Verify LangChain-Core imports and patterns",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [
+            "backend/app/core/state.py",
+            "backend/agent_graph.py"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage; from langchain_core.tools import tool; from langchain_core.prompts import ChatPromptTemplate; print('LangChain-Core imports OK')\"",
+            "expected": "LangChain-Core imports OK"
+          },
+          "status": "pending",
+          "notes": "Verifies message classes, @tool decorator, and prompt templates still work in 0.3.x"
+        },
+        {
+          "id": "subtask-2-2",
+          "description": "Verify LangChain-Anthropic compatibility",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [
+            "backend/app/core/llm.py"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from langchain_anthropic import ChatAnthropic; llm = ChatAnthropic(model='claude-3-haiku-20240307', temperature=0); print('ChatAnthropic init OK')\"",
+            "expected": "ChatAnthropic init OK"
+          },
+          "status": "pending",
+          "notes": "Verifies ChatAnthropic initialization pattern. Requires ANTHROPIC_API_KEY environment variable."
+        },
+        {
+          "id": "subtask-2-3",
+          "description": "Verify LangGraph StateGraph and checkpointing",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [
+            "backend/app/core/graph.py",
+            "backend/agent_graph.py"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from langgraph.graph import StateGraph, START, END; from langgraph.checkpoint.sqlite import SqliteSaver; from langgraph.prebuilt import ToolNode, tools_condition; print('LangGraph imports OK')\"",
+            "expected": "LangGraph imports OK"
+          },
+          "status": "pending",
+          "notes": "Critical verification - LangGraph 0.2\u21920.3 may have breaking changes in StateGraph API, conditional edges, or interrupts"
+        },
+        {
+          "id": "subtask-2-4",
+          "description": "Verify RAG pipeline imports (PyPDFLoader, text splitters, embeddings)",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [
+            "backend/data_processing/loaders/guidelines_loader.py"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from langchain_community.document_loaders import PyPDFLoader; from langchain_text_splitters import RecursiveCharacterTextSplitter; from langchain_openai import OpenAIEmbeddings; print('RAG pipeline imports OK')\"",
+            "expected": "RAG pipeline imports OK"
+          },
+          "status": "pending",
+          "notes": "High risk: PyPDFLoader version jump from 0.0.10\u21920.3.0 is significant. Must verify API compatibility immediately."
+        }
+      ]
+    },
+    {
+      "id": "phase-3-graph-verification",
+      "name": "Graph Compilation Verification",
+      "type": "implementation",
+      "description": "Verify all LangGraph workflows compile successfully with new version",
+      "depends_on": [
+        "phase-2-verify-imports"
+      ],
+      "parallel_safe": false,
+      "subtasks": [
+        {
+          "id": "subtask-3-1",
+          "description": "Verify agent_graph.py compiles",
           "service": "backend",
           "files_to_modify": [
             "backend/agent_graph.py"
           ],
           "files_to_create": [],
           "patterns_from": [
-            "backend/app/core/graph.py"
+            "backend/agent_graph.py"
           ],
           "verification": {
             "type": "command",
-            "command": "cd backend && python -c \"from agent_graph import app; print('OK')\"",
-            "expected": "OK (imports without errors)"
+            "command": "cd backend && python -c \"from agent_graph import app; print('Agent graph compiled:', app is not None)\"",
+            "expected": "Agent graph compiled: True"
           },
-          "status": "completed",
-          "notes": "Migrated agent_graph.py to START/END pattern. Updated import to include START from langgraph.graph, replaced set_entry_point(\"agent\") with add_edge(START, \"agent\"). Verification passed - LangGraph imports and graph construction with START/END pattern work correctly.",
-          "updated_at": "2025-12-30T23:14:43.395115+00:00"
+          "status": "pending",
+          "notes": "Uses @tool decorator, bind_tools(), and SqliteSaver checkpointing. If fails, check for breaking changes in ToolNode or tools_condition."
         },
         {
-          "id": "subtask-2-2",
-          "description": "Migrate epicrisis_graph.py to START/END pattern",
+          "id": "subtask-3-2",
+          "description": "Verify epicrisis_graph.py compiles",
           "service": "backend",
           "files_to_modify": [
             "backend/epicrisis_graph.py"
           ],
           "files_to_create": [],
           "patterns_from": [
-            "backend/app/core/graph.py"
+            "backend/epicrisis_graph.py"
           ],
           "verification": {
             "type": "command",
-            "command": "cd backend && python -c \"from epicrisis_graph import app; print('OK')\"",
-            "expected": "OK (imports without errors)"
+            "command": "cd backend && python -c \"from epicrisis_graph import app; print('Epicrisis graph compiled:', app is not None)\"",
+            "expected": "Epicrisis graph compiled: True"
           },
-          "status": "completed",
-          "notes": "Migrated epicrisis_graph.py to START/END pattern: imported START from langgraph.graph, replaced set_entry_point('generate') with add_edge(START, 'generate'). Verification passed.",
-          "updated_at": "2025-12-30T23:17:44.636338+00:00"
+          "status": "pending",
+          "notes": "Verify graph compilation and message handling patterns"
         },
         {
-          "id": "subtask-2-3",
-          "description": "Migrate translator_graph.py to START/END pattern",
+          "id": "subtask-3-3",
+          "description": "Verify translator_graph.py compiles",
           "service": "backend",
           "files_to_modify": [
             "backend/translator_graph.py"
+          ],
+          "files_to_create": [],
+          "patterns_from": [
+            "backend/translator_graph.py"
+          ],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from translator_graph import app; print('Translator graph compiled:', app is not None)\"",
+            "expected": "Translator graph compiled: True"
+          },
+          "status": "pending",
+          "notes": "Verify async invocation patterns work in 0.3.x"
+        },
+        {
+          "id": "subtask-3-4",
+          "description": "Verify app/core/graph.py (main workflow) compiles",
+          "service": "backend",
+          "files_to_modify": [
+            "backend/app/core/graph.py"
           ],
           "files_to_create": [],
           "patterns_from": [
@@ -126,139 +211,172 @@
           ],
           "verification": {
             "type": "command",
-            "command": "cd backend && python -c \"from translator_graph import app; print('OK')\"",
-            "expected": "OK (imports without errors)"
+            "command": "cd backend && python -c \"from app.core.graph import app; print('Clinical workflow graph compiled:', app is not None)\"",
+            "expected": "Clinical workflow graph compiled: True"
           },
-          "status": "completed",
-          "notes": "Migrated translator_graph.py from deprecated set_entry_point() to add_edge(START, \"translate\") pattern. Syntax validated. Committed as 732c5dc.",
-          "updated_at": "2025-12-31T00:01:36.068093+00:00"
+          "status": "pending",
+          "notes": "Main RAG workflow graph with conditional edges, iteration control, and checkpointing. Critical path for functionality."
         }
       ]
     },
     {
-      "id": "phase-3-checkpoint-validation",
-      "name": "Checkpoint Persistence Validation",
+      "id": "phase-4-unit-tests",
+      "name": "Unit Tests Execution",
       "type": "implementation",
-      "description": "Verify checkpoint save/load cycle works with upgraded LangChain versions",
+      "description": "Run existing unit test suite and verify zero failures",
       "depends_on": [
-        "phase-2-graph-migration"
+        "phase-3-graph-verification"
       ],
       "parallel_safe": false,
       "subtasks": [
         {
-          "id": "subtask-3-1",
-          "description": "Test checkpoint persistence with new versions",
-          "service": "backend",
-          "files_to_modify": [],
-          "files_to_create": [],
-          "patterns_from": [],
-          "verification": {
-            "type": "command",
-            "command": "cd backend && python verify_graph_compilation.py",
-            "expected": "Graph compiles successfully with checkpoint support"
-          },
-          "status": "completed",
-          "notes": "Checkpoint persistence verified with LangGraph 1.x. Enhanced verify_graph_compilation.py to test: (1) checkpoint module imports, (2) MemorySaver instantiation, (3) graph compilation with checkpointer, (4) checkpoint save/load cycle with message history preservation. All 4 tests passed. Committed as a38c923.",
-          "updated_at": "2025-12-31T00:04:33.787516+00:00"
-        }
-      ]
-    },
-    {
-      "id": "phase-4-deep-agents-verification",
-      "name": "Deep Agents Support Verification",
-      "type": "implementation",
-      "description": "Verify Deep Agents functionality is available in upgraded LangGraph",
-      "depends_on": [
-        "phase-2-graph-migration"
-      ],
-      "parallel_safe": true,
-      "subtasks": [
-        {
           "id": "subtask-4-1",
-          "description": "Verify Deep Agents import path",
+          "description": "Run graph-related tests",
           "service": "backend",
           "files_to_modify": [],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
             "type": "command",
-            "command": "cd backend && python -c \"from langgraph.prebuilt import create_react_agent; print('Deep Agents available')\"",
-            "expected": "Deep Agents available (no import errors)"
+            "command": "cd backend && pytest tests/test_graph.py tests/test_state.py -v",
+            "expected": "All tests pass (0 failures)"
           },
-          "status": "completed",
-          "notes": "Deep Agents import path verified successfully. The create_react_agent function is available from langgraph.prebuilt with LangGraph 1.x. Created verification script backend/verify_deep_agents.py and committed.",
-          "updated_at": "2025-12-31T00:06:11.509126+00:00"
+          "status": "pending",
+          "notes": "Tests StateGraph functionality, message handling, and state management. If failures occur, check for API changes in message classes or state handling."
+        },
+        {
+          "id": "subtask-4-2",
+          "description": "Run tool-related tests",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && pytest tests/test_tools_registry.py tests/test_tools_mcp_integration.py tests/test_tools_base.py -v",
+            "expected": "All tests pass (0 failures)"
+          },
+          "status": "pending",
+          "notes": "Tests @tool decorator and tool binding. If failures occur, check for changes in tool definition or binding APIs."
+        },
+        {
+          "id": "subtask-4-3",
+          "description": "Run RAG pipeline tests (PyPDFLoader critical path)",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && pytest tests/test_multiformat_pdf_support.py tests/test_guidelines_loader.py -v",
+            "expected": "All tests pass (0 failures)"
+          },
+          "status": "pending",
+          "notes": "CRITICAL: PyPDFLoader version jump 0.0.10\u21920.3.0. If failures occur, check PyPDFLoader API changes for load() method or document structure."
+        },
+        {
+          "id": "subtask-4-4",
+          "description": "Run search service tests",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && pytest tests/test_search_service.py -v",
+            "expected": "All tests pass (0 failures)"
+          },
+          "status": "pending",
+          "notes": "Tests integration with retrievers and embeddings"
         }
       ]
     },
     {
-      "id": "phase-5-testing",
-      "name": "Test Suite Validation",
+      "id": "phase-5-integration-tests",
+      "name": "Integration Tests & E2E Verification",
       "type": "integration",
-      "description": "Run complete test suite to verify backward compatibility",
+      "description": "Run integration tests and verify RAG workflow end-to-end",
       "depends_on": [
-        "phase-3-checkpoint-validation",
-        "phase-4-deep-agents-verification"
+        "phase-4-unit-tests"
       ],
       "parallel_safe": false,
       "subtasks": [
         {
           "id": "subtask-5-1",
-          "description": "Run unit tests with strict deprecation warnings",
+          "description": "Run integration tests",
           "service": "backend",
           "files_to_modify": [],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
             "type": "command",
-            "command": "cd backend && pytest tests/ -W error::DeprecationWarning -v",
-            "expected": "All tests pass with zero deprecation warnings"
+            "command": "cd backend && pytest tests/test_api_integration.py tests/test_guideline_pipeline_e2e.py tests/test_rag_flow_verification.py -v",
+            "expected": "All integration tests pass (0 failures)"
           },
-          "status": "completed",
-          "notes": "All 84 unit tests pass with strict deprecation warnings. LangChain/LangGraph code has zero deprecation warnings. Created conftest.py with warning filters for third-party pyparsing/pyiceberg warnings (supabase dependency chain). Updated pytest.ini documentation. Committed as ad973ac.",
-          "updated_at": "2025-12-31T00:14:05.966430+00:00"
+          "status": "pending",
+          "notes": "Tests full RAG workflow: PDF loading \u2192 chunking \u2192 embeddings \u2192 retrieval \u2192 LLM response"
         },
         {
           "id": "subtask-5-2",
-          "description": "Verify RAG workflow endpoints",
+          "description": "Verify full test suite with deprecation warnings enabled",
           "service": "backend",
           "files_to_modify": [],
           "files_to_create": [],
           "patterns_from": [],
           "verification": {
-            "type": "api",
-            "method": "GET",
-            "url": "http://localhost:8000/health",
-            "expected_status": 200
+            "type": "command",
+            "command": "cd backend && pytest -W default 2>&1 | grep -i deprecat || echo 'No deprecation warnings found'",
+            "expected": "No deprecation warnings found"
           },
-          "status": "completed",
-          "notes": "RAG workflow endpoints verified through multiple approaches:\n\n1. Graph compilation verification passed - checkpoint persistence works with LangGraph 1.x\n2. Deep agents (create_react_agent) imports correctly from langgraph.prebuilt\n3. All 4 graph files (agent_graph.py, epicrisis_graph.py, translator_graph.py, app/core/graph.py) use modern START/END pattern - no deprecated set_entry_point() calls\n4. Python syntax verified for all graph files\n5. 27 unit tests passed (test_parsers, test_guidelines_loader, test_search_service)\n\nNote: Full API endpoint testing (health, /query, /stream, /history) requires environment variables (SUPABASE_URL, SUPABASE_KEY, ANTHROPIC_API_KEY, PUBMED_EMAIL) which are not available in this environment. Previous subtask 5-1 confirmed 84 tests pass when credentials are available.",
-          "updated_at": "2025-12-31T01:06:00.786912+00:00"
+          "status": "pending",
+          "notes": "Critical requirement: Zero deprecation warnings. If warnings found, must address deprecated API usage."
+        },
+        {
+          "id": "subtask-5-3",
+          "description": "Verify Deep Agents features are accessible",
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "command",
+            "command": "cd backend && python -c \"from langgraph.prebuilt import ToolNode; import langgraph; print('LangGraph version:', langgraph.__version__); print('Deep Agents features accessible')\"",
+            "expected": "LangGraph version: 0.3.x and Deep Agents features accessible"
+          },
+          "status": "pending",
+          "notes": "Confirms Deep Agents functionality is enabled in LangGraph 0.3.x"
+        },
+        {
+          "id": "subtask-5-4",
+          "description": "End-to-end verification: Start backend and test RAG query endpoint",
+          "all_services": false,
+          "service": "backend",
+          "files_to_modify": [],
+          "files_to_create": [],
+          "patterns_from": [],
+          "verification": {
+            "type": "manual",
+            "instructions": "1. Start backend: cd backend && uvicorn main:app --reload --port 8000\n2. Test health: curl http://localhost:8000/health\n3. Test RAG query: curl -X POST http://localhost:8000/api/v1/query/ -H 'Content-Type: application/json' -d '{\"query\": \"test query\"}'\n4. Verify response contains answer and context\n5. Check logs for any errors or warnings"
+          },
+          "status": "pending",
+          "notes": "Final validation that RAG workflow functions identically post-upgrade. Requires ANTHROPIC_API_KEY and OPENAI_API_KEY environment variables."
         }
       ]
     }
   ],
   "summary": {
     "total_phases": 5,
-    "total_subtasks": 10,
+    "total_subtasks": 16,
     "services_involved": [
       "backend"
     ],
     "parallelism": {
-      "max_parallel_phases": 2,
-      "parallel_groups": [
-        {
-          "phases": [
-            "phase-3-checkpoint-validation",
-            "phase-4-deep-agents-verification"
-          ],
-          "reason": "Both depend only on phase-2-graph-migration and operate on different aspects (checkpoint persistence vs Deep Agents support)"
-        }
-      ],
+      "max_parallel_phases": 1,
+      "parallel_groups": [],
       "recommended_workers": 1,
-      "speedup_estimate": "1.2x faster with 2 workers during phase 3-4 parallel execution"
+      "speedup_estimate": "Sequential execution required due to dependencies"
     },
-    "startup_command": "cd /Users/petrsovadina/Desktop/Develope/personal/v0-benjamin && source backend/venv/bin/activate && python auto-claude/run.py --spec 001 --parallel 1"
+    "startup_command": "source auto-claude/.venv/bin/activate && python auto-claude/run.py --spec 001"
   },
   "verification_strategy": {
     "risk_level": "high",
@@ -266,84 +384,66 @@
     "test_creation_phase": "post_implementation",
     "test_types_required": [
       "unit",
-      "integration",
-      "e2e"
+      "integration"
     ],
     "security_scanning_required": false,
     "staging_deployment_required": false,
     "acceptance_criteria": [
-      "All LangChain packages upgraded to 0.3.x+",
-      "All existing tests pass without modification",
-      "Zero deprecation warnings when running pytest -W error::DeprecationWarning",
-      "Backend service starts without errors",
-      "Deep Agents functionality is importable",
-      "Checkpoint persistence works with new versions",
-      "All RAG workflow endpoints functional (/query, /stream, /history)"
+      "All 7 LangChain packages at version \u22650.3.0",
+      "All existing tests pass (0 failures)",
+      "No deprecation warnings in test output",
+      "Backend starts successfully",
+      "RAG workflow endpoints return valid responses",
+      "Deep Agents features confirmed accessible"
     ],
     "verification_steps": [
       {
-        "name": "Dependency Version Check",
-        "command": "cd backend && python -m pip list | grep -E 'langchain|langgraph'",
-        "expected_outcome": "All packages at 0.3.x or higher",
-        "type": "command",
-        "required": true,
-        "blocking": true
-      },
-      {
-        "name": "No Dependency Conflicts",
-        "command": "cd backend && python -m pip check",
-        "expected_outcome": "No broken requirements detected",
-        "type": "command",
+        "name": "Package Version Check",
+        "command": "cd backend && pip list | grep -E 'langchain|langgraph'",
+        "expected_outcome": "All packages show 0.3.x or higher",
+        "type": "test",
         "required": true,
         "blocking": true
       },
       {
         "name": "Unit Tests",
-        "command": "cd backend && pytest tests/test_graph.py tests/test_state.py -v",
-        "expected_outcome": "All graph and state tests pass",
+        "command": "cd backend && pytest tests/ -v",
+        "expected_outcome": "All tests pass",
         "type": "test",
         "required": true,
         "blocking": true
       },
       {
         "name": "Deprecation Warning Check",
-        "command": "cd backend && pytest tests/ -W error::DeprecationWarning",
-        "expected_outcome": "All tests pass with zero warnings",
+        "command": "cd backend && pytest -W default 2>&1 | grep -i deprecat",
+        "expected_outcome": "No deprecation warnings",
         "type": "test",
         "required": true,
         "blocking": true
       },
       {
         "name": "Integration Tests",
-        "command": "cd backend && pytest tests/test_api_integration.py tests/test_rag_flow_verification.py -v",
-        "expected_outcome": "All RAG workflow tests pass",
+        "command": "cd backend && pytest tests/test_api_integration.py tests/test_guideline_pipeline_e2e.py tests/test_rag_flow_verification.py -v",
+        "expected_outcome": "All integration tests pass",
         "type": "test",
         "required": true,
         "blocking": true
-      },
-      {
-        "name": "Backend Service Start",
-        "command": "cd backend && timeout 10 python -m uvicorn app.main:app --log-level debug || true",
-        "expected_outcome": "Starts without errors or deprecation warnings",
-        "type": "command",
-        "required": true,
-        "blocking": false
       }
     ],
-    "reasoning": "Major version upgrade with strict backward compatibility requirements and high risk. Full test suite validation required with zero tolerance for deprecation warnings."
+    "reasoning": "High risk due to major version upgrade (0.1.x\u21920.3.x) with strict zero-failure requirement. Unit and integration tests verify backward compatibility. No E2E tests needed (backend-only change)."
   },
   "qa_acceptance": {
     "unit_tests": {
       "required": true,
       "commands": [
-        "cd backend && pytest tests/test_graph.py tests/test_state.py tests/test_search_service.py -v"
+        "pytest backend/tests/ -v"
       ],
       "minimum_coverage": null
     },
     "integration_tests": {
       "required": true,
       "commands": [
-        "cd backend && pytest tests/test_api_integration.py tests/test_rag_flow_verification.py -v"
+        "pytest backend/tests/test_api_integration.py backend/tests/test_guideline_pipeline_e2e.py backend/tests/test_rag_flow_verification.py -v"
       ],
       "services_to_test": [
         "backend"
@@ -359,35 +459,50 @@
       "pages": []
     },
     "database_verification": {
-      "required": true,
-      "checks": [
-        "checkpoint-persistence",
-        "message-history-compatibility"
-      ]
+      "required": false,
+      "checks": []
     },
     "api_verification": {
       "required": true,
       "endpoints": [
         {
-          "path": "/health",
+          "name": "Health Check",
+          "url": "http://localhost:8000/health",
           "method": "GET",
           "expected_status": 200
         },
         {
-          "path": "/query",
+          "name": "RAG Query",
+          "url": "http://localhost:8000/api/v1/query/",
           "method": "POST",
           "body": {
-            "query": "test"
+            "query": "test query"
           },
           "expected_status": 200
+        }
+      ]
+    },
+    "dependency_verification": {
+      "required": true,
+      "checks": [
+        {
+          "name": "LangChain Version",
+          "command": "pip show langchain | grep Version",
+          "expected": "Version: 0.3.x"
+        },
+        {
+          "name": "LangGraph Version",
+          "command": "pip show langgraph | grep Version",
+          "expected": "Version: 0.3.x"
+        },
+        {
+          "name": "No Dependency Conflicts",
+          "command": "pip check",
+          "expected": "No broken dependencies"
         }
       ]
     }
   },
   "qa_signoff": null,
-  "last_updated": "2025-12-31T01:06:00.786922+00:00",
-  "status": "in_progress",
-  "planStatus": "in_progress",
-  "updated_at": "2025-12-31T00:58:59.993Z",
-  "recoveryNote": "Task recovered from stuck state at 2025-12-31T00:58:59.993Z"
+  "last_updated": "2025-12-31T01:54:11.360920+00:00"
 }
