@@ -7,7 +7,7 @@ Tests cover:
 """
 
 import pytest
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 
 from backend.tools.base import ToolDefinition, ToolResult
 

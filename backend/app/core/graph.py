@@ -21,7 +21,7 @@ Usage:
     >>> result = await app.ainvoke({"messages": [HumanMessage(content="...")]}, config=config)
 """
 
-from typing import List, Dict, Any, Literal
+from typing import Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -263,10 +263,7 @@ async def synthesizer_node(state: ClinicalState):
     
     return {"final_answer": response.content}
 
-# --- CHECKPOINTER CONFIGURATION ---
-# SqliteSaver provides persistent state storage for session recovery.
-# The checkpoints.db file is created in the backend directory.
-# Thread IDs are required when invoking the graph for session isolation.
+# Checkpointer initialization for state persistence
 CHECKPOINT_DB_PATH = "backend/checkpoints.db"
 checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
 

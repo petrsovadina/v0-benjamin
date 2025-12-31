@@ -13,9 +13,8 @@ Tests cover:
 """
 
 import asyncio
-import logging
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from pydantic import BaseModel, Field
 
 from backend.tools.base import ToolDefinition, ToolResult

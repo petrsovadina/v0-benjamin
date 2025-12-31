@@ -19,7 +19,7 @@ registry integration works correctly without requiring external dependencies.
 import asyncio
 import json
 import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from backend.tools import ToolRegistry, ToolDefinition, ToolResult
 from backend.tools import get_registry, init_default_registry

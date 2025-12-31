@@ -12,9 +12,8 @@ Key functionality:
 - Preservation of original function metadata (docstrings, names)
 """
 
-import asyncio
 import inspect
-from typing import Any, Callable, Dict, List, Optional, Type, Union, get_type_hints
+from typing import Any, Callable, Dict, List, Optional, Type, get_type_hints
 
 from pydantic import BaseModel, Field, create_model
 

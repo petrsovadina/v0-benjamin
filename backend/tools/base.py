@@ -7,9 +7,8 @@ This module defines the core interfaces and data structures for the tool registr
 """
 
 import asyncio
-import inspect
-from dataclasses import dataclass, field
-from typing import Any, Callable, Optional, Type, Union
+from dataclasses import dataclass
+from typing import Any, Callable, Optional, Type
 from pydantic import BaseModel
 
 

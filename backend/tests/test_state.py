@@ -8,7 +8,7 @@ defined in backend/app/core/state.py.
 
 import json
 from datetime import datetime
-from typing import get_type_hints, get_origin, get_args
+from typing import get_type_hints
 
 import pytest
 from pydantic import ValidationError
