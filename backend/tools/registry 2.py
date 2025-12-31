@@ -385,8 +385,8 @@ class ToolRegistry:
             avoids the overhead of thread pool execution.
         """
         try:
-            # Try to get the current event loop
-            loop = asyncio.get_running_loop()
+            # Check if event loop is running
+            asyncio.get_running_loop()
             # If we're in an async context, we can't use run_until_complete
             # This path handles the case where invoke() is called from sync code
             # but an event loop happens to be running (e.g., in Jupyter)
