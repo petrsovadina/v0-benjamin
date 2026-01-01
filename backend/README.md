@@ -26,6 +26,11 @@ Python backend powering the Czech MedAI Assistant. Handles AI orchestration, dat
     - `GOOGLE_API_KEY`: For Audio Transcription (Required)
     - `SUPABASE_URL`: Database URL
     - `SUPABASE_KEY`: Service Role Key (Required for pipeline writes)
+    - `ENVIRONMENT`: Set to `development`, `staging`, or `production`
+    - `CORS_ORIGINS`: JSON array of allowed origins (e.g., `["http://localhost:3000"]`)
+      - ⚠️ **REQUIRED IN PRODUCTION**: Must be explicitly set when `ENVIRONMENT=production`
+      - The application will fail to start if `CORS_ORIGINS` is empty in production mode
+      - This prevents security misconfigurations that could block frontend access
 
 ## 🚀 Running the API
 
