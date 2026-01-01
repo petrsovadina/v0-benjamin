@@ -52,7 +52,7 @@ Toto je **full-stack aplikace** s odděleným frontendem a backendem.
 ### Frontend
 - **Framework**: [Next.js](https://nextjs.org/) 16.0.7 (App Router)
 - **React**: 19.2.0
-- **TypeScript**: 5.x
+- **TypeScript**: 5.9
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) 4.1.9
 - **UI Components**: [Radix UI](https://www.radix-ui.com/) / shadcn/ui
 - **Form Handling**: React Hook Form + Zod validation
@@ -647,9 +647,10 @@ Tento projekt je proprietární software. Všechna práva vyhrazena.
 
 ## 🤝 Kontakt a podpora
 
-- **Web**: [czechmedai.cz](https://czechmedai.cz) (placeholder)
-- **Email**: podpora@czechmedai.cz (placeholder)
-- **Dokumentace**: [docs.czechmedai.cz](https://docs.czechmedai.cz) (placeholder)
+- **Web**: czechmedai.cz *(připravujeme)*
+- **Email**: podpora@czechmedai.cz *(připravujeme)*
+- **Dokumentace**: docs.czechmedai.cz *(připravujeme)*
+- **GitHub**: Tento repozitář
 
 ## 🙏 Acknowledgments
 
@@ -662,3 +663,5 @@ Tento projekt je proprietární software. Všechna práva vyhrazena.
 ---
 
 **Vytvořeno s ❤️ pro české lékaře**
+
+*Poslední aktualizace: leden 2025*
