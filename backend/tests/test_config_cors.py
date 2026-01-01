@@ -9,7 +9,9 @@ Tests verify:
 """
 
 import os
+import pytest
 from unittest.mock import patch
+from pydantic import ValidationError
 
 
 class TestEnvironmentConfiguration:
@@ -381,12 +383,41 @@ class TestSettingsIntegration:
 
 class TestCORSProductionValidation:
     """Tests for CORS_ORIGINS validation in production environment."""
+    
+    @staticmethod
+    def create_test_settings_with_validator():
+        """Helper to create a test Settings class with CORS validation."""
+        from pydantic_settings import BaseSettings, SettingsConfigDict
+        from pydantic import model_validator
+        from typing import Self
+        
+        class TestSettings(BaseSettings):
+            ENVIRONMENT: str = "development"
+            CORS_ORIGINS: list[str] = []
+            SUPABASE_URL: str
+            SUPABASE_KEY: str
+            ANTHROPIC_API_KEY: str
+            PUBMED_EMAIL: str
+            
+            model_config = SettingsConfigDict(
+                env_ignore_empty=True,
+                extra="ignore"
+            )
+            
+            @model_validator(mode='after')
+            def validate_cors_origins_in_production(self) -> Self:
+                if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+                    raise ValueError(
+                        "CORS_ORIGINS must not be empty when ENVIRONMENT is 'production'. "
+                        "Please set CORS_ORIGINS environment variable with allowed origins, "
+                        "e.g., CORS_ORIGINS=[\"https://yourdomain.com\"]"
+                    )
+                return self
+        
+        return TestSettings
 
     def test_production_requires_cors_origins(self):
         """Production environment should raise ValueError if CORS_ORIGINS is empty."""
-        import pytest
-        from pydantic import ValidationError
-        
         with patch.dict(os.environ, {
             "ENVIRONMENT": "production",
             # CORS_ORIGINS not set, should default to empty list
@@ -395,32 +426,7 @@ class TestCORSProductionValidation:
             "ANTHROPIC_API_KEY": "test-key",
             "PUBMED_EMAIL": "test@test.com"
         }, clear=True):
-            from pydantic_settings import BaseSettings, SettingsConfigDict
-            from pydantic import model_validator
-            from typing import Self
-            
-            class TestSettings(BaseSettings):
-                ENVIRONMENT: str = "development"
-                CORS_ORIGINS: list[str] = []
-                SUPABASE_URL: str
-                SUPABASE_KEY: str
-                ANTHROPIC_API_KEY: str
-                PUBMED_EMAIL: str
-                
-                model_config = SettingsConfigDict(
-                    env_ignore_empty=True,
-                    extra="ignore"
-                )
-                
-                @model_validator(mode='after')
-                def validate_cors_origins_in_production(self) -> Self:
-                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
-                        raise ValueError(
-                            "CORS_ORIGINS must not be empty when ENVIRONMENT is 'production'. "
-                            "Please set CORS_ORIGINS environment variable with allowed origins, "
-                            "e.g., CORS_ORIGINS=[\"https://yourdomain.com\"]"
-                        )
-                    return self
+            TestSettings = self.create_test_settings_with_validator()
             
             with pytest.raises(ValidationError) as exc_info:
                 settings = TestSettings()
@@ -437,32 +443,7 @@ class TestCORSProductionValidation:
             "ANTHROPIC_API_KEY": "test-key",
             "PUBMED_EMAIL": "test@test.com"
         }, clear=True):
-            from pydantic_settings import BaseSettings, SettingsConfigDict
-            from pydantic import model_validator
-            from typing import Self
-            
-            class TestSettings(BaseSettings):
-                ENVIRONMENT: str = "development"
-                CORS_ORIGINS: list[str] = []
-                SUPABASE_URL: str
-                SUPABASE_KEY: str
-                ANTHROPIC_API_KEY: str
-                PUBMED_EMAIL: str
-                
-                model_config = SettingsConfigDict(
-                    env_ignore_empty=True,
-                    extra="ignore"
-                )
-                
-                @model_validator(mode='after')
-                def validate_cors_origins_in_production(self) -> Self:
-                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
-                        raise ValueError(
-                            "CORS_ORIGINS must not be empty when ENVIRONMENT is 'production'. "
-                            "Please set CORS_ORIGINS environment variable with allowed origins, "
-                            "e.g., CORS_ORIGINS=[\"https://yourdomain.com\"]"
-                        )
-                    return self
+            TestSettings = self.create_test_settings_with_validator()
             
             settings = TestSettings()
             assert settings.ENVIRONMENT == "production"
@@ -478,32 +459,7 @@ class TestCORSProductionValidation:
             "ANTHROPIC_API_KEY": "test-key",
             "PUBMED_EMAIL": "test@test.com"
         }, clear=True):
-            from pydantic_settings import BaseSettings, SettingsConfigDict
-            from pydantic import model_validator
-            from typing import Self
-            
-            class TestSettings(BaseSettings):
-                ENVIRONMENT: str = "development"
-                CORS_ORIGINS: list[str] = []
-                SUPABASE_URL: str
-                SUPABASE_KEY: str
-                ANTHROPIC_API_KEY: str
-                PUBMED_EMAIL: str
-                
-                model_config = SettingsConfigDict(
-                    env_ignore_empty=True,
-                    extra="ignore"
-                )
-                
-                @model_validator(mode='after')
-                def validate_cors_origins_in_production(self) -> Self:
-                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
-                        raise ValueError(
-                            "CORS_ORIGINS must not be empty when ENVIRONMENT is 'production'. "
-                            "Please set CORS_ORIGINS environment variable with allowed origins, "
-                            "e.g., CORS_ORIGINS=[\"https://yourdomain.com\"]"
-                        )
-                    return self
+            TestSettings = self.create_test_settings_with_validator()
             
             # Should not raise ValueError
             settings = TestSettings()
@@ -520,32 +476,7 @@ class TestCORSProductionValidation:
             "ANTHROPIC_API_KEY": "test-key",
             "PUBMED_EMAIL": "test@test.com"
         }, clear=True):
-            from pydantic_settings import BaseSettings, SettingsConfigDict
-            from pydantic import model_validator
-            from typing import Self
-            
-            class TestSettings(BaseSettings):
-                ENVIRONMENT: str = "development"
-                CORS_ORIGINS: list[str] = []
-                SUPABASE_URL: str
-                SUPABASE_KEY: str
-                ANTHROPIC_API_KEY: str
-                PUBMED_EMAIL: str
-                
-                model_config = SettingsConfigDict(
-                    env_ignore_empty=True,
-                    extra="ignore"
-                )
-                
-                @model_validator(mode='after')
-                def validate_cors_origins_in_production(self) -> Self:
-                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
-                        raise ValueError(
-                            "CORS_ORIGINS must not be empty when ENVIRONMENT is 'production'. "
-                            "Please set CORS_ORIGINS environment variable with allowed origins, "
-                            "e.g., CORS_ORIGINS=[\"https://yourdomain.com\"]"
-                        )
-                    return self
+            TestSettings = self.create_test_settings_with_validator()
             
             # Should not raise ValueError
             settings = TestSettings()
