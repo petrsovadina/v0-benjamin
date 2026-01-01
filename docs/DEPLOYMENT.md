@@ -18,8 +18,23 @@ Před spuštěním je nutné nastavit proměnné prostředí. Použijte `.env.ex
 ANTHROPIC_API_KEY=sk-ant-...
 SUPABASE_URL=https://xyz.supabase.co
 SUPABASE_SERVICE_KEY=...
+
+# Environment configuration (REQUIRED)
+ENVIRONMENT=production
+
+# CORS Configuration (REQUIRED in production)
+# JSON array of allowed frontend origins
+CORS_ORIGINS='["https://app.benjamin.cz","https://benjamin.cz"]'
+
 # ... další proměnné z backend/.env.example
 ```
+
+**⚠️ IMPORTANT - CORS Security**:
+- In production (`ENVIRONMENT=production`), the `CORS_ORIGINS` environment variable **must be set** and **cannot be empty**.
+- The application will fail to start if `CORS_ORIGINS` is empty in production to prevent security misconfigurations.
+- Always use HTTPS URLs in production (e.g., `https://app.benjamin.cz`).
+- Include all frontend domains that need to access the API.
+- Format: JSON array of strings, e.g., `CORS_ORIGINS='["https://domain1.com","https://domain2.com"]'`
 
 ### Frontend (`.env.local` nebo `.env.production`)
 ```bash
@@ -74,3 +89,25 @@ Projekt bude brzy obsahovat GitHub Actions workflow pro automatické testování
 ## 📝 Poznámky k Produkci
 - **Databáze:** Ujistěte se, že jste aplikovali všechny SQL migrace (`supabase/migrations`).
 - **Rate Limiting:** V produkci (např. za Nginx/Traefik) může být nutné nastavit `slowapi` na použití `X-Forwarded-For` hlavičky pro správnou detekci IP adresy.
+
+## 🔧 Troubleshooting
+
+### Backend se nespustí v produkci s chybou "CORS_ORIGINS must not be empty"
+**Problém**: Application fails to start with error about CORS_ORIGINS being empty.
+
+**Řešení**:
+1. Nastavte proměnnou prostředí `CORS_ORIGINS` s platným JSON polem URL adres:
+   ```bash
+   CORS_ORIGINS='["https://app.benjamin.cz","https://benjamin.cz"]'
+   ```
+2. Ujistěte se, že hodnota není prázdné pole `[]`.
+3. Zkontrolujte, že `ENVIRONMENT=production` je správně nastaveno.
+
+### Frontend nemůže komunikovat s backendem (CORS errors)
+**Problém**: Browser console shows CORS errors when frontend tries to call API.
+
+**Řešení**:
+1. Ověřte, že frontend URL je v `CORS_ORIGINS` seznamu.
+2. Zkontrolujte, že používáte správný protokol (http vs https).
+3. Pro development: `CORS_ORIGINS='["http://localhost:3000","http://localhost:5173"]'`
+4. Pro production: Vždy používejte HTTPS URL.
