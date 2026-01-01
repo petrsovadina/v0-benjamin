@@ -378,3 +378,154 @@ class TestSettingsIntegration:
 
             settings = TestSettings()
             assert isinstance(settings.CORS_ORIGINS, list)
+
+
+class TestCORSMiddlewareHeaders:
+    """Integration tests for CORS headers in FastAPI responses."""
+
+    def test_cors_preflight_options_request(self):
+        """Test CORS preflight OPTIONS request returns correct headers."""
+        import os
+        from unittest.mock import patch
+
+        with patch.dict(os.environ, {
+            "ENVIRONMENT": "development",
+            "CORS_ORIGINS": '["http://localhost:3000", "http://localhost:8000"]',
+            "SUPABASE_URL": "https://test.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "ANTHROPIC_API_KEY": "test-key",
+            "PUBMED_EMAIL": "test@test.com"
+        }, clear=True):
+            # Import fresh app instance with test settings
+            from fastapi import FastAPI
+            from fastapi.middleware.cors import CORSMiddleware
+            from fastapi.testclient import TestClient
+
+            # Create test app with same CORS configuration pattern
+            test_app = FastAPI()
+            test_app.add_middleware(
+                CORSMiddleware,
+                allow_origins=["http://localhost:3000", "http://localhost:8000"],
+                allow_credentials=True,
+                allow_methods=["*"],
+                allow_headers=["*"],
+            )
+
+            @test_app.get("/health")
+            def health():
+                return {"status": "ok"}
+
+            client = TestClient(test_app)
+
+            # Send OPTIONS preflight request
+            response = client.options(
+                "/health",
+                headers={
+                    "Origin": "http://localhost:3000",
+                    "Access-Control-Request-Method": "GET",
+                    "Access-Control-Request-Headers": "Content-Type"
+                }
+            )
+
+            # Verify preflight response
+            assert response.status_code == 200
+            assert response.headers.get("access-control-allow-origin") == "http://localhost:3000"
+            assert "GET" in response.headers.get("access-control-allow-methods", "")
+
+    def test_cors_headers_on_get_request(self):
+        """Test CORS headers are present on regular GET requests."""
+        from fastapi import FastAPI
+        from fastapi.middleware.cors import CORSMiddleware
+        from fastapi.testclient import TestClient
+
+        test_app = FastAPI()
+        test_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["http://localhost:3000"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+        @test_app.get("/health")
+        def health():
+            return {"status": "ok", "version": "2.0.0"}
+
+        client = TestClient(test_app)
+
+        # Send GET request with Origin header
+        response = client.get(
+            "/health",
+            headers={"Origin": "http://localhost:3000"}
+        )
+
+        assert response.status_code == 200
+        assert response.headers.get("access-control-allow-origin") == "http://localhost:3000"
+        assert response.headers.get("access-control-allow-credentials") == "true"
+
+    def test_cors_blocks_unauthorized_origin(self):
+        """Test CORS blocks requests from unauthorized origins."""
+        from fastapi import FastAPI
+        from fastapi.middleware.cors import CORSMiddleware
+        from fastapi.testclient import TestClient
+
+        test_app = FastAPI()
+        test_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["http://localhost:3000"],  # Only allow localhost:3000
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+        @test_app.get("/health")
+        def health():
+            return {"status": "ok"}
+
+        client = TestClient(test_app)
+
+        # Send request from unauthorized origin
+        response = client.get(
+            "/health",
+            headers={"Origin": "http://evil-site.com"}
+        )
+
+        # Request succeeds but CORS header should NOT reflect the unauthorized origin
+        assert response.status_code == 200
+        # The access-control-allow-origin should not be set for unauthorized origins
+        assert response.headers.get("access-control-allow-origin") != "http://evil-site.com"
+
+    def test_cors_preflight_with_development_origins(self):
+        """Test CORS preflight with multiple development origins."""
+        from fastapi import FastAPI
+        from fastapi.middleware.cors import CORSMiddleware
+        from fastapi.testclient import TestClient
+
+        dev_origins = ["http://localhost:3000", "http://localhost:8000"]
+
+        test_app = FastAPI()
+        test_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=dev_origins,
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
+        @test_app.get("/health")
+        def health():
+            return {"status": "ok"}
+
+        client = TestClient(test_app)
+
+        # Test both development origins
+        for origin in dev_origins:
+            response = client.options(
+                "/health",
+                headers={
+                    "Origin": origin,
+                    "Access-Control-Request-Method": "GET"
+                }
+            )
+            assert response.status_code == 200
+            assert response.headers.get("access-control-allow-origin") == origin
