@@ -1,25 +1,25 @@
 {
   "active": true,
-  "spec": "001-f0-1-upgrade-langchain-langgraph-dependencies",
+  "spec": "034-production-cors-security",
   "state": "complete",
   "subtasks": {
-    "completed": 18,
-    "total": 18,
+    "completed": 6,
+    "total": 6,
     "in_progress": 0,
     "failed": 0
   },
   "phase": {
-    "current": "",
-    "id": 0,
-    "total": 0
+    "current": "Validation & Testing",
+    "id": null,
+    "total": 3
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 0,
-    "started_at": "2025-12-31T14:55:51.301067"
+    "number": 250,
+    "started_at": "2026-01-01T17:07:32.765343"
   },
-  "last_update": "2025-12-31T14:55:51.316197"
+  "last_update": "2026-01-01T18:05:37.815914"
 }
