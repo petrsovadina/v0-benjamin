@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import field_validator
+from pydantic import model_validator
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Czech MedAI"
@@ -22,18 +22,15 @@ class Settings(BaseSettings):
     # External APIs
     PUBMED_EMAIL: str
     
-    @field_validator('CORS_ORIGINS')
-    @classmethod
-    def validate_cors_origins_in_production(cls, v, info):
+    @model_validator(mode='after')
+    def validate_cors_origins_in_production(self):
         """Ensure CORS_ORIGINS is not empty when ENVIRONMENT is production."""
-        # Access other field values via info.data
-        environment = info.data.get('ENVIRONMENT', 'development')
-        if environment == 'production' and not v:
+        if self.ENVIRONMENT == 'production' and not self.CORS_ORIGINS:
             raise ValueError(
                 'CORS_ORIGINS must not be empty when ENVIRONMENT is set to "production". '
                 'Please configure allowed origins in your environment variables.'
             )
-        return v
+        return self
     
     model_config = SettingsConfigDict(
         env_file=(".env", "backend/.env"),
