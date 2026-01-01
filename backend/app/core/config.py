@@ -3,7 +3,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Czech MedAI"
     API_V1_STR: str = "/api/v1"
-    
+
+    # Environment
+    ENVIRONMENT: str = "development"
+
+    # CORS
+    CORS_ORIGINS: list[str] = []
+
     # Supabase
     SUPABASE_URL: str
     SUPABASE_KEY: str
