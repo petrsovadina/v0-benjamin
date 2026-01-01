@@ -8,7 +8,6 @@ Tests verify:
 - Whitespace handling in origin lists
 """
 
-import pytest
 import os
 from unittest.mock import patch
 
