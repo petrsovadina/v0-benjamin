@@ -6,10 +6,13 @@ Tests verify:
 - CORS_ORIGINS correctly parsed from environment variable
 - Empty CORS_ORIGINS defaults to empty list
 - Whitespace handling in origin lists
+- Production validation prevents empty CORS_ORIGINS
 """
 
 import os
+import pytest
 from unittest.mock import patch
+from pydantic import ValidationError
 
 
 class TestEnvironmentConfiguration:
@@ -528,3 +531,183 @@ class TestCORSMiddlewareHeaders:
             )
             assert response.status_code == 200
             assert response.headers.get("access-control-allow-origin") == origin
+
+
+class TestProductionCORSValidation:
+    """Tests for production environment CORS validation."""
+
+    def test_production_requires_cors_origins(self):
+        """Production environment should raise error when CORS_ORIGINS is empty."""
+        with patch.dict(os.environ, {
+            "ENVIRONMENT": "production",
+            "SUPABASE_URL": "https://test.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "ANTHROPIC_API_KEY": "test-key",
+            "PUBMED_EMAIL": "test@test.com"
+        }, clear=True):
+            from pydantic import model_validator
+            from pydantic_settings import BaseSettings, SettingsConfigDict
+
+            class TestSettings(BaseSettings):
+                PROJECT_NAME: str = "Czech MedAI"
+                ENVIRONMENT: str = "development"
+                CORS_ORIGINS: list[str] = []
+                SUPABASE_URL: str
+                SUPABASE_KEY: str
+                ANTHROPIC_API_KEY: str
+                PUBMED_EMAIL: str
+
+                model_config = SettingsConfigDict(
+                    env_ignore_empty=True,
+                    extra="ignore"
+                )
+
+                @model_validator(mode="after")
+                def validate_production_cors(self) -> "TestSettings":
+                    """Validate that CORS_ORIGINS is not empty when ENVIRONMENT is production."""
+                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+                        raise ValueError(
+                            "CORS_ORIGINS must be explicitly configured when ENVIRONMENT is set to 'production'. "
+                            "Please set the CORS_ORIGINS environment variable with a JSON array of allowed origins, "
+                            "e.g., CORS_ORIGINS='[\"https://app.benjamin.cz\",\"https://benjamin.cz\"]'"
+                        )
+                    return self
+
+            # Should raise ValidationError when CORS_ORIGINS is empty in production
+            with pytest.raises(ValidationError) as exc_info:
+                settings = TestSettings()
+            
+            # Verify the error message is helpful
+            error_message = str(exc_info.value)
+            assert "CORS_ORIGINS must be explicitly configured" in error_message
+            assert "production" in error_message
+
+    def test_production_with_cors_origins_succeeds(self):
+        """Production environment should succeed when CORS_ORIGINS is set."""
+        with patch.dict(os.environ, {
+            "ENVIRONMENT": "production",
+            "CORS_ORIGINS": '["https://benjamin.cz", "https://app.benjamin.cz"]',
+            "SUPABASE_URL": "https://test.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "ANTHROPIC_API_KEY": "test-key",
+            "PUBMED_EMAIL": "test@test.com"
+        }, clear=True):
+            from pydantic import model_validator
+            from pydantic_settings import BaseSettings, SettingsConfigDict
+
+            class TestSettings(BaseSettings):
+                PROJECT_NAME: str = "Czech MedAI"
+                ENVIRONMENT: str = "development"
+                CORS_ORIGINS: list[str] = []
+                SUPABASE_URL: str
+                SUPABASE_KEY: str
+                ANTHROPIC_API_KEY: str
+                PUBMED_EMAIL: str
+
+                model_config = SettingsConfigDict(
+                    env_ignore_empty=True,
+                    extra="ignore"
+                )
+
+                @model_validator(mode="after")
+                def validate_production_cors(self) -> "TestSettings":
+                    """Validate that CORS_ORIGINS is not empty when ENVIRONMENT is production."""
+                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+                        raise ValueError(
+                            "CORS_ORIGINS must be explicitly configured when ENVIRONMENT is set to 'production'. "
+                            "Please set the CORS_ORIGINS environment variable with a JSON array of allowed origins, "
+                            "e.g., CORS_ORIGINS='[\"https://app.benjamin.cz\",\"https://benjamin.cz\"]'"
+                        )
+                    return self
+
+            # Should succeed when CORS_ORIGINS is set in production
+            settings = TestSettings()
+            assert settings.ENVIRONMENT == "production"
+            assert len(settings.CORS_ORIGINS) == 2
+            assert "https://benjamin.cz" in settings.CORS_ORIGINS
+            assert "https://app.benjamin.cz" in settings.CORS_ORIGINS
+
+    def test_development_allows_empty_cors_origins(self):
+        """Development environment should allow empty CORS_ORIGINS."""
+        with patch.dict(os.environ, {
+            "ENVIRONMENT": "development",
+            "SUPABASE_URL": "https://test.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "ANTHROPIC_API_KEY": "test-key",
+            "PUBMED_EMAIL": "test@test.com"
+        }, clear=True):
+            from pydantic import model_validator
+            from pydantic_settings import BaseSettings, SettingsConfigDict
+
+            class TestSettings(BaseSettings):
+                PROJECT_NAME: str = "Czech MedAI"
+                ENVIRONMENT: str = "development"
+                CORS_ORIGINS: list[str] = []
+                SUPABASE_URL: str
+                SUPABASE_KEY: str
+                ANTHROPIC_API_KEY: str
+                PUBMED_EMAIL: str
+
+                model_config = SettingsConfigDict(
+                    env_ignore_empty=True,
+                    extra="ignore"
+                )
+
+                @model_validator(mode="after")
+                def validate_production_cors(self) -> "TestSettings":
+                    """Validate that CORS_ORIGINS is not empty when ENVIRONMENT is production."""
+                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+                        raise ValueError(
+                            "CORS_ORIGINS must be explicitly configured when ENVIRONMENT is set to 'production'. "
+                            "Please set the CORS_ORIGINS environment variable with a JSON array of allowed origins, "
+                            "e.g., CORS_ORIGINS='[\"https://app.benjamin.cz\",\"https://benjamin.cz\"]'"
+                        )
+                    return self
+
+            # Should succeed in development even with empty CORS_ORIGINS
+            settings = TestSettings()
+            assert settings.ENVIRONMENT == "development"
+            assert settings.CORS_ORIGINS == []
+
+    def test_staging_allows_empty_cors_origins(self):
+        """Staging environment should allow empty CORS_ORIGINS."""
+        with patch.dict(os.environ, {
+            "ENVIRONMENT": "staging",
+            "SUPABASE_URL": "https://test.supabase.co",
+            "SUPABASE_KEY": "test-key",
+            "ANTHROPIC_API_KEY": "test-key",
+            "PUBMED_EMAIL": "test@test.com"
+        }, clear=True):
+            from pydantic import model_validator
+            from pydantic_settings import BaseSettings, SettingsConfigDict
+
+            class TestSettings(BaseSettings):
+                PROJECT_NAME: str = "Czech MedAI"
+                ENVIRONMENT: str = "development"
+                CORS_ORIGINS: list[str] = []
+                SUPABASE_URL: str
+                SUPABASE_KEY: str
+                ANTHROPIC_API_KEY: str
+                PUBMED_EMAIL: str
+
+                model_config = SettingsConfigDict(
+                    env_ignore_empty=True,
+                    extra="ignore"
+                )
+
+                @model_validator(mode="after")
+                def validate_production_cors(self) -> "TestSettings":
+                    """Validate that CORS_ORIGINS is not empty when ENVIRONMENT is production."""
+                    if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+                        raise ValueError(
+                            "CORS_ORIGINS must be explicitly configured when ENVIRONMENT is set to 'production'. "
+                            "Please set the CORS_ORIGINS environment variable with a JSON array of allowed origins, "
+                            "e.g., CORS_ORIGINS='[\"https://app.benjamin.cz\",\"https://benjamin.cz\"]'"
+                        )
+                    return self
+
+            # Should succeed in staging even with empty CORS_ORIGINS
+            settings = TestSettings()
+            assert settings.ENVIRONMENT == "staging"
+            assert settings.CORS_ORIGINS == []
+

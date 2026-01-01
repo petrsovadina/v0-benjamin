@@ -1,3 +1,4 @@
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -26,5 +27,16 @@ class Settings(BaseSettings):
         env_ignore_empty=True, 
         extra="ignore"
     )
+
+    @model_validator(mode="after")
+    def validate_production_cors(self) -> "Settings":
+        """Validate that CORS_ORIGINS is not empty when ENVIRONMENT is production."""
+        if self.ENVIRONMENT == "production" and not self.CORS_ORIGINS:
+            raise ValueError(
+                "CORS_ORIGINS must be explicitly configured when ENVIRONMENT is set to 'production'. "
+                "Please set the CORS_ORIGINS environment variable with a JSON array of allowed origins, "
+                "e.g., CORS_ORIGINS='[\"https://app.benjamin.cz\",\"https://benjamin.cz\"]'"
+            )
+        return self
 
 settings = Settings()
