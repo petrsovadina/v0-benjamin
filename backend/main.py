@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 from backend.services.cache import cache
 
 from backend.app.api.v1.api import api_router
+from backend.app.core.config import settings
 
 # Load environment variables
 load_dotenv()
@@ -43,7 +44,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=settings.CORS_ORIGINS if settings.CORS_ORIGINS else ["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
