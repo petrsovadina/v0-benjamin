@@ -19,7 +19,7 @@ Tento dokument obsahuje přehled dokončených funkcí a plánovaný vývoj proj
 - [x] Konverzační rozhraní v češtině
 - [x] Evidence-based odpovědi s citacemi
 - [x] PubMed integrace (29M+ článků)
-- [x] Streaming odpovědí (real-time)
+- [x] Streaming odpovědí (backend) - ⚠️ Frontend zatím nevyužívá
 - [x] Historie konverzací
 
 ### Lékařské nástroje
@@ -36,9 +36,15 @@ Tento dokument obsahuje přehled dokončených funkcí a plánovaný vývoj proj
 
 ### Autentizace & Bezpečnost
 - [x] Email autentizace přes Supabase
-- [x] Row Level Security (RLS)
+- [x] Row Level Security (RLS) - ⚠️ **14 tabulek bez RLS** - viz BACKLOG.md
 - [x] Session management
-- [x] Ochrana API endpointů
+- [ ] Ochrana API endpointů - ⚠️ **Některé endpointy bez auth** - viz BACKLOG.md
+
+---
+
+## 📝 Detailní backlog
+
+Pro detailní rozepsání úkolů a priorit viz **[BACKLOG.md](BACKLOG.md)**.
 
 ---
 
