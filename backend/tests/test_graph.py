@@ -139,12 +139,13 @@ class TestCheckpointerIntegration:
         # The compiled graph should exist
         assert app is not None
 
-    def test_checkpoint_db_path_configured(self):
-        """Test that CHECKPOINT_DB_PATH is configured."""
-        from app.core.graph import CHECKPOINT_DB_PATH
+    def test_checkpointer_configured(self):
+        """Test that checkpointer is configured (MemorySaver)."""
+        from app.core.graph import checkpointer
+        from langgraph.checkpoint.memory import MemorySaver
 
-        assert CHECKPOINT_DB_PATH is not None
-        assert "checkpoints.db" in CHECKPOINT_DB_PATH
+        assert checkpointer is not None
+        assert isinstance(checkpointer, MemorySaver)
 
     def test_graph_nodes_exist(self):
         """Test that all expected nodes are in the graph."""
