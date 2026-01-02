@@ -23,7 +23,7 @@ Usage:
 
 from typing import Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from backend.app.core.llm import get_llm
@@ -264,12 +264,10 @@ async def synthesizer_node(state: ClinicalState):
     return {"final_answer": response.content}
 
 # Checkpointer initialization for state persistence
-import sqlite3
-
 CHECKPOINT_DB_PATH = "backend/checkpoints.db"
-# Create persistent connection for checkpointer (check_same_thread=False for FastAPI async context)
-conn = sqlite3.connect(CHECKPOINT_DB_PATH, check_same_thread=False)
-checkpointer = SqliteSaver(conn)
+# AsyncSqliteSaver for async FastAPI context
+# from_conn_string returns a context manager, so we use it directly
+checkpointer = AsyncSqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
 
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
