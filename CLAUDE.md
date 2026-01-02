@@ -135,14 +135,24 @@ Frontend používá Next.js 16 App Router s jasným rozdělením mezi:
 Backend je aplikace FastAPI s LangGraph pro zpracování klinických dotazů:
 
 1. **Základní struktura** (`backend/`):
-   - `main.py` - vstupní bod aplikace FastAPI
-   - `agent_graph.py` - stavový stroj LangGraph pro klinické dotazy
-   - `epicrisis_graph.py` - specializovaný graf pro generování epikrisis (lékařského shrnutí)
+   - `main.py` - vstupní bod aplikace FastAPI (spouštěč)
+   - `agent_graph.py` - stavový stroj LangGraph pro klinické dotazy (streaming)
+   - `epicrisis_graph.py` - specializovaný graf pro generování epikrisis
+   - `translator_graph.py` - graf pro překlad lékařských textů
 
 2. **Organizace API** (`backend/app/`):
-   - `app/api/` – obslužné rutiny API
-   - `app/core/` – základní konfigurace a nástroje
-   - `app/models/` – modely Pydantic pro ověřování požadavků/odpovědí
+   - `app/main.py` - hlavní FastAPI aplikace
+   - `app/api/v1/` – verzované API endpointy
+   - `app/api/v1/endpoints/` – jednotlivé routery (ai.py, query.py, drugs.py, admin.py)
+   - `app/api/v1/deps.py` – autentizační dependencies
+   - `app/core/` – konfigurace, databáze, LangGraph workflow
+   - `app/schemas/` – Pydantic modely pro validaci
+   - `app/services/` – business logika (search_service.py)
+
+3. **Services** (`backend/services/`):
+   - `sukl_api_client.py` - SÚKL API integrace
+   - `chat_history.py` - správa historie chatu
+   - `logger.py` - strukturované logování
 
 3. **Zpracování dat** (`backend/data_processing/`):
    - Pipeline pro zpracování zdrojů lékařských dat (SÚKL, PubMed, české směrnice)
@@ -171,9 +181,21 @@ Klíčové tabulky databáze (úplné schéma viz README.md):
 ### Komunikace mezi frontendem a backendem
 
 Frontend komunikuje s backendem prostřednictvím:
-1. **Přímých volání API** do koncových bodů FastAPI (např. `/api/chat`, `/api/vzp-search`)
-2. **Supabase** pro autentizaci, uživatelské profily a trvalé uchovávání dat
-3. **Předplatného v reálném čase** prostřednictvím Supabase pro živé aktualizace (pokud je implementováno)
+
+1. **Next.js API Routes** (proxy pattern):
+   - `/api/chat` → `backend /api/v1/query`
+   - `/api/epicrisis` → `backend /api/v1/ai/epicrisis`
+   - `/api/translate` → `backend /api/v1/ai/translate`
+   - `/api/transcribe` → `backend /api/v1/ai/transcribe`
+
+2. **Přímá volání FastAPI** (vyžaduje Bearer token):
+   - `ChatInterface` volá přímo `/api/v1/query/` s auth tokenem
+   - `VzpSearchInterface` volá přímo `/api/v1/drugs/vzp-search`
+   - `HistoryInterface` volá přímo `/api/v1/query/history`
+
+3. **Supabase** pro autentizaci a persistenci dat
+
+**⚠️ Známý problém**: Nekonzistentní vzory volání - některé komponenty používají proxy, jiné přímé volání. Viz BACKLOG.md US-2.1.
 
 ## Klíčové technické podrobnosti
 
