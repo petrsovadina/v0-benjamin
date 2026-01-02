@@ -32,6 +32,7 @@ jobs:
         SUPABASE_URL: "https://dummy.supabase.co"
         SUPABASE_KEY: "dummy-key"
         PUBMED_EMAIL: "test@example.com"
+        PYTHONPATH: ${{ github.workspace }}
       run: |
         pytest backend/tests/
 
