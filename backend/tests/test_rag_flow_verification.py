@@ -215,9 +215,10 @@ class TestCompleteRAGFlowWithCitations:
                 from backend.app.core.graph import app as graph_app
                 from langchain_core.messages import HumanMessage
 
-                result = await graph_app.ainvoke({
-                    "messages": [HumanMessage(content="Jaké jsou doporučení pro léčbu?")]
-                })
+                result = await graph_app.ainvoke(
+                    {"messages": [HumanMessage(content="Jaké jsou doporučení pro léčbu?")]},
+                    config={"configurable": {"thread_id": "test-thread"}}
+                )
 
                 # Verify successful completion
                 assert "final_answer" in result
@@ -388,9 +389,10 @@ Citace:
             from langchain_core.messages import HumanMessage
 
             # Step 3: Query with guideline question
-            result = await graph_app.ainvoke({
-                "messages": [HumanMessage(content="Jaká je doporučená léčba?")]
-            })
+            result = await graph_app.ainvoke(
+                {"messages": [HumanMessage(content="Jaká je doporučená léčba?")]},
+                config={"configurable": {"thread_id": "test-thread"}}
+            )
 
         # Step 4: Verify response includes guidelines context with proper citations
         assert "final_answer" in result

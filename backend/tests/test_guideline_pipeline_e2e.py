@@ -203,9 +203,10 @@ Citace:
             from langchain_core.messages import HumanMessage
 
             # Run the full pipeline
-            result = await graph_app.ainvoke({
-                "messages": [HumanMessage(content="Jaké jsou doporučení pro léčbu hypertenze?")]
-            })
+            result = await graph_app.ainvoke(
+                {"messages": [HumanMessage(content="Jaké jsou doporučení pro léčbu hypertenze?")]},
+                config={"configurable": {"thread_id": "test-thread"}}
+            )
 
         # Verify final answer exists
         assert "final_answer" in result
