@@ -32,9 +32,9 @@ jobs:
         SUPABASE_URL: "https://dummy.supabase.co"
         SUPABASE_KEY: "dummy-key"
         PUBMED_EMAIL: "test@example.com"
-        PYTHONPATH: ${{ github.workspace }}
+        PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/backend
       run: |
-        pytest backend/tests/
+        pytest backend/tests/ -W ignore::DeprecationWarning
 
   frontend-build:
     runs-on: ubuntu-latest
