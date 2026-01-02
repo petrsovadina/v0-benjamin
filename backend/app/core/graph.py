@@ -8,7 +8,7 @@ various sources (SÚKL, PubMed, guidelines), and synthesizes responses.
 Key Features:
     - ClinicalState: Extended state with agentic workflow capabilities
     - Iteration Control: Maximum 5 iterations to prevent infinite loops
-    - Checkpointing: SqliteSaver persistence for session recovery
+    - Checkpointing: MemorySaver for in-memory session state persistence
     - Query Classification: LLM-based routing to appropriate retrieval nodes
 
 Workflow Flow:
@@ -23,7 +23,7 @@ Usage:
 
 from typing import Dict, Any, Literal
 from langgraph.graph import StateGraph, START, END
-from langgraph.checkpoint.sqlite.aio import AsyncSqliteSaver
+from langgraph.checkpoint.memory import MemorySaver
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from backend.app.core.llm import get_llm
@@ -264,10 +264,9 @@ async def synthesizer_node(state: ClinicalState):
     return {"final_answer": response.content}
 
 # Checkpointer initialization for state persistence
-CHECKPOINT_DB_PATH = "backend/checkpoints.db"
-# AsyncSqliteSaver for async FastAPI context
-# from_conn_string returns a context manager, so we use it directly
-checkpointer = AsyncSqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
+# MemorySaver provides in-memory checkpointing without requiring async context management
+# For production SQLite persistence, use AsyncSqliteSaver with proper async initialization
+checkpointer = MemorySaver()
 
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
@@ -345,9 +344,9 @@ workflow.add_edge("retrieve_guidelines", "synthesizer")
 workflow.add_edge("synthesizer", END)
 
 # --- CHECKPOINTER CONFIGURATION ---
-# SqliteSaver provides persistent state storage for session recovery.
-# The checkpoints.db file is created in the backend directory.
+# MemorySaver provides in-memory state storage for session management.
 # Thread IDs are required when invoking the graph for session isolation.
+# For production with persistent state, consider AsyncSqliteSaver with proper async initialization.
 # Compile the graph with checkpointer for state persistence.
 # When invoking, use config={"configurable": {"thread_id": "session_123"}}
 app = workflow.compile(checkpointer=checkpointer)
