@@ -264,8 +264,12 @@ async def synthesizer_node(state: ClinicalState):
     return {"final_answer": response.content}
 
 # Checkpointer initialization for state persistence
+import sqlite3
+
 CHECKPOINT_DB_PATH = "backend/checkpoints.db"
-checkpointer = SqliteSaver.from_conn_string(CHECKPOINT_DB_PATH)
+# Create persistent connection for checkpointer (check_same_thread=False for FastAPI async context)
+conn = sqlite3.connect(CHECKPOINT_DB_PATH, check_same_thread=False)
+checkpointer = SqliteSaver(conn)
 
 # --- GRAPH CONSTRUCTION ---
 workflow = StateGraph(ClinicalState)
