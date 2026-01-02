@@ -9,10 +9,6 @@ on:
 jobs:
   backend-test:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: ./backend
 
     steps:
     - uses: actions/checkout@v3
@@ -23,10 +19,11 @@ jobs:
         python-version: "3.11"
 
     - name: Install dependencies
+      working-directory: ./backend
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
     # Pro testy musíme nastavit dummy ENV proměnné, aby aplikace nespadla při startu
     # Reálné klíče v testech nepoužíváme (vše je mockované)
     - name: Run Tests with pytest
@@ -36,7 +33,7 @@ jobs:
         SUPABASE_KEY: "dummy-key"
         PUBMED_EMAIL: "test@example.com"
       run: |
-        pytest tests/
+        pytest backend/tests/
 
   frontend-build:
     runs-on: ubuntu-latest
