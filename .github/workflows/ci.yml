@@ -33,24 +33,30 @@ jobs:
       env:
         ANTHROPIC_API_KEY: "sk-dummy-key"
         SUPABASE_URL: "https://dummy.supabase.co"
-        SUPABASE_SERVICE_KEY: "dummy-key"
+        SUPABASE_KEY: "dummy-key"
+        PUBMED_EMAIL: "test@example.com"
       run: |
         pytest tests/
 
   frontend-build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
-        cache: 'npm'
+        node-version: '22'
+        cache: 'pnpm'
 
     - name: Install dependencies
-      run: npm ci
+      run: pnpm install --frozen-lockfile
 
     - name: Build Frontend
       # Toto ověří TypeScript kompilaci a Next.js build
@@ -58,4 +64,4 @@ jobs:
         NEXT_PUBLIC_SUPABASE_URL: "https://dummy.supabase.co"
         NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-key"
         NEXT_PUBLIC_API_URL: "http://localhost:8000"
-      run: npm run build
+      run: pnpm build
