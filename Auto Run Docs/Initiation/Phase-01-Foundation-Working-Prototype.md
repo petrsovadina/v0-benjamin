@@ -10,7 +10,7 @@ Tato fáze validuje základní hypotézu "Czech Medical Google" — AI asistent,
   - Ensure `/docs` endpoint returns Swagger UI
   - Test basic health endpoint returns 200 OK
 
-- [ ] Create ClinicalState schema for LangGraph workflow:
+- [x] Create ClinicalState schema for LangGraph workflow:
   - Create `backend/app/core/schemas/clinical_state.py`
   - Define TypedDict `ClinicalState` with fields:
     - `messages: Annotated[list, add_messages]` for conversation history
